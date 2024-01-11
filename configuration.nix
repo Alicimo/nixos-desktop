@@ -11,13 +11,14 @@
     ];
 
   # Bootloader
-  # boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.grub = {
-    enable = true;
-    device = "nodev";
-    useOSProber = true;
-    efiSupport = true;
+  boot.loader = {
+    efi.canTouchEfiVariables = true;
+    grub = {
+      enable = true;
+      device = "nodev";
+      useOSProber = true;
+      efiSupport = true;
+    };
   };
   time.hardwareClockInLocalTime = true;
 
@@ -36,7 +37,7 @@
   fileSystems."/home/alistair/samba" = {
     device = "//tiefenbacher/public";
     fsType = "cifs";
-    options = [ "guest,uid=1000,iocharset=utf8" ];
+    options = [ "guest,uid=1000,iocharset=utf8,_netdev,nofail" ];
   };
 
   # Localisation
@@ -133,6 +134,7 @@
             "clipboard-history@alexsaveau.dev"
             "dash-to-panel@jderose9.github.com"
             "Vitals@CoreCoding.com"
+            "tiling-assistant@leleat-on-github"
           ];
         };
         "org/gnome/desktop/interface" = {
@@ -146,7 +148,7 @@
           picture-options = "zoom";
         };
         "org/gnome/mutter" = {
-          edge-tiling = true;
+          edge-tiling = false; # turn off when using tiling assistant extension
           dynamic-workspaces = true;
           workspaces-only-on-primary = true;
         };
@@ -174,6 +176,8 @@
         gnomeExtensions.dash-to-panel
         gnomeExtensions.clipboard-history
         gnomeExtensions.alphabetical-app-grid
+        gnomeExtensions.tiling-assistant
+
         fira-code
         fira-code-symbols
         papirus-icon-theme
@@ -183,7 +187,6 @@
         duplicati
         libreoffice
 	      rstudio
-        ventoy-full
 
       	htop
         atop
@@ -204,8 +207,8 @@
       enable =  true;
       extensions = [
 	      "nngceckbapebfimnlniiiahkandclblb" # bitwarden
-	"fnaicdffflnofjppbagibeoednhnbjhg" # floccus bookmarks
-	"hkgfoiooedgoejojocmhlaklaeopbecg" # Picture-in-Picture
+	      "fnaicdffflnofjppbagibeoednhnbjhg" # floccus bookmarks
+	      "hkgfoiooedgoejojocmhlaklaeopbecg" # Picture-in-Picture
         "mnjggcdmjocbbbhaepdhchncahnbgone" # SponsorBlock
         "cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
       ];
@@ -368,8 +371,6 @@
 
   # Packages installed in system profile. To search, run: nix search wget
   environment.systemPackages = with pkgs; [
-     vim
-     cifs-utils
      gnome.gnome-tweaks
      # python38
      python312
@@ -379,7 +380,7 @@
   nix.optimise.automatic = true;
   nix.gc = {
     automatic = true;
-    options = "--delete-older-than 30d";
+    options = "--delete-older-than 7d";
   };
 
   # This value determines the NixOS release from which the default
