@@ -37,7 +37,7 @@
   fileSystems."/home/alistair/samba" = {
     device = "//tiefenbacher/public";
     fsType = "cifs";
-    options = [ "guest,uid=1000,iocharset=utf8,_netdev,nofail" ];
+    options = [ "guest,uid=1000,iocharset=utf8,_netdev,x-systemd.automount" ];
   };
 
   # Localisation
@@ -91,7 +91,12 @@
 ]);
 
   # Enable CUPS to print documents.
+  services.avahi = {
+    enable = true;
+    nssmdns = true;
+  };
   services.printing.enable = true;
+  services.printing.drivers = [ pkgs.brlaser ];
 
   # Enable sound with pipewire.
   sound.enable = true;
@@ -183,6 +188,7 @@
         papirus-icon-theme
 
         thunderbird
+        # betterbird  # Doesn't work
         vlc
         duplicati
         libreoffice
@@ -372,8 +378,10 @@
   # Packages installed in system profile. To search, run: nix search wget
   environment.systemPackages = with pkgs; [
      gnome.gnome-tweaks
+     cifs-utils
      # python38
-     python312
+     python311
+     python311Packages.pip
      R
   ];
 
