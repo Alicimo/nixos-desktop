@@ -18,6 +18,8 @@
   environment.systemPackages = [
     pkgs.rocmPackages.clr
     pkgs.rocmPackages.hipblas
+    pkgs.rocmPackages.rocblas
+    pkgs.rocmPackages.rocm-smi
   ];
 
   fileSystems."/" =
