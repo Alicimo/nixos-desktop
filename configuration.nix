@@ -6,9 +6,10 @@
 {
   imports = [
       ./hardware-configuration.nix
-      ./home/home.nix
       ./pkgs/default.nix
   ];
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Bootloader
   boot.loader = {
@@ -62,6 +63,7 @@
     hitori # sudoku game
     atomix # puzzle game
   ]);
+  programs.dconf.enable = true;
 
   systemd.tmpfiles.rules = [
     "d /home/alistair/workspace 0755 alistair users"
