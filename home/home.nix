@@ -1,10 +1,4 @@
-{ config, pkgs, lib, ... }:
- let
-   my-llama = ((pkgs.llama-cpp.overrideAttrs (finalAttrs: previousAttrs: {
-     cmakeFlags = (previousAttrs.cmakeFlags ++ [ "-DAMDGPU_TARGETS=gfx1030" ]);
-     })).override { rocmSupport = true; blasSupport=false; });
- in
-{ 
+{ config, pkgs, lib, ... }:{
   imports = [
     ./antuin.nix
     ./bash.nix
@@ -22,11 +16,7 @@
       libreoffice
       rstudio
       anki
-      # ((ollama.overrideAttrs (finalAttrs: previousAttrs: {
-      #   ldflags = (previousAttrs.ldflags ++ [ "-tags rocm" ]);
-      # })).override { llama-cpp = my-llama; })
-      # doesn't work due to the rocm tag needing to be including at generate
-      my-llama
+      telegram-desktop
 
       htop
       atop
@@ -37,6 +27,7 @@
       imagemagick
       tree
       cifs-utils
+      pkgs.unstable.llama-cpp
 
       handbrake
       makemkv

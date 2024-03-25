@@ -1,28 +1,29 @@
 { config, pkgs, lib, ... }:
 {
   # The below lets vscode setting.json be editable
-  # home.activation = {
-  #   boforeCheckLinkTargets = {
-  #     after = [];
-  #     before = [ "checkLinkTargets" ];
-  #     data = ''
-  #       userDir=/home/alistair/.config/Code/User
-  #       rm -rf $userDir/settings.json
-  #     '';
-  #   };
-  #   afterWriteBoundary = {
-  #     after = [ "writeBoundary" ];
-  #     before = [];
-  #     data = ''
-  #       userDir=/home/alistair/.config/Code/User
-  #       rm -rf $userDir/settings.json
-  #       cat \
-  #         ${(pkgs.formats.json {}).generate "blabla"
-  #           config.home-manager.users.alistair.programs.vscode.userSettings} \
-  #         > $userDir/settings.json
-  #     '';
-  #   };
-  # };
+  home.activation = {
+    boforeCheckLinkTargets = {
+      after = [];
+      before = [ "checkLinkTargets" ];
+      data = ''
+        userDir=/home/alistair/.config/Code/User
+        rm -rf $userDir/settings.json
+      '';
+    };
+    afterWriteBoundary = {
+      after = [ "writeBoundary" ];
+      before = [];
+      data = ''
+        userDir=/home/alistair/.config/Code/User
+        rm -rf $userDir/settings.json
+        cat \
+          ${(pkgs.formats.json {}).generate "blabla"
+            config.programs.vscode.userSettings} \
+          > $userDir/settings.json
+      '';
+    };
+  };
+
   fonts.fontconfig.enable = true;
   home.packages = with pkgs; [
       fira-code
@@ -67,12 +68,24 @@
         version = "1.18.0";
         sha256 = "hiOMcHiW8KFmau7WYli0pFszBBkb6HphZsz+QT5vHv0=";
       }
+      # {
+      #  name = "Continue";
+      #  publisher = "continue";
+      #  version = "0.9.80";
+      #  sha256 = "sha256-w/hAiu1Tus4XdbOOqBDN/fekqbjdRq9OBbdbCSUfTpo=";
+      # }
       {
         name = "twinny";
         publisher = "rjmacarthy";
-        version = "3.7.8";
-        sha256 = "sha256-C+NfG3J4WpRJJorJnwSlaD2jtcJFmhKpE3C32DId36o=";
+        version = "3.7.15";
+        sha256 = "sha256-p8geh3W4EU4XVWQb6UydT8/smka/LrCtiQEDLd7PN70=";
       }
+      # {
+      #   name = "huggingface-vscode";
+      #   publisher = "HuggingFace";
+      #   version = "0.2.0";
+      #   sha256 = "sha256-egEKHJHjCAUT1zoju4MCmVCHkOK/9C+mocC6+8kN0Js=";
+      # }
     ];
     userSettings = {
       "update.mode" = "none";
@@ -86,11 +99,36 @@
       "workbench.iconTheme" = "material-icon-theme";
       "workbench.productIconTheme" = "material-product-icons";
       "window.titleBarStyle" = "custom";
+
       "twinny.apiProvider" = "llamacpp";
       "twinny.fimApiPath" = "/completion";
       "twinny.chatApiPath" = "/completion";
       "twinny.chatApiPort" = 8080;
       "twinny.fimApiPort" = 8080;
+
+      # "llm.lsp.binaryPath" = "${lib.getExe pkgs.llm-ls}";
+      # "llm.backend" = "ollama";
+      # "llm.configTemplate" = "ollama/codellama:7b";
+      # "llm.modelId" = "codellama:7b";
+      # "llm.url" = "http://localhost:11434/api/generate";
+      # "llm.fillInTheMiddle.enabled" = true;
+      # "llm.fillInTheMiddle.prefix" = "<PRE> ";
+      # "llm.fillInTheMiddle.middle" = " <MID>";
+      # "llm.fillInTheMiddle.suffix" = " <SUF>";
+      # "llm.requestBody" = {
+      #   "options" = {
+      #     "num_predict" = 60;
+      #     "temperature" = 0.2;
+      #     "top_p" = 0.95;
+      #   };
+      # };
+      # "llm.contextWindow" = 2048;
+      # "llm.tokensToClear" = [
+      #   "<EOT>"
+      # ];
+      # "llm.tokenizer" = {
+      #   "repository" = "codellama/CodeLlama-7b-hf";
+      # };
     };
   };
 }
