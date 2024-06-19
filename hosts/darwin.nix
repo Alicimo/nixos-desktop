@@ -29,7 +29,6 @@ let user = "tiefenbacher"; in
 
   # Load configuration that is shared across systems
   environment.systemPackages = with pkgs; [
-    emacs-unstable
   ] ++ (import ../../modules/shared/packages.nix { inherit pkgs; });
 
   # Enable fonts dir
@@ -69,13 +68,18 @@ let user = "tiefenbacher"; in
 
       finder = {
         _FXShowPosixPathInTitle = false;
+        AppleShowAllExtensions = true;
+        FXPreferredViewStyle = "clmv";
       };
 
       trackpad = {
         Clicking = true;
         TrackpadThreeFingerDrag = true;
       };
+
+      screensaver.askForPasswordDelay = 10;
     };
+
     keyboard = {
       enableKeyMapping = true;
       remapCapsLockToControl = true;
