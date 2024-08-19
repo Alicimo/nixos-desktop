@@ -4,7 +4,7 @@
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     home-manager = {
       url = "github:nix-community/home-manager/release-23.11";
@@ -27,14 +27,31 @@
     }; 
   };
 
-  outputs = { self, nix-darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, nixpkgs-unstable } @inputs: {
-    darwinConfigurations."tiefenbacher-macbook" = nix-darwin.lib.darwinSystem {
-      modules = [
-        home-manager.darwinModules.home-manager
-        ./hosts/darwin.nix
-      ];
+  outputs = { self, nix-darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, nixpkgs-unstable } @inputs:
+    let
+      user = "tiefenbacher";
+    in {
+      darwinConfigurations."tiefenbacher-macbook" = nix-darwin.lib.darwinSystem {
+        modules = [
+          home-manager.darwinModules.home-manager
+          nix-homebrew.darwinModules.nix-homebrew {
+            nix-homebrew = {
+              inherit user;
+              enable = true;
+              taps = {
+                "homebrew/homebrew-core" = homebrew-core;
+                "homebrew/homebrew-cask" = homebrew-cask;
+                "homebrew/homebrew-bundle" = homebrew-bundle;
+              };
+              mutableTaps = false;
+              autoMigrate = true;
+            };
+          }
+          ./hosts/darwin.nix
+        ];
+      };
     };
-  };
+  }
 
     # let
     #   system = "x86_64-linux";
@@ -59,4 +76,3 @@
     #     ];
     #   };
     # };
-}

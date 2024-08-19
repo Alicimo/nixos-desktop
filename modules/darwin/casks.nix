@@ -1,38 +1,28 @@
 _:
 
 [
+  "1password"
+  "rectangle" # window snapping
+  "maccy" # clipboard manager
+  "keka" # 7zip 4 mac
+  "logi-options-plus"
+  
+
   # Development Tools
   "homebrew/cask/docker"
-#   "insomnia"
-#   "tableplus"
-#   "ngrok"
-#   "postico"
+  "ngrok"
   "visual-studio-code"
-#   "wireshark"
+  "iterm2"
 
   # Communication Tools
-#   "discord"
-#   "loom"
-#   "notion"
   "slack"
   "telegram"
-#   "zoom"
-
-  # Utility Tools
-#   "appcleaner"
-#   "syncthing"
+  "obsidian"
 
   # Entertainment Tools
-#   "steam"
   "vlc"
+  "spotify"
 
-  # Productivity Tools
-#   "raycast"
-#   "asana"
-
-  # Browsers
+  # Browsersß
   "google-chrome"
-
-  # AI
-#   "diffusionbee"
 ]

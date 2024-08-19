@@ -2,12 +2,15 @@
 let user = "tiefenbacher"; in
 {
   imports = [
-    ../../modules/darwin/home-manager.nix
-    ../../modules/shared
+    ../modules/darwin/home-manager.nix
+    ../modules/shared
   ];
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
+
+  # Turn off NIX_PATH warnings now that we're using flakes
+  system.checks.verifyNixPath = false;
 
   # Setup user, packages, programs
   nix = {
@@ -29,10 +32,7 @@ let user = "tiefenbacher"; in
 
   # Load configuration that is shared across systems
   environment.systemPackages = with pkgs; [
-  ] ++ (import ../../modules/shared/packages.nix { inherit pkgs; });
-
-  # Enable fonts dir
-  fonts.fontDir.enable = true;
+  ] ++ (import ../modules/shared/packages.nix { inherit pkgs; });
 
   system = {
     stateVersion = 4;
@@ -64,12 +64,13 @@ let user = "tiefenbacher"; in
         mouse-over-hilite-stack = true;
         orientation = "bottom";
         tilesize = 48;
+        mru-spaces = false;
       };
 
       finder = {
-        _FXShowPosixPathInTitle = false;
         AppleShowAllExtensions = true;
         FXPreferredViewStyle = "clmv";
+        ShowPathbar = true;
       };
 
       trackpad = {
