@@ -31,7 +31,7 @@
     firewall.enable = false;
   };
   services.tailscale.enable = true;
-  
+
   #Enable the X11 windowing system.
   services.xserver = {
     enable = true;
@@ -121,7 +121,7 @@
   users.users.alistair = {
     isNormalUser = true;
     description = "Alistair Tiefenbacher";
-    extraGroups = [ "networkmanager" "wheel" "docker"];
+    extraGroups = [ "networkmanager" "wheel" "docker" "cdrom"];
   };
 
   # Enable automatic login for the user.

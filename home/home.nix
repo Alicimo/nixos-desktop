@@ -31,7 +31,7 @@
     pkgs.unstable.llama-cpp
 
     handbrake
-    makemkv
+    pkgs.unstable.makemkv
     (abcde.overrideAttrs (oldAttrs: { buildInputs = oldAttrs.buildInputs ++ [ pkgs.perlPackages.IOSocketSSL ]; }))
     flac
   ];

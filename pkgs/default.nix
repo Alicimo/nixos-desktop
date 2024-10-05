@@ -8,6 +8,7 @@
     cifs-utils
     (python311.withPackages (ps: with ps; [ pandas numpy ]))
     R
+    jupyter
     borgbackup
   ];
 }
