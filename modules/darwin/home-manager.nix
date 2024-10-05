@@ -17,6 +17,14 @@ in
     # Homebrew is *installed* via the flake input nix-homebrew
     enable = true;
     casks = pkgs.callPackage ./casks.nix {};
+    global = {
+      autoUpdate = true;
+    };
+    onActivation = {
+      cleanup = "uninstall";
+      autoUpdate = true;
+      upgrade = true;
+    };
   };
 
   # Enable home-manager
@@ -30,8 +38,30 @@ in
       };
 
       programs = {} // import ../shared/home-manager.nix { inherit config pkgs lib; };
+
+      home.activation =
+      let
+        configPath = "/Users/tiefenbacher/Library/Application\ Support/Code/User/settings.json";
+      in
+      {
+        beforeCheckLinkTargets = {
+          after = [];
+          before = [ "checkLinkTargets" ];
+          data = ''
+            rm -f "${configPath}"
+          '';
+        };
+        makeVSCodeConfigWritable = {
+          after = [ "writeBoundary" ];
+          before = [ ];
+          data = ''
+            install -m 0640 "$(readlink "${configPath}")" "${configPath}"
+          '';
+        };
+      };
     };
   };
+
 
   # # Fully declarative dock using the latest from Nix Store
   # local = {

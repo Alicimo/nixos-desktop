@@ -5,8 +5,7 @@ _:
   "rectangle" # window snapping
   "maccy" # clipboard manager
   "keka" # 7zip 4 mac
-  "logi-options-plus"
-  
+  "logitech-options"
 
   # Development Tools
   "homebrew/cask/docker"
@@ -18,11 +17,14 @@ _:
   "slack"
   "telegram"
   "obsidian"
+  "lm-studio"
 
   # Entertainment Tools
   "vlc"
   "spotify"
+  "netnewswire"
+  "zotero"
 
-  # Browsersß
+  # Browsers
   "google-chrome"
 ]

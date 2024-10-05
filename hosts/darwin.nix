@@ -39,10 +39,10 @@ let user = "tiefenbacher"; in
 
     defaults = {
       LaunchServices = {
-        LSQuarantine = false;
-      };
+        LSQuarantine = false; };
 
       NSGlobalDomain = {
+        AppleInterfaceStyleSwitchesAutomatically = true;
         AppleShowAllExtensions = true;
         ApplePressAndHoldEnabled = false;
 

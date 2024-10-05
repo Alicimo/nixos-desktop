@@ -134,13 +134,13 @@ in {
     extensions = with pkgs.vscode-extensions; [
       pkief.material-icon-theme
       pkief.material-product-icons
+      github.github-vscode-theme
 
-      # mechatroner.rainbow-csv
-      # grapecity.gc-excelviewer
-      # ms-toolsai.datawrangler
+      ms-toolsai.datawrangler
       streetsidesoftware.code-spell-checker
       christian-kohler.path-intellisense
       ms-vscode-remote.remote-ssh
+      continue.continue
 
       jnoortheen.nix-ide
       mikestead.dotenv
@@ -155,28 +155,20 @@ in {
       ms-toolsai.vscode-jupyter-cell-tags
       ms-toolsai.jupyter-renderers
       ms-toolsai.jupyter-keymap
+
     ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-      {
-        name = "one-monokai";
-        publisher = "azemoh";
-        version = "0.5.0";
-        sha256 = "ardM7u9lXkkTTPsDVqTl4yniycERYdwTzTQxaa4dD+c=";
-      }
       {
         name = "vsc-python-indent";
         publisher = "KevinRose";
         version = "1.18.0";
         sha256 = "hiOMcHiW8KFmau7WYli0pFszBBkb6HphZsz+QT5vHv0=";
       }
-      {
-        name = "datawrangler";
-        publisher = "ms-toolsai";
-        version = "0.29.6";
-        sha256 = "sha256-9MR2+hb9YdjIGDfUkdLW41HOxhjeS/San49C8QRZ/YY=";
-      }
     ];
     userSettings = {
       "update.mode" = "none";
+      "extensions.ignoreRecommendations" = true;
+      "continue.telemetryEnabled" = false;
+      "cSpell.diagnosticLevel" = "Hint";
 
       "editor.fontFamily" = "Fira Code";
       "editor.fontLigatures" = true;
@@ -187,7 +179,9 @@ in {
       "files.trimTrailingWhitespace" = true;
       "files.autoSave" = "afterDelay";
 
-      "workbench.colorTheme" = "One Monokai";
+      "window.autoDetectColorScheme" = true;
+      "workbench.preferredDarkColorTheme" = "GitHub Dark";
+      "workbench.preferredLightColorTheme" = "GitHub Light";
       "workbench.iconTheme" = "material-icon-theme";
       "workbench.productIconTheme" = "material-product-icons";
 
@@ -202,6 +196,7 @@ in {
           "source.organizeImports" = "explicit";
         };
       };
+      "python.analysis.autoImportCompletions" = true;
 
       "terminal.integrated.cwd" =  "\${workspaceFolder}";
       "jupyter.notebookFileRoot" = "\${workspaceFolder}";
