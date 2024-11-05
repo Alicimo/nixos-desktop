@@ -11,18 +11,15 @@ with pkgs; [
   sqlite
   wget
   zip
-  
+  devenv
+  direnv
+
   # Media-related packages
   imagemagick
   ffmpeg
   fd
   pngquant
   jpegoptim
-  fira-code
-  fira-code-symbols
-
-  # Source code management, Git, GitHub tools
-  git
 
   # Text and terminal utilities
   iftop
@@ -30,11 +27,10 @@ with pkgs; [
   ripgrep
   tree
   unzip
+  git
 
-  # Python packages
-  python311
-  python311Packages.virtualenv
-  ruff
-
+  # Programming
+  (python312.withPackages (ps: with ps; [ polars pandas numpy ipykernel jupyter requests]))
   R
+  ruff
 ]

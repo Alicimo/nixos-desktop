@@ -42,7 +42,7 @@ in {
       POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD = true;
     };
     enableCompletion = true;
-    enableAutosuggestions = true;
+    autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     zplug = {
       enable = true;

@@ -3,45 +3,163 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, lib, ... }:
+let user = "alistair"; in
 {
   imports = [
-      ./hardware-configuration.nix
-      ./pkgs/default.nix
-      # ./services/ollama.nix
+      ../modules/shared
   ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # Bootloader
-  boot.loader = {
-    efi.canTouchEfiVariables = true;
-    grub = {
+  boot = {
+    initrd = {
+      availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
+      kernelModules = [ "amdgpu" ];
+    };
+    loader = {
+      efi.canTouchEfiVariables = true;
+      grub = {
+        enable = true;
+        device = "nodev";
+        useOSProber = true;
+        efiSupport = true;
+      };
+    };
+    kernelModules = [ "kvm-amd" ];
+  };
+
+  hardware = {
+    opengl = {
       enable = true;
-      device = "nodev";
-      useOSProber = true;
-      efiSupport = true;
+      driSupport = true;
+      driSupport32Bit = true;
+      extraPackages = [
+        pkgs.rocmPackages.clr.icd
+        pkgs.rocmPackages.clr
+      ];
     };
   };
-  time.hardwareClockInLocalTime = true;
+
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-uuid/575c029b-feea-4deb-9583-9419861b3891";
+      fsType = "ext4";
+    };
+    "/boot" = {
+      device = "/dev/disk/by-uuid/3D57-FA8E";
+      fsType = "vfat";
+    };
+  };
+  swapDevices = [ {
+    device = "/var/lib/swapfile";
+    size = 2*1024;
+  } ];
+  systemd.tmpfiles.rules = [
+    "d /home/alistair/workspace 0755 alistair users"
+    "d /home/alistair/samba 0755 alistair users"
+  ];
+  fileSystems."/home/alistair/samba" = {
+    device = "//tiefenbacher.home/public";
+    fsType = "cifs";
+    options = [ "guest,uid=1000,iocharset=utf8,_netdev" ];
+  };
+
+  nix = {
+    settings = {
+      trusted-users = [ "@admin" "${user}" ];
+      substituters = [ "https://nix-community.cachix.org" "https://cache.nixos.org" ];
+      trusted-public-keys = [
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      ];
+    };
+    package = pkgs.nix;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+      warn-dirty = false
+    '';
+    optimise.automatic = true;
+    gc = {
+      automatic = true;
+      options = "--delete-older-than 7d";
+    };
 
   # Networking
   networking = {
+    useDHCP = true;
     hostName = "odin";
-    networkmanager.enable = true;
-    firewall.enable = false;
-  };
-  services.tailscale.enable = true;
-  
-  #Enable the X11 windowing system.
-  services.xserver = {
-    enable = true;
-    videoDrivers = [ "amdgpu" ];
-    excludePackages = [ pkgs.xterm ];
+    networkmanager.enable = true;  # default for mamy DEs inc. GNOME
+    firewall.enable = true;
   };
 
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  # Localisation
+  time = {
+    timeZone = "Europe/Vienna";
+    hardwareClockInLocalTime = true;
+  };
+  i18n = {
+    defaultLocale = "en_GB.UTF-8";
+    extraLocaleSettings = {
+      LC_ADDRESS = "de_AT.UTF-8";
+      LC_IDENTIFICATION = "de_AT.UTF-8";
+      LC_MEASUREMENT = "de_AT.UTF-8";
+      LC_MONETARY = "de_AT.UTF-8";
+      LC_NAME = "de_AT.UTF-8";
+      LC_NUMERIC = "de_AT.UTF-8";
+      LC_PAPER = "de_AT.UTF-8";
+      LC_TELEPHONE = "de_AT.UTF-8";
+      LC_TIME = "de_AT.UTF-8";
+    };
+  };
+
+  services = {
+    tailscale.enable = true;
+
+    # GNOME w/ X
+    xserver = {
+      enable = true;
+      videoDrivers = [ "amdgpu" ];
+      excludePackages = [ pkgs.xterm ];
+      displayManager = {
+        gdm.enable = true;
+        autoLogin = {
+          enable = true;
+          user = "${user}";
+        };
+      };
+      desktopManager.gnome.enable = true;
+    };
+
+    # Audio
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+    };
+
+    # Printing
+    avahi = {
+      enable = true;
+      nssmdns = true;
+      openFirewall = true;
+    };
+    printing = {
+      enable = true;
+      drivers = [ pkgs.brlaser ];
+    };
+
+    borgbackup.jobs.workspace = {
+      paths = "/home/alistair/workspace";
+      encryption.mode = "none";
+      environment.BORG_RSH = "ssh -i /home/alistair/.ssh/id_ed25519";
+      repo = "ssh://tiefenbacher:22/mnt/data/backups/workspace";
+      startAt = "*-*-* 12:00";
+      prune.keep.daily = 7;
+      user="alistair";
+    };
+  };
+
+  # Clean up Gnome
   environment.gnome.excludePackages = (with pkgs; [
     # gnome-photos
     gnome-tour
@@ -64,100 +182,69 @@
     hitori # sudoku game
     atomix # puzzle game
   ]);
-  programs.dconf.enable = true;
 
-  systemd.tmpfiles.rules = [
-    "d /home/alistair/workspace 0755 alistair users"
-    "d /home/alistair/samba 0755 alistair users"
-  ];
-  fileSystems."/home/alistair/samba" = {
-    device = "//tiefenbacher.home/public";
-    fsType = "cifs";
-    options = [ "guest,uid=1000,iocharset=utf8,_netdev" ];
-  };
 
-  # Localisation
-  time.timeZone = "Europe/Vienna";
-  i18n = {
-    defaultLocale = "en_GB.UTF-8";
-    extraLocaleSettings = {
-      LC_ADDRESS = "de_AT.UTF-8";
-      LC_IDENTIFICATION = "de_AT.UTF-8";
-      LC_MEASUREMENT = "de_AT.UTF-8";
-      LC_MONETARY = "de_AT.UTF-8";
-      LC_NAME = "de_AT.UTF-8";
-      LC_NUMERIC = "de_AT.UTF-8";
-      LC_PAPER = "de_AT.UTF-8";
-      LC_TELEPHONE = "de_AT.UTF-8";
-      LC_TIME = "de_AT.UTF-8";
+  programs = {
+    dconf.enable = true;
+    zsh.enable = true;
+    chromium = {
+      enable = true;
+      extraOpts = {
+          "BrowserSignin" = 0;
+          "SyncDisabled" = true;
+          "PasswordManagerEnabled" = false;
+          "SpellcheckEnabled" = true;
+          "BrowserLabsEnabled" = false;
+          "HighEfficiencyModeEnabled" = true;
+          "NewTabPageLocation" = "http://tiefenbacher.home";
+          "DefaultNotificationsSetting" = 2;
+          "DefaultSearchProviderEnabled" = true;
+          "DefaultSearchProviderName" = "Whoogle";
+          "DefaultSearchProviderSearchURL" = "http://search.tiefenbacher.home/search?q={searchTerms}";
+          "AutofillAddressEnabled" = false;
+      };
     };
   };
 
-  # Enable CUPS to print documents.
-  services.avahi = {
-    enable = true;
-    nssmdns = true;
-  };
-  services.printing.enable = true;
-  services.printing.drivers = [ pkgs.brlaser ];
+  fonts = {
+    enableDefaultPackages = True;
+    packages = with pkgs; [
+      fira-code
+      fira-code-symbols
+  ];
 
-  # Enable sound with pipewire.
-  sound.enable = true;
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
+  # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
+  systemd.services = {
+    "getty@tty1".enable = false;
+    "autovt@tty1".enable = false;
   };
+
+  security.rtkit.enable = true; # Improves pipewire
 
   virtualisation.docker = {
     enable = true;
     autoPrune.enable = true;
   };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.alistair = {
+  users.users.${user} = {
     isNormalUser = true;
     description = "Alistair Tiefenbacher";
     extraGroups = [ "networkmanager" "wheel" "docker"];
+    shell = pkgs.zsh;
   };
 
-  # Enable automatic login for the user.
-  services.xserver.displayManager.autoLogin.enable = true;
-  services.xserver.displayManager.autoLogin.user = "alistair";
-
-  # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
-  systemd.services."getty@tty1".enable = false;
-  systemd.services."autovt@tty1".enable = false;
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
   nixpkgs.config.rocmSupport = true;
 
-  services.borgbackup.jobs.workspace = {
-    paths = "/home/alistair/workspace";
-    encryption.mode = "none";
-    environment.BORG_RSH = "ssh -i /home/alistair/.ssh/id_ed25519";
-    repo = "ssh://tiefenbacher:22/mnt/data/backups/workspace";
-    startAt = "*-*-* 12:00";
-    prune.keep.daily = 7;
-    user="alistair";
-  };
+  environment.systemPackages = with pkgs; [
+    gnome.gnome-tweaks
+    cifs-utils
 
-  nix.optimise.automatic = true;
-  nix.gc = {
-    automatic = true;
-    options = "--delete-older-than 7d";
-  };
+    clinfo
+    rocmPackages.clr
+    rocmPackages.hipblas
+    rocmPackages.rocblas
+    rocmPackages.rocm-smi
+];
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.11"; # Did you read the comment?
-
+  system.stateVersion = "23.11"; # Never change this!
 }

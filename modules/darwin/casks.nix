@@ -2,14 +2,13 @@ _:
 
 [
   "1password"
-  "rectangle" # window snapping
-  "maccy" # clipboard manager
   "keka" # 7zip 4 mac
   "logitech-options"
+  "jordanbaird-ice"
+  "fliqlo"
 
   # Development Tools
-  "homebrew/cask/docker"
-  "ngrok"
+  "docker"
   "visual-studio-code"
   "iterm2"
 
@@ -21,10 +20,15 @@ _:
 
   # Entertainment Tools
   "vlc"
-  "spotify"
+  # "spotify"
+  "spotube"
   "netnewswire"
+  # "freetube"
   "zotero"
+  "steam"
+  "whisky"
 
   # Browsers
-  "google-chrome"
+  # "google-chrome"
+  "firefox"
 ]
