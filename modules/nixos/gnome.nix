@@ -8,16 +8,13 @@
       gnomeExtensions.alphabetical-app-grid
       gnomeExtensions.tiling-assistant
       gnomeExtensions.caffeine
-
-      fira-code
-      fira-code-symbols
       papirus-icon-theme
   ];
   dconf = {
     settings = {
       "org/gnome/shell" = {
         favorite-apps = [
-          "chromium-browser.desktop"
+          "firefox.desktop"
           "thunderbird.desktop"
           "code.desktop"
           "org.gnome.Console.desktop"
@@ -59,9 +56,9 @@
       };
       "org/gnome/shell/extensions/settings/vitals" = {
         hot-sensors = [
-          "_processor_usage_"          
+          "_processor_usage_"
           "_memory_usage_"
-          "__network-rx_max__" 
+          "__network-rx_max__"
         ];
       };
       "org/gnome/desktop/search-providers" = {

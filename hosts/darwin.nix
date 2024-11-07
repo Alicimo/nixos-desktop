@@ -40,7 +40,8 @@ let user = "tiefenbacher"; in
     packages = with pkgs; [
       fira-code
       fira-code-symbols
-  ];
+    ];
+  };
 
   # Load configuration that is shared across systems
   environment.systemPackages = with pkgs; [

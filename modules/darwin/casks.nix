@@ -23,12 +23,8 @@ _:
   # "spotify"
   "spotube"
   "netnewswire"
-  # "freetube"
   "zotero"
-  "steam"
-  "whisky"
 
   # Browsers
-  # "google-chrome"
   "firefox"
 ]

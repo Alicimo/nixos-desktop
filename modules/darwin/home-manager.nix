@@ -1,10 +1,11 @@
 { config, pkgs, lib, home-manager, ... }:
 
 let
-  user = "tiefenbacher";
+    name = "Alistair Tiefenbacher";
+    user = "tiefenbacher";
+    email = "tiefenbacher@xund.ai";
 in
 {
-  # It me
   users.users.${user} = {
     name = "${user}";
     home = "/Users/${user}";
@@ -35,28 +36,40 @@ in
         enableNixpkgsReleaseCheck = false;
         packages = pkgs.callPackage ./packages.nix {};
         stateVersion = "23.11";
+
+        # The vscode config be editable
+        activation =
+        let
+          configPath = "/Users/tiefenbacher/Library/Application\ Support/Code/User/settings.json";
+        in
+        {
+          beforeCheckLinkTargets = {
+            after = [];
+            before = [ "checkLinkTargets" ];
+            data = ''
+              rm -f "${configPath}"
+            '';
+          };
+          makeVSCodeConfigWritable = {
+            after = [ "writeBoundary" ];
+            before = [ ];
+            data = ''
+              install -m 0640 "$(readlink "${configPath}")" "${configPath}"
+            '';
+          };
+        };
       };
 
-      programs = {} // import ../shared/home-manager.nix { inherit config pkgs lib; };
-
-      home.activation =
-      let
-        configPath = "/Users/tiefenbacher/Library/Application\ Support/Code/User/settings.json";
-      in
-      {
-        beforeCheckLinkTargets = {
-          after = [];
-          before = [ "checkLinkTargets" ];
-          data = ''
-            rm -f "${configPath}"
-          '';
+      programs = import ../shared/home-manager.nix { inherit config pkgs lib; } // {
+        ssh = {
+          enable = true;
+          serverAliveCountMax = 15;
+          serverAliveInterval = 120;
+          includes = [ "/Users/${user}/.ssh/config_external" ];
         };
-        makeVSCodeConfigWritable = {
-          after = [ "writeBoundary" ];
-          before = [ ];
-          data = ''
-            install -m 0640 "$(readlink "${configPath}")" "${configPath}"
-          '';
+        git = {
+          userName = name;
+          userEmail = email;
         };
       };
     };

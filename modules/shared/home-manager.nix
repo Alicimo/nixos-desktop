@@ -1,10 +1,6 @@
 { config, pkgs, lib, ... }:
-
-let
-    name = "Alistair Tiefenbacher";
-    user = "tiefenbacher";
-    email = "tiefenbacher@xund.ai";
-in {
+{
+  home-manager.enable = true;
 
   atuin = {
     enable = true;
@@ -18,13 +14,11 @@ in {
       enable = true;
       enableZshIntegration = true;
       nix-direnv.enable = true;
-    };
+  };
 
   zsh = {
     enable = true;
     shellAliases = {
-      ls = "ls -l";
-      la = "ls -a";
       l = "ls";
       ll = "ls";
       c = "clear";
@@ -37,6 +31,9 @@ in {
       cat = "bat";
       top = "btop";
       grep = "rg";
+      diff = "difft";
+      du = "dust";
+      ls = "eza -l";
     };
     localVariables = {
       POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD = true;
@@ -55,8 +52,6 @@ in {
   git = {
     enable = true;
     ignores = [ "*.swp" ];
-    userName = name;
-    userEmail = email;
     lfs.enable = true;
     extraConfig = {
       init.defaultBranch = "main";
@@ -118,15 +113,6 @@ in {
     enable = true;
     serverAliveCountMax = 15;
     serverAliveInterval = 120;
-
-    includes = [
-      (lib.mkIf pkgs.stdenv.hostPlatform.isLinux
-        "/home/${user}/.ssh/config_external"
-      )
-      (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin
-        "/Users/${user}/.ssh/config_external"
-      )
-    ];
   };
 
   vscode = {

@@ -3,6 +3,21 @@
 with pkgs;
 let shared-packages = import ../shared/packages.nix { inherit pkgs; }; in
 shared-packages ++ [
+  vlc
+  libreoffice
+  anki
+  telegram-desktop
+  lmstudio
+
+  spotube
+  freetube
+  steam
+
+  handbrake
+  makemkv
+  abcde
+  flac
+
   brlaser
   borgbackup
 ]

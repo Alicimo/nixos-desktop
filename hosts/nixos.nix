@@ -53,6 +53,7 @@ let user = "alistair"; in
     device = "/var/lib/swapfile";
     size = 2*1024;
   } ];
+
   systemd.tmpfiles.rules = [
     "d /home/alistair/workspace 0755 alistair users"
     "d /home/alistair/samba 0755 alistair users"
@@ -60,7 +61,9 @@ let user = "alistair"; in
   fileSystems."/home/alistair/samba" = {
     device = "//tiefenbacher.home/public";
     fsType = "cifs";
-    options = [ "guest,uid=1000,iocharset=utf8,_netdev" ];
+    options = let
+      automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+    in [ "${automount_opts},guest,uid=1000" ]; # Removed _netdev, iocharset=utf8
   };
 
   nix = {
@@ -229,7 +232,7 @@ let user = "alistair"; in
   users.users.${user} = {
     isNormalUser = true;
     description = "Alistair Tiefenbacher";
-    extraGroups = [ "networkmanager" "wheel" "docker"];
+    extraGroups = [ "networkmanager" "wheel" "docker" "cdrom" ];
     shell = pkgs.zsh;
   };
 

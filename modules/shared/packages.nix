@@ -1,36 +1,37 @@
 { pkgs, ... }:
 
 with pkgs; [
-  # General packages for development and system management
+  # CLI tools
   bat
-  btop
   coreutils
+  du-dust
   killall
-  # openssh
-  pandoc
-  sqlite
-  wget
-  zip
-  devenv
-  direnv
-
-  # Media-related packages
-  imagemagick
-  ffmpeg
-  fd
-  pngquant
-  jpegoptim
-
-  # Text and terminal utilities
-  iftop
-  iotop
   ripgrep
   tree
   unzip
-  git
+  wget
+  curl
+  zip
+  difftastic
+  eza
+  fd
 
-  # Programming
-  (python312.withPackages (ps: with ps; [ polars pandas numpy ipykernel jupyter requests]))
+  # Monitors
+  btop
+  iotop
+  nload
+
+  # File-related packages
+  pandoc
+  imagemagick
+  ffmpeg
+  rsync
+
+  # Dev
+  (python312.withPackages (ps: with ps; [ polars pandas numpy ]))
   R
   ruff
+  sqlite
+  devenv
+  git
 ]
