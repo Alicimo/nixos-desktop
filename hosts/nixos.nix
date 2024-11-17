@@ -24,10 +24,13 @@ let user = "alistair"; in
         efiSupport = true;
       };
     };
-    kernelModules = [ "kvm-amd" "sg" ];
+    kernelModules = [ "kvm-amd" "sg" "iwlwifi" ];
+    kernelPackages = pkgs.linuxPackages_latest;
   };
 
   hardware = {
+    cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    enableAllFirmware = true;
     enableRedistributableFirmware = true;
     graphics = {
       enable = true;
@@ -89,10 +92,11 @@ let user = "alistair"; in
 
   # Networking
   networking = {
+    useDHCP = lib.mkDefault true;
     hostName = "odin";
     networkmanager.enable = true;  # default for mamy DEs inc. GNOME
     firewall.enable = false;
-    useDHCP = lib.mkDefault true;
+
   };
 
   # Localisation

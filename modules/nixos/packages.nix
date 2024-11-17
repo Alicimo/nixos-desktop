@@ -9,6 +9,7 @@ shared-packages ++ [
   telegram-desktop
   lmstudio
   thunderbird
+  chromium
   firefox
 
   spotube
@@ -22,4 +23,7 @@ shared-packages ++ [
 
   brlaser
   borgbackup
+
+  pciutils
+  iw
 ]
