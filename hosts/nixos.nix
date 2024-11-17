@@ -13,7 +13,7 @@ let user = "alistair"; in
   boot = {
     initrd = {
       availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
-      kernelModules = [ "amdgpu" ];
+      kernelModules = [ "amdgpu" "iwlwifi" "sg"];
     };
     loader = {
       efi.canTouchEfiVariables = true;
@@ -27,13 +27,16 @@ let user = "alistair"; in
     kernelModules = [ "kvm-amd" "sg" ];
   };
 
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-    extraPackages = [
-      pkgs.rocmPackages.clr.icd
-      pkgs.rocmPackages.clr
-    ];
+  hardware = {
+    enableRedistributableFirmware = true;
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+      extraPackages = [
+        pkgs.rocmPackages.clr.icd
+        pkgs.rocmPackages.clr
+      ];
+    };
   };
 
   fileSystems = {
