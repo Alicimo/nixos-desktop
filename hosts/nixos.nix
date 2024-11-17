@@ -89,9 +89,9 @@ let user = "alistair"; in
     hostName = "odin";
     networkmanager.enable = true;  # default for mamy DEs inc. GNOME
     firewall.enable = false;
-    wireless.enable = true;
+    useDHCP = lib.mkDefault true;
   };
-
+  
   # Localisation
   time = {
     timeZone = "Europe/Vienna";
