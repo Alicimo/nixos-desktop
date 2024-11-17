@@ -24,7 +24,7 @@ let user = "alistair"; in
         efiSupport = true;
       };
     };
-    kernelModules = [ "kvm-amd" ];
+    kernelModules = [ "kvm-amd" "sg" ];
   };
 
   hardware.graphics = {
@@ -91,7 +91,7 @@ let user = "alistair"; in
     firewall.enable = false;
     useDHCP = lib.mkDefault true;
   };
-  
+
   # Localisation
   time = {
     timeZone = "Europe/Vienna";
