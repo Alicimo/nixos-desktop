@@ -1,7 +1,10 @@
+{ config, pkgs, lib, ... }:
+
 let
   name = "Alistair Tiefenbacher";
   user = "alistair";
   email = "contact@alistair-martin.com";
+  shared-programs = import ../shared/home-manager.nix { inherit config pkgs lib; };
 in
 {
   imports = [
@@ -22,28 +25,27 @@ in
       configPath = "/home/alistair/.config/Code/User/settings.json";
     in
     {
-    beforeCheckLinkTargets = {
-      after = [];
-      before = [ "checkLinkTargets" ];
-      data = ''
-        rm -f "${configPath}"
-      '';
-    };
-    makeVSCodeConfigWritable = {
-      after = [ "writeBoundary" ];
-      before = [ ];
-      data = ''
-        install -m 0640 "$(readlink "${configPath}")" "${configPath}"
-      '';
+      beforeCheckLinkTargets = {
+        after = [];
+        before = [ "checkLinkTargets" ];
+        data = ''
+          rm -f "${configPath}"
+        '';
+      };
+      makeVSCodeConfigWritable = {
+        after = [ "writeBoundary" ];
+        before = [ ];
+        data = ''
+          install -m 0640 "$(readlink "${configPath}")" "${configPath}"
+        '';
+      };
     };
   };
 
-  programs = import ../shared/home-manager.nix { inherit config pkgs lib; } // {
+  programs = shared-programs // {
     git = {
       userName = name;
       userEmail = email;
     };
-    thunderbird.enable = true;
-    firefox.enable  = true;
   };
 }

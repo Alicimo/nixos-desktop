@@ -24,7 +24,7 @@ with pkgs; [
   # File-related packages
   pandoc
   imagemagick
-  ffmpeg
+  # ffmpeg
   rsync
 
   # Dev

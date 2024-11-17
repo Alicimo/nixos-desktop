@@ -56,6 +56,11 @@
     };
     nixosConfigurations."tiefenbacher-desktop" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
+        specialArgs = {
+          pkgs-stable = import nixpkgs-stable {
+            config.allowUnfree = true;
+          };
+        };
         modules = [
           home-manager.nixosModules.home-manager {
             home-manager = {
@@ -64,7 +69,7 @@
               users.alistair = import ./modules/nixos/home-manager.nix;
             };
           }
-          ./hosts/nixos
+          ./hosts/nixos.nix
         ];
     };
   };

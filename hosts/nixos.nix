@@ -27,16 +27,13 @@ let user = "alistair"; in
     kernelModules = [ "kvm-amd" ];
   };
 
-  hardware = {
-    opengl = {
-      enable = true;
-      driSupport = true;
-      driSupport32Bit = true;
-      extraPackages = [
-        pkgs.rocmPackages.clr.icd
-        pkgs.rocmPackages.clr
-      ];
-    };
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+    extraPackages = [
+      pkgs.rocmPackages.clr.icd
+      pkgs.rocmPackages.clr
+    ];
   };
 
   fileSystems = {
@@ -56,15 +53,15 @@ let user = "alistair"; in
 
   systemd.tmpfiles.rules = [
     "d /home/alistair/workspace 0755 alistair users"
-    "d /home/alistair/samba 0755 alistair users"
+    # "d /home/alistair/samba 0755 alistair users"
   ];
-  fileSystems."/home/alistair/samba" = {
-    device = "//tiefenbacher.home/public";
-    fsType = "cifs";
-    options = let
-      automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
-    in [ "${automount_opts},guest,uid=1000" ]; # Removed _netdev, iocharset=utf8
-  };
+  # fileSystems."/home/alistair/samba" = {
+  #   device = "//tiefenbacher.home/public";
+  #   fsType = "cifs";
+  #   options = let
+  #     automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+  #   in [ "${automount_opts},guest,uid=1000,vers=1.0" ]; # Removed _netdev, iocharset=utf8
+  # };
 
   nix = {
     settings = {
@@ -85,13 +82,14 @@ let user = "alistair"; in
       automatic = true;
       options = "--delete-older-than 7d";
     };
+  };
 
   # Networking
   networking = {
-    useDHCP = true;
     hostName = "odin";
     networkmanager.enable = true;  # default for mamy DEs inc. GNOME
-    firewall.enable = true;
+    firewall.enable = false;
+    wireless.enable = true;
   };
 
   # Localisation
@@ -117,18 +115,17 @@ let user = "alistair"; in
   services = {
     tailscale.enable = true;
 
+    displayManager.autoLogin = {
+      enable = true;
+      user = "${user}";
+    };
+
     # GNOME w/ X
     xserver = {
       enable = true;
       videoDrivers = [ "amdgpu" ];
       excludePackages = [ pkgs.xterm ];
-      displayManager = {
-        gdm.enable = true;
-        autoLogin = {
-          enable = true;
-          user = "${user}";
-        };
-      };
+      displayManager.gdm.enable = true;
       desktopManager.gnome.enable = true;
     };
 
@@ -143,7 +140,7 @@ let user = "alistair"; in
     # Printing
     avahi = {
       enable = true;
-      nssmdns = true;
+      nssmdns4 = true;
       openFirewall = true;
     };
     printing = {
@@ -166,7 +163,6 @@ let user = "alistair"; in
   environment.gnome.excludePackages = (with pkgs; [
     # gnome-photos
     gnome-tour
-  ]) ++ (with pkgs.gnome; [
     yelp
     gnome-calendar
     gnome-music
@@ -185,7 +181,6 @@ let user = "alistair"; in
     hitori # sudoku game
     atomix # puzzle game
   ]);
-
 
   programs = {
     dconf.enable = true;
@@ -210,11 +205,12 @@ let user = "alistair"; in
   };
 
   fonts = {
-    enableDefaultPackages = True;
+    enableDefaultPackages = true;
     packages = with pkgs; [
       fira-code
       fira-code-symbols
-  ];
+    ];
+  };
 
   # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
   systemd.services = {
@@ -239,15 +235,16 @@ let user = "alistair"; in
   nixpkgs.config.rocmSupport = true;
 
   environment.systemPackages = with pkgs; [
-    gnome.gnome-tweaks
-    cifs-utils
+    gnome-tweaks
+    # cifs-utils
+    # keyutils
 
     clinfo
     rocmPackages.clr
     rocmPackages.hipblas
     rocmPackages.rocblas
     rocmPackages.rocm-smi
-];
+  ];
 
   system.stateVersion = "23.11"; # Never change this!
 }

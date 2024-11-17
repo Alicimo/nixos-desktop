@@ -8,12 +8,14 @@ shared-packages ++ [
   anki
   telegram-desktop
   lmstudio
+  thunderbird
+  firefox
 
   spotube
   freetube
   steam
 
-  handbrake
+  # handbrake
   makemkv
   abcde
   flac
