@@ -57,7 +57,7 @@
       init.defaultBranch = "main";
       merge.conflictstyle = "zdiff3";
       push.default = "current";
-      diff.algorithm = "histogram";
+      diff.external = "difft";
     };
   };
 

@@ -35,8 +35,21 @@
   {
     darwinConfigurations."tiefenbacher-macbook" = nix-darwin.lib.darwinSystem {
       system = "aarch64-darwin";
+      specialArgs = { inherit inputs; };
       modules = [
-        home-manager.darwinModules.home-manager
+        {
+          nixpkgs.overlays = [
+            (final: prev: {
+              stable =
+                import inputs.nixpkgs-stable { system = prev.system; };
+            })
+          ];
+        }
+        home-manager.darwinModules.home-manager {
+          home-manager.extraSpecialArgs = {
+            inherit inputs;
+          };
+        }
         nix-homebrew.darwinModules.nix-homebrew {
           nix-homebrew = {
             user = "tiefenbacher";

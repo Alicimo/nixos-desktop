@@ -22,7 +22,7 @@ in
       autoUpdate = true;
     };
     onActivation = {
-      cleanup = "uninstall";
+      cleanup = "zap";
       autoUpdate = true;
       upgrade = true;
     };
