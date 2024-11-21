@@ -9,7 +9,6 @@ in
 {
   imports = [
     ./gnome.nix
-    ./guake.nix
   ];
 
   home = {
@@ -17,7 +16,7 @@ in
     username = "${user}";
     homeDirectory = "/home/${user}";
     packages = pkgs.callPackage ./packages.nix {};
-    stateVersion = "21.05";
+    stateVersion = "23.11";
 
     # The vscode config be editable
     activation =

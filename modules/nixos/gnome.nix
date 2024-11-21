@@ -36,10 +36,10 @@
         monospace-font-name = "Fira Code 10";
         icon-theme = "Papirus-Dark";
       };
-      "org/gnome/desktop/background" = {
-        picture-uri = "/home/alistair/samba/media/Photos/Wedding_dropbox/2020_12_19_Sophie & Alistair--140.jpg";
-        picture-options = "zoom";
-      };
+      # "org/gnome/desktop/background" = {
+      #   picture-uri = "/home/alistair/samba/media/Photos/Wedding_dropbox/2020_12_19_Sophie & Alistair--140.jpg";
+      #   picture-options = "zoom";
+      # };
       "org/gnome/mutter" = {
         edge-tiling = false; # turn off when using tiling assistant extension
         dynamic-workspaces = true;
@@ -63,10 +63,6 @@
       };
       "org/gnome/desktop/search-providers" = {
         disable-external =  true;
-      };
-      "org/freedesktop/tracker/miner/files" = {
-        index-recursive-directories = [];
-        index-single-directories = [];
       };
     };
   };

@@ -13,7 +13,7 @@ let user = "alistair"; in
   boot = {
     initrd = {
       availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
-      kernelModules = [ "amdgpu" "iwlwifi" "sg"];
+      kernelModules = [ "amdgpu" "iwlwifi" "sg" "cifs"];
     };
     loader = {
       efi.canTouchEfiVariables = true;
@@ -24,7 +24,7 @@ let user = "alistair"; in
         efiSupport = true;
       };
     };
-    kernelModules = [ "kvm-amd" "sg" "iwlwifi" ];
+    kernelModules = [ "kvm-amd" "sg" "iwlwifi" "iwlmvm" ];
     kernelPackages = pkgs.linuxPackages_latest;
   };
 
@@ -59,15 +59,15 @@ let user = "alistair"; in
 
   systemd.tmpfiles.rules = [
     "d /home/alistair/workspace 0755 alistair users"
-    # "d /home/alistair/samba 0755 alistair users"
+    "d /home/alistair/samba 0755 alistair users"
   ];
-  # fileSystems."/home/alistair/samba" = {
-  #   device = "//tiefenbacher.home/public";
-  #   fsType = "cifs";
-  #   options = let
-  #     automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
-  #   in [ "${automount_opts},guest,uid=1000,vers=1.0" ]; # Removed _netdev, iocharset=utf8
-  # };
+  fileSystems."/home/alistair/samba" = {
+    device = "//tiefenbacher.home/public";
+    fsType = "cifs";
+    options = let
+      automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+    in [ "${automount_opts},guest,uid=1000" ]; # Removed _netdev, iocharset=utf8
+  };
 
   nix = {
     settings = {
@@ -96,7 +96,6 @@ let user = "alistair"; in
     hostName = "odin";
     networkmanager.enable = true;  # default for mamy DEs inc. GNOME
     firewall.enable = false;
-
   };
 
   # Localisation
@@ -123,8 +122,8 @@ let user = "alistair"; in
     tailscale.enable = true;
 
     displayManager.autoLogin = {
-      enable = true;
-      user = "${user}";
+     enable = true;
+     user = "${user}";
     };
 
     # GNOME w/ X
@@ -166,27 +165,34 @@ let user = "alistair"; in
     };
   };
 
+  # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
+  systemd.services = {
+    "getty@tty1".enable = false;
+    "autovt@tty1".enable = false;
+  };
+
   # Clean up Gnome
   environment.gnome.excludePackages = (with pkgs; [
-    # gnome-photos
-    gnome-tour
-    yelp
-    gnome-calendar
-    gnome-music
-    gnome-maps
-    gnome-weather
-    gnome-contacts
-    gnome-clocks
-    simple-scan
-    epiphany # web browser
-    geary # email reader
-    evince # document viewer
-    gnome-characters
-    totem # video player
-    tali # poker game
-    iagno # go game
-    hitori # sudoku game
-    atomix # puzzle game
+  # gnome-photos
+   gnome-tour
+   gnome-connections
+   yelp
+   gnome-calendar
+   gnome-music
+   gnome-maps
+   gnome-weather
+   gnome-contacts
+   gnome-clocks
+   simple-scan
+   epiphany # web browser
+   geary # email reader
+   evince # document viewer
+   gnome-characters
+   totem # video player
+   tali # poker game
+   iagno # go game
+   hitori # sudoku game
+   atomix # puzzle game
   ]);
 
   programs = {
@@ -219,12 +225,6 @@ let user = "alistair"; in
     ];
   };
 
-  # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
-  systemd.services = {
-    "getty@tty1".enable = false;
-    "autovt@tty1".enable = false;
-  };
-
   security.rtkit.enable = true; # Improves pipewire
 
   virtualisation.docker = {
@@ -243,8 +243,7 @@ let user = "alistair"; in
 
   environment.systemPackages = with pkgs; [
     gnome-tweaks
-    # cifs-utils
-    # keyutils
+    cifs-utils
 
     clinfo
     rocmPackages.clr
