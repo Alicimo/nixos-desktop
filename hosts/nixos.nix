@@ -24,7 +24,7 @@ let user = "alistair"; in
         efiSupport = true;
       };
     };
-    kernelModules = [ "kvm-amd" "sg" "iwlwifi" "iwlmvm" ];
+    kernelModules = [ "kvm-amd" "sg" "iwlwifi" "iwlmvm" "cifs" ];
     kernelPackages = pkgs.linuxPackages_latest;
   };
 
@@ -66,7 +66,7 @@ let user = "alistair"; in
     fsType = "cifs";
     options = let
       automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
-    in [ "${automount_opts},guest,uid=1000" ]; # Removed _netdev, iocharset=utf8
+    in [ "${automount_opts},guest,vers=2.0" ]; # Removed _netdev, iocharset=utf8
   };
 
   nix = {
@@ -163,6 +163,10 @@ let user = "alistair"; in
       prune.keep.daily = 7;
       user="alistair";
     };
+
+    # llm
+    ollama.enable=true;
+    # open-webui.enable=true;
   };
 
   # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
@@ -173,19 +177,6 @@ let user = "alistair"; in
 
   # Clean up Gnome
   environment.gnome.excludePackages = (with pkgs; [
-  # gnome-photos
-   gnome-tour
-   gnome-connections
-   yelp
-   gnome-calendar
-   gnome-music
-   gnome-maps
-   gnome-weather
-   gnome-contacts
-   gnome-clocks
-   simple-scan
-   epiphany # web browser
-   geary # email reader
    evince # document viewer
    gnome-characters
    totem # video player
@@ -225,7 +216,10 @@ let user = "alistair"; in
     ];
   };
 
-  security.rtkit.enable = true; # Improves pipewire
+  security = {
+    rtkit.enable = true; # Improves pipewire
+    pam.services.gdm.enableGnomeKeyring = true;  # autologin to keyring
+  };
 
   virtualisation.docker = {
     enable = true;

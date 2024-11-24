@@ -15,6 +15,7 @@ with pkgs; [
   difftastic
   eza
   fd
+  pciutils
 
   # Monitors
   btop
@@ -24,7 +25,7 @@ with pkgs; [
   # File-related packages
   pandoc
   imagemagick
-  # ffmpeg
+  ffmpeg
   rsync
 
   # Dev

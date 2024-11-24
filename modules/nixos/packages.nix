@@ -7,7 +7,6 @@ shared-packages ++ [
   libreoffice
   anki
   telegram-desktop
-  lmstudio
   thunderbird
   chromium
   firefox
@@ -16,14 +15,11 @@ shared-packages ++ [
   freetube
   steam
 
-  # handbrake
+  handbrake
   makemkv
   abcde
   flac
 
   brlaser
   borgbackup
-
-  pciutils
-  iw
 ]
