@@ -57,6 +57,7 @@
       init.defaultBranch = "main";
       merge.conflictstyle = "zdiff3";
       push.default = "current";
+      push.autoSetupRemote = true;
       diff.external = "difft";
     };
   };
