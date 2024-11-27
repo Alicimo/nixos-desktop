@@ -57,7 +57,8 @@
       init.defaultBranch = "main";
       merge.conflictstyle = "zdiff3";
       push.default = "current";
-      diff.algorithm = "histogram";
+      push.autoSetupRemote = true;
+      diff.external = "difft";
     };
   };
 
@@ -146,8 +147,14 @@
       {
         name = "vsc-python-indent";
         publisher = "KevinRose";
-        version = "1.18.0";
-        sha256 = "hiOMcHiW8KFmau7WYli0pFszBBkb6HphZsz+QT5vHv0=";
+        version = "1.18.1";
+        sha256 = "sha256-etfQmVEtnTh/cVmjYfbi6sgCBSKUguh4TFMUy2ztRYk=";
+      }
+      {
+        name = "dvc";
+        publisher = "Iterative";
+        version = "1.2.21";
+        sha256 = "sha256-TBjN81+T9c/B8IjFlRqFwK43DYNBLGzNktdM1cwozbE=";
       }
     ];
     userSettings = {
@@ -194,6 +201,7 @@
         "ms-python.python"
         "ms-python.vscode-pylance"
         "charliermarsh.ruff"
+        "KevinRose.vsc-python-indent"
 
         "ms-toolsai.jupyter"
         "ms-toolsai.vscode-jupyter-slideshow"
@@ -201,6 +209,7 @@
         "ms-toolsai.jupyter-renderers"
         "ms-toolsai.jupyter-keymap"
         "ms-toolsai.datawrangler"
+        "iterative.dvc"
       ];
     };
 

@@ -58,12 +58,9 @@ let user = "tiefenbacher"; in
       NSGlobalDomain = {
         AppleInterfaceStyleSwitchesAutomatically = true;
         AppleShowAllExtensions = true;
+
         ApplePressAndHoldEnabled = false;
-
-        # 120, 90, 60, 30, 12, 6, 2
         KeyRepeat = 2;
-
-        # 120, 94, 68, 35, 25, 15
         InitialKeyRepeat = 15;
 
         "com.apple.mouse.tapBehavior" = 1;
@@ -74,17 +71,21 @@ let user = "tiefenbacher"; in
       dock = {
         autohide = true;
         show-recents = false;
+        magnification = true;
         launchanim = true;
         mouse-over-hilite-stack = true;
         orientation = "bottom";
         tilesize = 48;
+        largesize = 96;
         mru-spaces = false;
       };
 
       finder = {
         AppleShowAllExtensions = true;
-        FXPreferredViewStyle = "clmv";
+        FXPreferredViewStyle = "Nlsv";
         ShowPathbar = true;
+        ShowStatusBar = true;
+        _FXShowPosixPathInTitle = true;
       };
 
       trackpad = {
@@ -95,9 +96,7 @@ let user = "tiefenbacher"; in
       screensaver.askForPasswordDelay = 10;
     };
 
-    keyboard = {
-      enableKeyMapping = true;
-    };
+    keyboard.enableKeyMapping = true;
   };
 
   security.pam.enableSudoTouchIdAuth = true;
