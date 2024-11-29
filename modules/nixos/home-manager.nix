@@ -54,38 +54,46 @@ in
         isDefault = true;
         settings = {
           "browser.startup.homepage" = "http://tiefenbacher.home";
-          "browser.search.defaultenginename" = "Whoogle";
+          "extensions.pocket.enabled" = false;
+          "signon.rememberSignons" = false;
+          "browser.newtabpage.enabled" = false;
+          "browser.vpn_promo.enabled" = false;
+          "identity.fxaccounts.enabled" = false;
         };
-        search.engines = {
-          "Nix Packages" = {
-            definedAliases = [ "@np" ];
-            urls = [{
-              template = "https://search.nixos.org/packages";
-              params = [
-                { name = "query"; value = "{searchTerms}"; }
-              ];
-            }];
-            icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+        search = {
+          default = "Whoogle";
+          force = true;
+          engines = {
+            "Nix Packages" = {
+              definedAliases = [ "@np" ];
+              urls = [{
+                template = "https://search.nixos.org/packages";
+                params = [
+                  { name = "query"; value = "{searchTerms}"; }
+                ];
+              }];
+              icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
 
+            };
+            "Nix Options" = {
+              definedAliases = [ "@no" ];
+              urls = [{
+                template = "https://search.nixos.org/options";
+                params = [
+                  { name = "query"; value = "{searchTerms}"; }
+                ];
+              }];
+            };
+            "Whoogle" = {
+              urls = [{
+                template = "http://search.tiefenbacher.home/search";
+                params = [
+                  {name = "q"; value = "{searchTerms}"; }
+                ];
+              }];
+            };
+            "Google".metaData.alias = "@g";
           };
-          "Nix Options" = {
-            definedAliases = [ "@no" ];
-            urls = [{
-              template = "https://search.nixos.org/options";
-              params = [
-                { name = "query"; value = "{searchTerms}"; }
-              ];
-            }];
-          };
-          "Whoogle" = {
-            urls = [{
-              template = "http://search.tiefenbacher.home/search";
-              params = [
-                {name = "q"; value = "{searchTerms}"; }
-              ];
-            }];
-          };
-          "Google".metaData.alias = "@g";
         };
       };
     };
