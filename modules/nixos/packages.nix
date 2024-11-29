@@ -9,7 +9,6 @@ shared-packages ++ [
   telegram-desktop
   thunderbird
   chromium
-  firefox
 
   spotube
   freetube
