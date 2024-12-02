@@ -71,8 +71,57 @@ in
           userName = name;
           userEmail = email;
         };
+        firefox = {
+          enable = true;
+          profiles."default" = {
+            id = 0 ;
+            isDefault = true;
+            settings = {
+              "browser.startup.homepage" = "http://localhost:5000";
+              "extensions.pocket.enabled" = false;
+              "signon.rememberSignons" = false;
+              "browser.newtabpage.enabled" = false;
+              "browser.vpn_promo.enabled" = false;
+              "identity.fxaccounts.enabled" = false;
+            };
+            search = {
+              default = "Whoogle";
+              force = true;
+              engines = {
+                "Nix Packages" = {
+                  definedAliases = [ "@np" ];
+                  urls = [{
+                    template = "https://search.nixos.org/packages";
+                    params = [
+                      { name = "query"; value = "{searchTerms}"; }
+                    ];
+                  }];
+                  icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+
+                };
+                "Nix Options" = {
+                  definedAliases = [ "@no" ];
+                  urls = [{
+                    template = "https://search.nixos.org/options";
+                    params = [
+                      { name = "query"; value = "{searchTerms}"; }
+                    ];
+                  }];
+                };
+                "Whoogle" = {
+                  urls = [{
+                    template = "http://localhost:5000/search";
+                    params = [
+                      {name = "q"; value = "{searchTerms}"; }
+                    ];
+                  }];
+                };
+                "Google".metaData.alias = "@g";
+              };
+            };
+          };
+        };
       };
     };
   };
-
 }

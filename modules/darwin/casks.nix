@@ -4,7 +4,7 @@ _:
   "1password"
   "keka" # 7zip 4 mac
   "logitech-options"
-  "jordanbaird-ice"
+  "jordanbaird-ice"  # toolbar
   "fliqlo"
 
   # Development Tools
@@ -20,8 +20,6 @@ _:
 
   # Entertainment Tools
   "vlc"
-  # "spotify"
-  "spotube"
   "netnewswire"
   "zotero"
 
