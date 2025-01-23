@@ -2,6 +2,7 @@
 
 with pkgs; [
   # CLI tools
+  # ghostty
   bat
   coreutils
   du-dust
@@ -31,7 +32,7 @@ with pkgs; [
   # Dev
   (python312.withPackages (ps: with ps; [ polars pandas numpy ]))
   R
-  ruff
+  # ruff
   sqlite
   devenv
   git

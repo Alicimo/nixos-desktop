@@ -10,9 +10,8 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-homebrew = {
-      url = "github:zhaofengli-wip/nix-homebrew";
-    };
+    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+    nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin";
     homebrew-bundle = {
       url = "github:homebrew/homebrew-bundle";
       flake = false;
@@ -31,7 +30,7 @@
     };
   };
 
-  outputs = { self, nix-darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, homebrew-krtirtho, home-manager, nixpkgs, nixpkgs-stable }@inputs:
+  outputs = { self, nix-darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, homebrew-krtirtho, home-manager, nixpkgs, nixpkgs-stable, nixpkgs-firefox-darwin }@inputs:
   {
     darwinConfigurations."tiefenbacher-macbook" = nix-darwin.lib.darwinSystem {
       system = "aarch64-darwin";
@@ -43,6 +42,7 @@
               stable =
                 import inputs.nixpkgs-stable { system = prev.system; };
             })
+            inputs.nixpkgs-firefox-darwin.overlay
           ];
         }
         home-manager.darwinModules.home-manager {

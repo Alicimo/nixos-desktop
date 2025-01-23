@@ -168,6 +168,7 @@
       "editor.minimap.enabled" = false;
       "editor.overviewRulerBorder" = false;
       "editor.bracketPairColorization.independentColorPoolPerBracketType" = true;
+      "chat.commandCenter.enabled" = false;
 
       "files.trimTrailingWhitespace" = true;
       "files.autoSave" = "afterDelay";

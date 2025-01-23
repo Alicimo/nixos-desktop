@@ -73,7 +73,8 @@ in
         };
         firefox = {
           enable = true;
-          profiles."default" = {
+          package = pkgs.firefox-bin;
+          profiles."alistair" = {
             id = 0 ;
             isDefault = true;
             settings = {
@@ -111,6 +112,15 @@ in
                 "Whoogle" = {
                   urls = [{
                     template = "http://localhost:5000/search";
+                    params = [
+                      {name = "q"; value = "{searchTerms}"; }
+                    ];
+                  }];
+                };
+                "Perplexity" = {
+                  definedAliases = [ "@p" ];
+                  urls = [{
+                    template = "https://www.perplexity.ai/";
                     params = [
                       {name = "q"; value = "{searchTerms}"; }
                     ];

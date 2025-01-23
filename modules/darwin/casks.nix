@@ -17,12 +17,10 @@ _:
   "telegram"
   "obsidian"
   "lm-studio"
+  "google-drive"
 
   # Entertainment Tools
   "vlc"
   "netnewswire"
   "zotero"
-
-  # Browsers
-  "firefox"
 ]
