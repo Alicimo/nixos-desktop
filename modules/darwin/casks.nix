@@ -10,16 +10,19 @@ _:
   # Development Tools
   "docker"
   "visual-studio-code"
-  "iterm2"
+  "ghostty"
 
   # Communication Tools
   "slack"
   "telegram"
   "obsidian"
+
+  # Productivity
   "lm-studio"
   "google-drive"
+  "google-chrome"
 
-  # Entertainment Tools
+  # Media
   "vlc"
   "netnewswire"
   "zotero"

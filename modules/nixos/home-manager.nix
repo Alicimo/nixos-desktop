@@ -47,6 +47,11 @@ in
       userEmail = email;
     };
 
+    ghosttty = {
+      enable = true;
+      enableFishIntegration = true;
+    };
+
     firefox = {
       enable = true;
       profiles."default" = {

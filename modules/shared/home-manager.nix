@@ -16,37 +16,26 @@
       nix-direnv.enable = true;
   };
 
-  zsh = {
+  fish = {
     enable = true;
     shellAliases = {
+      ls = "eza -l";
       l = "ls";
       ll = "ls";
       c = "clear";
-      pull = "git pull";
-      add = "git add";
-      commit = "git commit -m";
-      push = "git push";
-      status = "git status";
       ".." = "cd ..";
       cat = "bat";
       top = "btop";
       grep = "rg";
       diff = "difft";
       du = "dust";
-      ls = "eza -l";
     };
-    localVariables = {
-      POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD = true;
-    };
-    enableCompletion = true;
-    autosuggestion.enable = true;
-    syntaxHighlighting.enable = true;
-    zplug = {
-      enable = true;
-      plugins = [
-        { name = "romkatv/powerlevel10k"; tags = [ as:theme depth:1 ]; }
-      ];
-    };
+    interactiveShellInit = ''
+      set fish_greeting # Disable greeting
+    '';
+    plugins = [
+      { name = "bobthefish"; src = pkgs.fishPlugins.bobthefish.src; }
+    ];
   };
 
   git = {

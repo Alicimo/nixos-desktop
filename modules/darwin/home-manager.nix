@@ -13,6 +13,8 @@ in
     shell = pkgs.zsh;
   };
 
+  programs.fish.enable = true;
+
   homebrew = {
     # This is a module from nix-darwin
     # Homebrew is *installed* via the flake input nix-homebrew
@@ -67,11 +69,28 @@ in
           serverAliveInterval = 120;
           includes = [ "/Users/${user}/.ssh/config_external" ];
         };
+        zsh = {
+          enable = true;
+          initExtra = ''
+            if [[ $(ps -o command= -p "$PPID" | awk '{print $1}') != 'fish' ]]
+            then
+                exec fish -l
+            fi
+          '';
+        };
         git = {
           userName = name;
           userEmail = email;
         };
         firefox = {
+          /* Extentions TBA after install
+          - 1password
+          - UblockOrigin
+          - Bypass Paywalls Clean
+          - SponsorBlock
+          - Sotero
+          - LocalCDN
+          */
           enable = true;
           package = pkgs.firefox-bin;
           profiles."alistair" = {
