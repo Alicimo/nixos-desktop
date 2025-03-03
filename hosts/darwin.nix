@@ -6,16 +6,13 @@ let user = "tiefenbacher"; in
     ../modules/shared
   ];
 
-  # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
-
   # Turn off NIX_PATH warnings now that we're using flakes
   system.checks.verifyNixPath = false;
 
   # Setup user, packages, programs
   nix = {
+    enable = true;
     package = pkgs.nix;
-    configureBuildUsers = true;
 
     settings = {
       trusted-users = [ "@admin" "${user}" ];
@@ -24,7 +21,6 @@ let user = "tiefenbacher"; in
     };
 
     gc = {
-      user = "root";
       automatic = true;
       interval = { Weekday = 0; Hour = 2; Minute = 0; };
       options = "--delete-older-than 30d";
@@ -99,5 +95,5 @@ let user = "tiefenbacher"; in
     keyboard.enableKeyMapping = true;
   };
 
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
 }

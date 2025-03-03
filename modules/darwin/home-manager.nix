@@ -78,10 +78,10 @@ in
             fi
           '';
         };
-        git = {
-          userName = name;
-          userEmail = email;
-        };
+#        git = {
+#          userName = name;
+#          userEmail = email;
+#        };
         firefox = {
           /* Extentions TBA after install
           - 1password
@@ -140,6 +140,15 @@ in
                   definedAliases = [ "@p" ];
                   urls = [{
                     template = "https://www.perplexity.ai/";
+                    params = [
+                      {name = "q"; value = "{searchTerms}"; }
+                    ];
+                  }];
+                };
+                "ChatGPT" = {
+                  definedAliases = [ "@gpt" ];
+                  urls = [{
+                    template = "https://chatgpt.com/";
                     params = [
                       {name = "q"; value = "{searchTerms}"; }
                     ];

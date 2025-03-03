@@ -40,14 +40,30 @@
 
   git = {
     enable = true;
-    ignores = [ "*.swp" ];
+    ignores = [
+      "*.swp"
+      ".DS_Store"
+      ".vscode"
+      "__pycache__/"
+      "venv/"
+      ".env"
+    ];
     lfs.enable = true;
+    difftastic.enable = true;
     extraConfig = {
       init.defaultBranch = "main";
       merge.conflictstyle = "zdiff3";
       push.default = "current";
       push.autoSetupRemote = true;
-      diff.external = "difft";
+      branch.sort = "committerdate";
+      rebase.autosquash = true;
+      rebase.autostash = true;
+      rebase.updateRefs = true;
+      column.ui = "auto";
+      fetch.prune = true;
+      fetch.all = true;
+      help.autocorrect = "prompt";
+      core.excludesfile = "/Users/tiefenbacher/.config/git/ignore";
     };
   };
 
@@ -107,100 +123,102 @@
 
   vscode = {
     enable = true;
-    extensions = with pkgs.vscode-extensions; [
-      pkief.material-icon-theme
-      pkief.material-product-icons
-      github.github-vscode-theme
+    profiles.default = {
+      extensions = with pkgs.vscode-extensions; [
+        pkief.material-icon-theme
+        pkief.material-product-icons
+        github.github-vscode-theme
 
-      ms-toolsai.datawrangler
-      streetsidesoftware.code-spell-checker
-      christian-kohler.path-intellisense
-      ms-vscode-remote.remote-ssh
-      continue.continue
+        ms-toolsai.datawrangler
+        streetsidesoftware.code-spell-checker
+        christian-kohler.path-intellisense
+        ms-vscode-remote.remote-ssh
+        continue.continue
 
-      jnoortheen.nix-ide
-      mikestead.dotenv
-      ms-azuretools.vscode-docker
+        jnoortheen.nix-ide
+        mikestead.dotenv
+        ms-azuretools.vscode-docker
 
-      ms-python.python
-      ms-python.vscode-pylance
-      charliermarsh.ruff
+        ms-python.python
+        ms-python.vscode-pylance
+        charliermarsh.ruff
 
-      ms-toolsai.jupyter
-      ms-toolsai.vscode-jupyter-slideshow
-      ms-toolsai.vscode-jupyter-cell-tags
-      ms-toolsai.jupyter-renderers
-      ms-toolsai.jupyter-keymap
+        ms-toolsai.jupyter
+        ms-toolsai.vscode-jupyter-slideshow
+        ms-toolsai.vscode-jupyter-cell-tags
+        ms-toolsai.jupyter-renderers
+        ms-toolsai.jupyter-keymap
 
-    ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-      {
-        name = "vsc-python-indent";
-        publisher = "KevinRose";
-        version = "1.18.1";
-        sha256 = "sha256-etfQmVEtnTh/cVmjYfbi6sgCBSKUguh4TFMUy2ztRYk=";
-      }
-      {
-        name = "dvc";
-        publisher = "Iterative";
-        version = "1.2.21";
-        sha256 = "sha256-TBjN81+T9c/B8IjFlRqFwK43DYNBLGzNktdM1cwozbE=";
-      }
-    ];
-    userSettings = {
-      "update.mode" = "none";
-      "extensions.ignoreRecommendations" = true;
-      "continue.telemetryEnabled" = false;
-      "cSpell.diagnosticLevel" = "Hint";
-
-      "editor.fontFamily" = "Fira Code";
-      "editor.fontLigatures" = true;
-      "editor.minimap.enabled" = false;
-      "editor.overviewRulerBorder" = false;
-      "editor.bracketPairColorization.independentColorPoolPerBracketType" = true;
-      "chat.commandCenter.enabled" = false;
-
-      "files.trimTrailingWhitespace" = true;
-      "files.autoSave" = "afterDelay";
-
-      "window.autoDetectColorScheme" = true;
-      "workbench.preferredDarkColorTheme" = "GitHub Dark";
-      "workbench.preferredLightColorTheme" = "GitHub Light";
-      "workbench.iconTheme" = "material-icon-theme";
-      "workbench.productIconTheme" = "material-product-icons";
-
-      "window.titleBarStyle" = "custom";
-      "interactiveWindow.executeWithShiftEnter" = true;
-
-      "[python]" = {
-        "editor.defaultFormatter" = "charliermarsh.ruff";
-        "editor.formatOnSave" = true;
-        "editor.codeActionsOnSave" = {
-          "source.fixAll" = "explicit";
-          "source.organizeImports" = "explicit";
-        };
-      };
-      "python.analysis.autoImportCompletions" = true;
-
-      "terminal.integrated.cwd" =  "\${workspaceFolder}";
-      "jupyter.notebookFileRoot" = "\${workspaceFolder}";
-
-      "remote.SSH.defaultExtensions" = [
-        "streetsidesoftware.code-spell-checker"
-        "christian-kohler.path-intellisense"
-        "mikestead.dotenv"
-        "ms-python.python"
-        "ms-python.vscode-pylance"
-        "charliermarsh.ruff"
-        "KevinRose.vsc-python-indent"
-
-        "ms-toolsai.jupyter"
-        "ms-toolsai.vscode-jupyter-slideshow"
-        "ms-toolsai.vscode-jupyter-cell-tags"
-        "ms-toolsai.jupyter-renderers"
-        "ms-toolsai.jupyter-keymap"
-        "ms-toolsai.datawrangler"
-        "iterative.dvc"
+      ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+        {
+          name = "vsc-python-indent";
+          publisher = "KevinRose";
+          version = "1.18.1";
+          sha256 = "sha256-etfQmVEtnTh/cVmjYfbi6sgCBSKUguh4TFMUy2ztRYk=";
+        }
+        {
+          name = "dvc";
+          publisher = "Iterative";
+          version = "1.2.21";
+          sha256 = "sha256-TBjN81+T9c/B8IjFlRqFwK43DYNBLGzNktdM1cwozbE=";
+        }
       ];
+      userSettings = {
+        "update.mode" = "none";
+        "extensions.ignoreRecommendations" = true;
+        "continue.telemetryEnabled" = false;
+        "cSpell.diagnosticLevel" = "Hint";
+
+        "editor.fontFamily" = "Fira Code";
+        "editor.fontLigatures" = true;
+        "editor.minimap.enabled" = false;
+        "editor.overviewRulerBorder" = false;
+        "editor.bracketPairColorization.independentColorPoolPerBracketType" = true;
+        "chat.commandCenter.enabled" = false;
+
+        "files.trimTrailingWhitespace" = true;
+        "files.autoSave" = "afterDelay";
+
+        "window.autoDetectColorScheme" = true;
+        "workbench.preferredDarkColorTheme" = "GitHub Dark";
+        "workbench.preferredLightColorTheme" = "GitHub Light";
+        "workbench.iconTheme" = "material-icon-theme";
+        "workbench.productIconTheme" = "material-product-icons";
+
+        "window.titleBarStyle" = "custom";
+        "interactiveWindow.executeWithShiftEnter" = true;
+
+        "[python]" = {
+          "editor.defaultFormatter" = "charliermarsh.ruff";
+          "editor.formatOnSave" = true;
+          "editor.codeActionsOnSave" = {
+            "source.fixAll" = "explicit";
+            "source.organizeImports" = "explicit";
+          };
+        };
+        "python.analysis.autoImportCompletions" = true;
+
+        "terminal.integrated.cwd" =  "\${workspaceFolder}";
+        "jupyter.notebookFileRoot" = "\${workspaceFolder}";
+
+        "remote.SSH.defaultExtensions" = [
+          "streetsidesoftware.code-spell-checker"
+          "christian-kohler.path-intellisense"
+          "mikestead.dotenv"
+          "ms-python.python"
+          "ms-python.vscode-pylance"
+          "charliermarsh.ruff"
+          "KevinRose.vsc-python-indent"
+
+          "ms-toolsai.jupyter"
+          "ms-toolsai.vscode-jupyter-slideshow"
+          "ms-toolsai.vscode-jupyter-cell-tags"
+          "ms-toolsai.jupyter-renderers"
+          "ms-toolsai.jupyter-keymap"
+          "ms-toolsai.datawrangler"
+          "iterative.dvc"
+        ];
+      };
     };
   };
 
