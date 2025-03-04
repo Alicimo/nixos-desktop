@@ -39,33 +39,37 @@
   };
 
   git = {
-    enable = true;
-    ignores = [
-      "*.swp"
-      ".DS_Store"
-      ".vscode"
-      "__pycache__/"
-      "venv/"
-      ".env"
+    enable = true;  # Enables Git support in the system configuration.
+
+    ignores = [      # Specifies global Git ignore patterns.
+      "*.swp"        # Ignore Vim swap files.
+      ".DS_Store"    # Ignore macOS Finder metadata files.
+      ".vscode"      # Ignore VS Code project settings.
+      "__pycache__/" # Ignore Python bytecode cache directories.
+      "venv/"        # Ignore Python virtual environment directories.
+      ".env"         # Ignore environment files (e.g., containing secrets).
     ];
-    lfs.enable = true;
-    difftastic.enable = true;
-    extraConfig = {
-      init.defaultBranch = "main";
-      merge.conflictstyle = "zdiff3";
-      push.default = "current";
-      push.autoSetupRemote = true;
-      branch.sort = "committerdate";
-      rebase.autosquash = true;
-      rebase.autostash = true;
-      rebase.updateRefs = true;
-      column.ui = "auto";
-      fetch.prune = true;
-      fetch.all = true;
-      help.autocorrect = "prompt";
-      core.excludesfile = "/Users/tiefenbacher/.config/git/ignore";
+
+    lfs.enable = true;  # Enables Git Large File Storage (LFS) for handling large files efficiently.
+    difftastic.enable = true;  # Enables Difftastic, a syntax-aware diff tool.
+
+    extraConfig = {  # Additional Git configuration settings.
+      init.defaultBranch = "main";  # Sets "main" as the default branch name instead of "master".
+      merge.conflictstyle = "zdiff3";  # Uses "zdiff3" for merge conflicts, providing more context.
+      push.default = "current";  # Pushes the current branch by default instead of requiring explicit naming.
+      push.autoSetupRemote = true;  # Automatically sets up tracking branches when pushing for the first time.
+      branch.sort = "committerdate";  # Sorts branches by the last commit date.
+      rebase.autosquash = true;  # Automatically squashes fixup! and squash! commits during rebase.
+      rebase.autostash = true;  # Stashes local changes before rebase and restores them afterward.
+      rebase.updateRefs = true;  # Updates remote references when rebasing.
+      column.ui = "auto";  # Enables column-based output formatting for certain Git commands when useful.
+      fetch.prune = true;  # Automatically prunes deleted remote branches when fetching.
+      fetch.all = true;  # Fetches updates from all remotes by default.
+      help.autocorrect = "prompt";  # Suggests the closest matching command when a typo is detected.
+      core.excludesfile = "/Users/tiefenbacher/.config/git/ignore";  # Specifies a custom global Git ignore file.
     };
   };
+
 
   vim = {
     enable = true;
