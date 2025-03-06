@@ -62,6 +62,17 @@ in
         };
       };
 
+      # Define a LaunchAgent to run hblock periodically
+      launchd.agents.hblock = {
+        enable = true;
+        config = {
+          Program = "${pkgs.hblock}/bin/hblock";
+          StartInterval = 86400;  # Run once per day
+          StandardOutPath = "${config.home.homeDirectory}/Library/Logs/hblock.log";
+          StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/hblock-error.log";
+        };
+      };
+
       programs = import ../shared/home-manager.nix { inherit config pkgs lib; } // {
         ssh = {
           enable = true;
