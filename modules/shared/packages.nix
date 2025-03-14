@@ -17,6 +17,7 @@ with pkgs; [
   eza
   fd
   pciutils
+  flyctl
 
   # Monitors
   btop

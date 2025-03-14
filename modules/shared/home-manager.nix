@@ -139,7 +139,6 @@
         ms-vscode-remote.remote-ssh
         continue.continue
 
-        jnoortheen.nix-ide
         mikestead.dotenv
         ms-azuretools.vscode-docker
 
