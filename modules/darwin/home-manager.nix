@@ -20,6 +20,9 @@ in
     # Homebrew is *installed* via the flake input nix-homebrew
     enable = true;
     casks = pkgs.callPackage ./casks.nix {};
+    brews = [
+      "lightgbm" # for pycaret
+    ];
     global = {
       autoUpdate = true;
     };
@@ -82,7 +85,7 @@ in
         };
         zsh = {
           enable = true;
-          initExtra = ''
+          initContent = ''
             if [[ $(ps -o command= -p "$PPID" | awk '{print $1}') != 'fish' ]]
             then
                 exec fish -l
@@ -103,7 +106,7 @@ in
           - LocalCDN
           */
           enable = true;
-          package = pkgs.firefox-bin;
+          # package = pkgs.firefox-bin;
           profiles."alistair" = {
             id = 0 ;
             isDefault = true;
@@ -116,7 +119,7 @@ in
               "identity.fxaccounts.enabled" = false;
             };
             search = {
-              default = "Whoogle";
+              default = "ChatGPT";
               force = true;
               engines = {
                 "Nix Packages" = {
@@ -139,14 +142,14 @@ in
                     ];
                   }];
                 };
-                "Whoogle" = {
-                  urls = [{
-                    template = "http://localhost:5000/search";
-                    params = [
-                      {name = "q"; value = "{searchTerms}"; }
-                    ];
-                  }];
-                };
+                # "Whoogle" = {
+                #   urls = [{
+                #     template = "http://localhost:5000/search";
+                #     params = [
+                #       {name = "q"; value = "{searchTerms}"; }
+                #     ];
+                #   }];
+                # };
                 "Perplexity" = {
                   definedAliases = [ "@p" ];
                   urls = [{
@@ -165,7 +168,7 @@ in
                     ];
                   }];
                 };
-                "Google".metaData.alias = "@g";
+                "google".metaData.alias = "@g";
               };
             };
           };

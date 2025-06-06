@@ -2,7 +2,6 @@
 
 with pkgs; [
   # CLI tools
-  # ghostty
   bat
   coreutils
   du-dust
@@ -31,10 +30,18 @@ with pkgs; [
   rsync
 
   # Dev
-  (python312.withPackages (ps: with ps; [ polars pandas numpy ]))
   R
-  # ruff
   sqlite
   devenv
   git
+
+  (python312.withPackages (ps: with ps; [
+    polars
+    pandas
+    numpy
+    plotly
+    aider-chat
+    uv
+    ruff
+  ]))
 ]

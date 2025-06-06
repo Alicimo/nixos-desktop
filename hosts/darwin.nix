@@ -42,6 +42,8 @@ let user = "tiefenbacher"; in
   system = {
     stateVersion = 4;
 
+    primaryUser="tiefenbacher";
+
     defaults = {
       LaunchServices = {
         LSQuarantine = false;

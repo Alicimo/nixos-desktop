@@ -4,8 +4,14 @@ _:
   "1password"
   "keka" # 7zip 4 mac
   "logitech-options"
+  "stats"
+  "stretchly"
+  "raycast"
+
+  # Personalisation
   "jordanbaird-ice"  # toolbar
-  "fliqlo"
+  "fliqlo"  # screensaver
+  "meetingbar"
 
   # Development Tools
   "docker"
@@ -15,12 +21,14 @@ _:
   # Communication Tools
   "slack"
   "telegram"
-  "obsidian"
+  "cap"
 
   # Productivity
   "lm-studio"
   "google-drive"
   "google-chrome"
+  "macwhisper"
+  "obsidian"
 
   # Media
   "vlc"
