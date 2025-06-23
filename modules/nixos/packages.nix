@@ -3,22 +3,32 @@
 with pkgs;
 let shared-packages = import ../shared/packages.nix { inherit pkgs; }; in
 shared-packages ++ [
-  vlc
-  libreoffice
-  anki
-  telegram-desktop
-  thunderbird
-  chromium
+  # CLI utilities
+  killall       # Kill processes by name
+  unzip         # Extracts .zip archive files
+  curl          # Tool for transferring data with URLs
+  zip           # Package and compress files into .zip format
 
-  spotube
-  freetube
-  steam
+  # Desktop applications
+  vlc           # Media player for audio and video files
+  libreoffice   # Office suite with word processor, spreadsheet, and presentation software
+  anki          # Spaced repetition flashcard program for learning
+  telegram-desktop # Desktop client for Telegram messaging
+  thunderbird   # Email client with calendar and contacts
+  chromium      # Open-source web browser
 
-  handbrake
-  makemkv
-  abcde
-  flac
+  # Entertainment
+  spotube       # Spotify client using YouTube as audio source
+  freetube      # Privacy-focused YouTube client
+  steam         # Gaming platform and digital distribution service
 
-  brlaser
-  borgbackup
+  # Media processing
+  handbrake     # Video transcoder for converting between formats
+  makemkv       # DVD and Blu-ray disc ripper
+  abcde         # CD ripper and encoder
+  flac          # Free lossless audio codec tools
+
+  # System utilities
+  brlaser       # Brother laser printer driver
+  borgbackup    # Deduplicating backup program
 ]
