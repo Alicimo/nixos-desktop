@@ -39,7 +39,7 @@ in
     users.${user} = { pkgs, config, lib, ... }:{
       home = {
         enableNixpkgsReleaseCheck = false;
-        packages = pkgs.callPackage ./packages.nix {};
+        packages = import ../shared/all-packages.nix { inherit pkgs; system = "aarch64-darwin"; };
         stateVersion = "23.11";
 
         # The vscode config be editable

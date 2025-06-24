@@ -15,7 +15,7 @@ in
     enableNixpkgsReleaseCheck = false;
     username = "${user}";
     homeDirectory = "/home/${user}";
-    packages = pkgs.callPackage ./packages.nix {};
+    packages = import ../shared/all-packages.nix { inherit pkgs; system = "x86_64-linux"; };
     stateVersion = "23.11";
 
     # The vscode config be editable
