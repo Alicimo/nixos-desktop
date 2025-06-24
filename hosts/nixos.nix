@@ -3,7 +3,10 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, lib, ... }:
-let user = "alistair"; in
+let 
+  userCfg = config.userConfig;
+  user = userCfg.nixos.username; 
+in
 {
   imports = [
       ../modules/shared
@@ -58,10 +61,10 @@ let user = "alistair"; in
   } ];
 
   systemd.tmpfiles.rules = [
-    "d /home/alistair/workspace 0755 alistair users"
-    "d /home/alistair/samba 0755 alistair users"
+    "d ${userCfg.nixos.homeDirectory}/workspace 0755 ${user} users"
+    "d ${userCfg.nixos.homeDirectory}/samba 0755 ${user} users"
   ];
-  fileSystems."/home/alistair/samba" = {
+  fileSystems."${userCfg.nixos.homeDirectory}/samba" = {
     device = "//tiefenbacher.home/public";
     fsType = "cifs";
     options = let
@@ -155,13 +158,13 @@ let user = "alistair"; in
     };
 
     borgbackup.jobs.workspace = {
-      paths = "/home/alistair/workspace";
+      paths = "${userCfg.nixos.homeDirectory}/workspace";
       encryption.mode = "none";
-      environment.BORG_RSH = "ssh -i /home/alistair/.ssh/id_ed25519";
+      environment.BORG_RSH = "ssh -i ${userCfg.nixos.homeDirectory}/.ssh/id_ed25519";
       repo = "ssh://tiefenbacher:22/mnt/data/backups/workspace";
       startAt = "*-*-* 12:00";
       prune.keep.daily = 7;
-      user="alistair";
+      user=user;
     };
 
     # llm
@@ -228,7 +231,7 @@ let user = "alistair"; in
 
   users.users.${user} = {
     isNormalUser = true;
-    description = "Alistair Tiefenbacher";
+    description = userCfg.name;
     extraGroups = [ "networkmanager" "wheel" "docker" "cdrom" ];
     shell = pkgs.zsh;
   };

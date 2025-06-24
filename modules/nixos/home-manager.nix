@@ -1,9 +1,8 @@
 { config, pkgs, lib, ... }:
 
 let
-  name = "Alistair Tiefenbacher";
-  user = "alistair";
-  email = "contact@alistair-martin.com";
+  userCfg = config.userConfig;
+  user = userCfg.nixos.username;
   shared-programs = import ../shared/home-manager.nix { inherit config pkgs lib; };
 in
 {
@@ -14,14 +13,14 @@ in
   home = {
     enableNixpkgsReleaseCheck = false;
     username = "${user}";
-    homeDirectory = "/home/${user}";
-    packages = import ../shared/all-packages.nix { inherit pkgs; system = "x86_64-linux"; };
+    homeDirectory = userCfg.nixos.homeDirectory;
+    packages = import ../shared/all-packages.nix { inherit pkgs; system = userCfg.nixos.system; };
     stateVersion = "23.11";
 
     # The vscode config be editable
     activation =
     let
-      configPath = "/home/alistair/.config/Code/User/settings.json";
+      configPath = userCfg.paths.vscode.nixos;
     in
     {
       beforeCheckLinkTargets = {
@@ -43,8 +42,8 @@ in
 
   programs = shared-programs // {
     git = {
-      userName = name;
-      userEmail = email;
+      userName = userCfg.name;
+      userEmail = userCfg.email.personal;
     };
 
     ghosttty = {
@@ -58,7 +57,7 @@ in
         id = 0 ;
         isDefault = true;
         settings = {
-          "browser.startup.homepage" = "http://tiefenbacher.home";
+          "browser.startup.homepage" = userCfg.services.homepage.nixos;
           "extensions.pocket.enabled" = false;
           "signon.rememberSignons" = false;
           "browser.newtabpage.enabled" = false;
@@ -66,7 +65,7 @@ in
           "identity.fxaccounts.enabled" = false;
         };
         search = {
-          default = "Whoogle";
+          default = userCfg.services.search.nixos;
           force = true;
           engines = {
             "Nix Packages" = {
@@ -91,7 +90,7 @@ in
             };
             "Whoogle" = {
               urls = [{
-                template = "http://search.tiefenbacher.home/search";
+                template = userCfg.services.whoogle.nixos;
                 params = [
                   {name = "q"; value = "{searchTerms}"; }
                 ];

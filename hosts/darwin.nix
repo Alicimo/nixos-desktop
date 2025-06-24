@@ -1,5 +1,7 @@
 { config, pkgs, ... }:
-let user = "tiefenbacher"; in
+let
+  user = config.userConfig.darwin.username;
+in
 {
   imports = [
     ../modules/darwin/home-manager.nix
@@ -42,7 +44,7 @@ let user = "tiefenbacher"; in
   system = {
     stateVersion = 4;
 
-    primaryUser="tiefenbacher";
+    primaryUser=user;
 
     defaults = {
       LaunchServices = {

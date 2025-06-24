@@ -66,7 +66,7 @@
       fetch.prune = true;  # Automatically prunes deleted remote branches when fetching.
       fetch.all = true;  # Fetches updates from all remotes by default.
       help.autocorrect = "prompt";  # Suggests the closest matching command when a typo is detected.
-      core.excludesfile = "/Users/tiefenbacher/.config/git/ignore";  # Specifies a custom global Git ignore file.
+      core.excludesfile = "~/.config/git/ignore";  # Specifies a custom global Git ignore file.
     };
   };
 

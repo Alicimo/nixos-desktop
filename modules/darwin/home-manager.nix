@@ -1,14 +1,13 @@
 { config, pkgs, lib, home-manager, ... }:
 
 let
-    name = "Alistair Tiefenbacher";
-    user = "tiefenbacher";
-    email = "tiefenbacher@xund.ai";
+    userCfg = config.userConfig;
+    user = userCfg.darwin.username;
 in
 {
   users.users.${user} = {
     name = "${user}";
-    home = "/Users/${user}";
+    home = userCfg.darwin.homeDirectory;
     isHidden = false;
     shell = pkgs.zsh;
   };
@@ -39,13 +38,13 @@ in
     users.${user} = { pkgs, config, lib, ... }:{
       home = {
         enableNixpkgsReleaseCheck = false;
-        packages = import ../shared/all-packages.nix { inherit pkgs; system = "aarch64-darwin"; };
+        packages = import ../shared/all-packages.nix { inherit pkgs; system = userCfg.darwin.system; };
         stateVersion = "23.11";
 
         # The vscode config be editable
         activation =
         let
-          configPath = "/Users/tiefenbacher/Library/Application\ Support/Code/User/settings.json";
+          configPath = userCfg.paths.vscode.darwin;
         in
         {
           beforeCheckLinkTargets = {
@@ -71,8 +70,8 @@ in
         config = {
           Program = "${pkgs.hblock}/bin/hblock";
           StartInterval = 86400;  # Run once per day
-          StandardOutPath = "${config.home.homeDirectory}/Library/Logs/hblock.log";
-          StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/hblock-error.log";
+          StandardOutPath = "${userCfg.darwin.homeDirectory}/Library/Logs/hblock.log";
+          StandardErrorPath = "${userCfg.darwin.homeDirectory}/Library/Logs/hblock-error.log";
         };
       };
 
@@ -81,7 +80,7 @@ in
           enable = true;
           serverAliveCountMax = 15;
           serverAliveInterval = 120;
-          includes = [ "/Users/${user}/.ssh/config_external" ];
+          includes = [ userCfg.paths.ssh.darwin ];
         };
         zsh = {
           enable = true;
@@ -111,7 +110,7 @@ in
             id = 0 ;
             isDefault = true;
             settings = {
-              "browser.startup.homepage" = "http://localhost:5000";
+              "browser.startup.homepage" = userCfg.services.homepage.darwin;
               "extensions.pocket.enabled" = false;
               "signon.rememberSignons" = false;
               "browser.newtabpage.enabled" = false;
@@ -119,7 +118,7 @@ in
               "identity.fxaccounts.enabled" = false;
             };
             search = {
-              default = "ChatGPT";
+              default = userCfg.services.search.darwin;
               force = true;
               engines = {
                 "Nix Packages" = {
