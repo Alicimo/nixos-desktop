@@ -9,8 +9,8 @@ _:
   "raycast"
 
   # Personalisation
-  "jordanbaird-ice"  # toolbar
-  "fliqlo"  # screensaver
+  "jordanbaird-ice" # toolbar
+  "fliqlo" # screensaver
   "meetingbar"
 
   # Development Tools

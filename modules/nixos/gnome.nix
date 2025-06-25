@@ -1,14 +1,19 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 {
   fonts.fontconfig.enable = true;
   home.packages = with pkgs; [
-      gnomeExtensions.vitals
-      gnomeExtensions.dash-to-panel
-      gnomeExtensions.clipboard-history
-      gnomeExtensions.alphabetical-app-grid
-      gnomeExtensions.tiling-assistant
-      gnomeExtensions.caffeine
-      papirus-icon-theme
+    gnomeExtensions.vitals
+    gnomeExtensions.dash-to-panel
+    gnomeExtensions.clipboard-history
+    gnomeExtensions.alphabetical-app-grid
+    gnomeExtensions.tiling-assistant
+    gnomeExtensions.caffeine
+    papirus-icon-theme
   ];
   dconf = {
     settings = {
@@ -51,7 +56,7 @@
       "org/gnome/shell/extensions/dash-to-panel" = {
         multi-monitors = true;
         panel-element-positions = ''
-      {"0":[{"element":"activitiesButton","visible":true,"position":"stackedTL"},{"element":"leftBox","visible":false,"position":"stackedTL"},{"element":"showAppsButton","visible":true,"position":"centered"},{"element":"taskbar","visible":true,"position":"stackedTL"},{"element":"centerBox","visible":false,"position":"centered"},{"element":"rightBox","visible":true,"position":"stackedBR"},{"element":"dateMenu","visible":true,"position":"stackedBR"},{"element":"systemMenu","visible":true,"position":"stackedTL"},{"element":"desktopButton","visible":false,"position":"stackedBR"}],"1":[{"element":"activitiesButton","visible":true,"position":"stackedTL"},{"element":"leftBox","visible":false,"position":"stackedTL"},{"element":"showAppsButton","visible":true,"position":"centered"},{"element":"taskbar","visible":true,"position":"stackedTL"},{"element":"centerBox","visible":false,"position":"centered"},{"element":"rightBox","visible":true,"position":"stackedBR"},{"element":"dateMenu","visible":true,"position":"stackedBR"},{"element":"systemMenu","visible":true,"position":"stackedTL"},{"element":"desktopButton","visible":false,"position":"stackedBR"}]}
+          {"0":[{"element":"activitiesButton","visible":true,"position":"stackedTL"},{"element":"leftBox","visible":false,"position":"stackedTL"},{"element":"showAppsButton","visible":true,"position":"centered"},{"element":"taskbar","visible":true,"position":"stackedTL"},{"element":"centerBox","visible":false,"position":"centered"},{"element":"rightBox","visible":true,"position":"stackedBR"},{"element":"dateMenu","visible":true,"position":"stackedBR"},{"element":"systemMenu","visible":true,"position":"stackedTL"},{"element":"desktopButton","visible":false,"position":"stackedBR"}],"1":[{"element":"activitiesButton","visible":true,"position":"stackedTL"},{"element":"leftBox","visible":false,"position":"stackedTL"},{"element":"showAppsButton","visible":true,"position":"centered"},{"element":"taskbar","visible":true,"position":"stackedTL"},{"element":"centerBox","visible":false,"position":"centered"},{"element":"rightBox","visible":true,"position":"stackedBR"},{"element":"dateMenu","visible":true,"position":"stackedBR"},{"element":"systemMenu","visible":true,"position":"stackedTL"},{"element":"desktopButton","visible":false,"position":"stackedBR"}]}
         '';
       };
       "org/gnome/shell/extensions/settings/vitals" = {
@@ -62,7 +67,7 @@
         ];
       };
       "org/gnome/desktop/search-providers" = {
-        disable-external =  true;
+        disable-external = true;
       };
     };
   };

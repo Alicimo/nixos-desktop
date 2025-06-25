@@ -1,16 +1,23 @@
-{ config, pkgs, lib, platform ? null, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  platform ? null,
+  ...
+}:
 
 let
   userCfg = config.userConfig;
-  
+
   # VS Code activation script for making config writable
-  mkVSCodeActivation = platform:
+  mkVSCodeActivation =
+    platform:
     let
       configPath = userCfg.paths.vscode.${platform};
     in
     {
       beforeCheckLinkTargets = {
-        after = [];
+        after = [ ];
         before = [ "checkLinkTargets" ];
         data = ''
           rm -f "${configPath}"
@@ -25,7 +32,6 @@ let
       };
     };
 
-
 in
 {
   home-manager.enable = true;
@@ -39,9 +45,9 @@ in
   };
 
   direnv = {
-      enable = true;
-      enableZshIntegration = true;
-      nix-direnv.enable = true;
+    enable = true;
+    enableZshIntegration = true;
+    nix-direnv.enable = true;
   };
 
   fish = {
@@ -62,54 +68,58 @@ in
       set fish_greeting # Disable greeting
     '';
     plugins = [
-      { name = "bobthefish"; src = pkgs.fishPlugins.bobthefish.src; }
+      {
+        name = "bobthefish";
+        src = pkgs.fishPlugins.bobthefish.src;
+      }
     ];
   };
 
   git = {
-    enable = true;  # Enables Git support in the system configuration.
+    enable = true; # Enables Git support in the system configuration.
 
-    ignores = [      # Specifies global Git ignore patterns.
-      "*.swp"        # Ignore Vim swap files.
-      ".DS_Store"    # Ignore macOS Finder metadata files.
-      ".vscode"      # Ignore VS Code project settings.
+    ignores = [
+      # Specifies global Git ignore patterns.
+      "*.swp" # Ignore Vim swap files.
+      ".DS_Store" # Ignore macOS Finder metadata files.
+      ".vscode" # Ignore VS Code project settings.
       "__pycache__/" # Ignore Python bytecode cache directories.
-      "venv/"        # Ignore Python virtual environment directories.
-      ".env"         # Ignore environment files (e.g., containing secrets).
+      "venv/" # Ignore Python virtual environment directories.
+      ".env" # Ignore environment files (e.g., containing secrets).
     ];
 
-    lfs.enable = true;  # Enables Git Large File Storage (LFS) for handling large files efficiently.
-    difftastic.enable = true;  # Enables Difftastic, a syntax-aware diff tool.
+    lfs.enable = true; # Enables Git Large File Storage (LFS) for handling large files efficiently.
+    difftastic.enable = true; # Enables Difftastic, a syntax-aware diff tool.
 
-    extraConfig = {  # Additional Git configuration settings.
-      init.defaultBranch = "main";  # Sets "main" as the default branch name instead of "master".
-      merge.conflictstyle = "zdiff3";  # Uses "zdiff3" for merge conflicts, providing more context.
-      push.default = "current";  # Pushes the current branch by default instead of requiring explicit naming.
-      push.autoSetupRemote = true;  # Automatically sets up tracking branches when pushing for the first time.
-      branch.sort = "committerdate";  # Sorts branches by the last commit date.
-      rebase.autosquash = true;  # Automatically squashes fixup! and squash! commits during rebase.
-      rebase.autostash = true;  # Stashes local changes before rebase and restores them afterward.
-      rebase.updateRefs = true;  # Updates remote references when rebasing.
-      column.ui = "auto";  # Enables column-based output formatting for certain Git commands when useful.
-      fetch.prune = true;  # Automatically prunes deleted remote branches when fetching.
-      fetch.all = true;  # Fetches updates from all remotes by default.
-      help.autocorrect = "prompt";  # Suggests the closest matching command when a typo is detected.
-      core.excludesfile = "~/.config/git/ignore";  # Specifies a custom global Git ignore file.
+    extraConfig = {
+      # Additional Git configuration settings.
+      init.defaultBranch = "main"; # Sets "main" as the default branch name instead of "master".
+      merge.conflictstyle = "zdiff3"; # Uses "zdiff3" for merge conflicts, providing more context.
+      push.default = "current"; # Pushes the current branch by default instead of requiring explicit naming.
+      push.autoSetupRemote = true; # Automatically sets up tracking branches when pushing for the first time.
+      branch.sort = "committerdate"; # Sorts branches by the last commit date.
+      rebase.autosquash = true; # Automatically squashes fixup! and squash! commits during rebase.
+      rebase.autostash = true; # Stashes local changes before rebase and restores them afterward.
+      rebase.updateRefs = true; # Updates remote references when rebasing.
+      column.ui = "auto"; # Enables column-based output formatting for certain Git commands when useful.
+      fetch.prune = true; # Automatically prunes deleted remote branches when fetching.
+      fetch.all = true; # Fetches updates from all remotes by default.
+      help.autocorrect = "prompt"; # Suggests the closest matching command when a typo is detected.
+      core.excludesfile = "~/.config/git/ignore"; # Specifies a custom global Git ignore file.
     };
   };
-
 
   vim = {
     enable = true;
     plugins = with pkgs.vimPlugins; [
-      vim-lastplace         # open files at last edit
-      indentLine            # visible indents
-      auto-pairs            # closes brackets
-      vim-gitgutter         # indicates changes from current git branch
+      vim-lastplace # open files at last edit
+      indentLine # visible indents
+      auto-pairs # closes brackets
+      vim-gitgutter # indicates changes from current git branch
       vim-better-whitespace # makes trailing spaces visible
-      vim-airline           # status bar at bottom of vim
-      gruvbox               # colour scheme
-      nerdtree              # file browser
+      vim-airline # status bar at bottom of vim
+      gruvbox # colour scheme
+      nerdtree # file browser
     ];
     extraConfig = ''
       " Enable filetype plugins
@@ -156,44 +166,47 @@ in
   vscode = {
     enable = true;
     profiles.default = {
-      extensions = with pkgs.vscode-extensions; [
-        pkief.material-icon-theme
-        pkief.material-product-icons
-        github.github-vscode-theme
+      extensions =
+        with pkgs.vscode-extensions;
+        [
+          pkief.material-icon-theme
+          pkief.material-product-icons
+          github.github-vscode-theme
 
-        ms-toolsai.datawrangler
-        streetsidesoftware.code-spell-checker
-        christian-kohler.path-intellisense
-        ms-vscode-remote.remote-ssh
-        continue.continue
+          ms-toolsai.datawrangler
+          streetsidesoftware.code-spell-checker
+          christian-kohler.path-intellisense
+          ms-vscode-remote.remote-ssh
+          continue.continue
 
-        mikestead.dotenv
-        ms-azuretools.vscode-docker
+          mikestead.dotenv
+          ms-azuretools.vscode-docker
 
-        ms-python.python
-        ms-python.vscode-pylance
-        charliermarsh.ruff
+          ms-python.python
+          ms-python.vscode-pylance
+          charliermarsh.ruff
 
-        ms-toolsai.jupyter
-        ms-toolsai.vscode-jupyter-slideshow
-        ms-toolsai.vscode-jupyter-cell-tags
-        ms-toolsai.jupyter-renderers
-        ms-toolsai.jupyter-keymap
+          ms-toolsai.jupyter
+          ms-toolsai.vscode-jupyter-slideshow
+          ms-toolsai.vscode-jupyter-cell-tags
+          ms-toolsai.jupyter-renderers
+          ms-toolsai.jupyter-keymap
 
-      ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-        {
-          name = "vsc-python-indent";
-          publisher = "KevinRose";
-          version = "1.18.1";
-          sha256 = "sha256-etfQmVEtnTh/cVmjYfbi6sgCBSKUguh4TFMUy2ztRYk=";
-        }
-        {
-          name = "dvc";
-          publisher = "Iterative";
-          version = "1.2.21";
-          sha256 = "sha256-TBjN81+T9c/B8IjFlRqFwK43DYNBLGzNktdM1cwozbE=";
-        }
-      ];
+        ]
+        ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+          {
+            name = "vsc-python-indent";
+            publisher = "KevinRose";
+            version = "1.18.1";
+            sha256 = "sha256-etfQmVEtnTh/cVmjYfbi6sgCBSKUguh4TFMUy2ztRYk=";
+          }
+          {
+            name = "dvc";
+            publisher = "Iterative";
+            version = "1.2.21";
+            sha256 = "sha256-TBjN81+T9c/B8IjFlRqFwK43DYNBLGzNktdM1cwozbE=";
+          }
+        ];
       userSettings = {
         "update.mode" = "none";
         "extensions.ignoreRecommendations" = true;
@@ -229,7 +242,7 @@ in
         };
         "python.analysis.autoImportCompletions" = true;
 
-        "terminal.integrated.cwd" =  "\${workspaceFolder}";
+        "terminal.integrated.cwd" = "\${workspaceFolder}";
         "jupyter.notebookFileRoot" = "\${workspaceFolder}";
 
         "remote.SSH.defaultExtensions" = [
@@ -273,40 +286,60 @@ in
         engines = {
           "Nix Packages" = {
             definedAliases = [ "@np" ];
-            urls = [{
-              template = "https://search.nixos.org/packages";
-              params = [
-                { name = "query"; value = "{searchTerms}"; }
-              ];
-            }];
+            urls = [
+              {
+                template = "https://search.nixos.org/packages";
+                params = [
+                  {
+                    name = "query";
+                    value = "{searchTerms}";
+                  }
+                ];
+              }
+            ];
             icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
           };
           "Nix Options" = {
             definedAliases = [ "@no" ];
-            urls = [{
-              template = "https://search.nixos.org/options";
-              params = [
-                { name = "query"; value = "{searchTerms}"; }
-              ];
-            }];
+            urls = [
+              {
+                template = "https://search.nixos.org/options";
+                params = [
+                  {
+                    name = "query";
+                    value = "{searchTerms}";
+                  }
+                ];
+              }
+            ];
           };
           "ChatGPT" = {
             definedAliases = [ "@gpt" ];
-            urls = [{
-              template = "https://chatgpt.com/";
-              params = [
-                {name = "q"; value = "{searchTerms}"; }
-              ];
-            }];
+            urls = [
+              {
+                template = "https://chatgpt.com/";
+                params = [
+                  {
+                    name = "q";
+                    value = "{searchTerms}";
+                  }
+                ];
+              }
+            ];
           };
           "Perplexity" = {
             definedAliases = [ "@p" ];
-            urls = [{
-              template = "https://www.perplexity.ai/";
-              params = [
-                {name = "q"; value = "{searchTerms}"; }
-              ];
-            }];
+            urls = [
+              {
+                template = "https://www.perplexity.ai/";
+                params = [
+                  {
+                    name = "q";
+                    value = "{searchTerms}";
+                  }
+                ];
+              }
+            ];
           };
           "google".metaData.alias = "@g";
         };

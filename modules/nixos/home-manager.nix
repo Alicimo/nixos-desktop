@@ -1,21 +1,30 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
   # Now userConfig is available via config.userConfig due to the import
   userCfg = config.userConfig;
   user = userCfg.nixos.username;
-  
+
   # Import shared programs with platform
-  shared-programs = import ../shared/home-manager.nix { inherit config pkgs lib; platform = "nixos"; };
-  
+  shared-programs = import ../shared/home-manager.nix {
+    inherit config pkgs lib;
+    platform = "nixos";
+  };
+
   # VS Code activation function using userConfig
-  mkVSCodeActivation = platform:
+  mkVSCodeActivation =
+    platform:
     let
       configPath = userCfg.paths.vscode.${platform};
     in
     {
       beforeCheckLinkTargets = {
-        after = [];
+        after = [ ];
         before = [ "checkLinkTargets" ];
         data = ''
           rm -f "${configPath}"
@@ -41,7 +50,10 @@ in
     enableNixpkgsReleaseCheck = false;
     username = user;
     homeDirectory = userCfg.nixos.homeDirectory;
-    packages = import ../shared/all-packages.nix { inherit pkgs; system = userCfg.nixos.system; };
+    packages = import ../shared/all-packages.nix {
+      inherit pkgs;
+      system = userCfg.nixos.system;
+    };
     stateVersion = "23.11";
 
     # VS Code activation using shared function

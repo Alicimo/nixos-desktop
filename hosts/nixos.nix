@@ -2,21 +2,37 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, ... }:
-let 
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+let
   userCfg = config.userConfig;
-  user = userCfg.nixos.username; 
+  user = userCfg.nixos.username;
 in
 {
   imports = [
-      ../modules/shared
+    ../modules/shared
   ];
-
 
   boot = {
     initrd = {
-      availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
-      kernelModules = [ "amdgpu" "iwlwifi" "sg" "cifs"];
+      availableKernelModules = [
+        "nvme"
+        "xhci_pci"
+        "ahci"
+        "usbhid"
+        "usb_storage"
+        "sd_mod"
+      ];
+      kernelModules = [
+        "amdgpu"
+        "iwlwifi"
+        "sg"
+        "cifs"
+      ];
     };
     loader = {
       efi.canTouchEfiVariables = true;
@@ -27,7 +43,13 @@ in
         efiSupport = true;
       };
     };
-    kernelModules = [ "kvm-amd" "sg" "iwlwifi" "iwlmvm" "cifs" ];
+    kernelModules = [
+      "kvm-amd"
+      "sg"
+      "iwlwifi"
+      "iwlmvm"
+      "cifs"
+    ];
     kernelPackages = pkgs.linuxPackages_latest;
   };
 
@@ -55,10 +77,12 @@ in
       fsType = "vfat";
     };
   };
-  swapDevices = [ {
-    device = "/var/lib/swapfile";
-    size = 2*1024;
-  } ];
+  swapDevices = [
+    {
+      device = "/var/lib/swapfile";
+      size = 2 * 1024;
+    }
+  ];
 
   systemd.tmpfiles.rules = [
     "d ${userCfg.nixos.homeDirectory}/workspace 0755 ${user} users"
@@ -67,15 +91,23 @@ in
   fileSystems."${userCfg.nixos.homeDirectory}/samba" = {
     device = "//tiefenbacher.home/public";
     fsType = "cifs";
-    options = let
-      automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
-    in [ "${automount_opts},guest,uid=1000,vers=2.0" ]; # Removed _netdev, iocharset=utf8
+    options =
+      let
+        automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+      in
+      [ "${automount_opts},guest,uid=1000,vers=2.0" ]; # Removed _netdev, iocharset=utf8
   };
 
   nix = {
     settings = {
-      trusted-users = [ "@admin" "${user}" ];
-      substituters = [ "https://nix-community.cachix.org" "https://cache.nixos.org" ];
+      trusted-users = [
+        "@admin"
+        "${user}"
+      ];
+      substituters = [
+        "https://nix-community.cachix.org"
+        "https://cache.nixos.org"
+      ];
       trusted-public-keys = [
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
@@ -97,7 +129,7 @@ in
   networking = {
     useDHCP = lib.mkDefault true;
     hostName = "odin";
-    networkmanager.enable = true;  # default for mamy DEs inc. GNOME
+    networkmanager.enable = true; # default for mamy DEs inc. GNOME
     firewall.enable = false;
   };
 
@@ -125,8 +157,8 @@ in
     tailscale.enable = true;
 
     displayManager.autoLogin = {
-     enable = true;
-     user = "${user}";
+      enable = true;
+      user = "${user}";
     };
 
     # GNOME w/ X
@@ -164,11 +196,11 @@ in
       repo = "ssh://tiefenbacher:22/mnt/data/backups/workspace";
       startAt = "*-*-* 12:00";
       prune.keep.daily = 7;
-      user=user;
+      user = user;
     };
 
     # llm
-    ollama.enable=true;
+    ollama.enable = true;
     # open-webui.enable=true;
   };
 
@@ -179,15 +211,18 @@ in
   };
 
   # Clean up Gnome
-  environment.gnome.excludePackages = (with pkgs; [
-   evince # document viewer
-   gnome-characters
-   totem # video player
-   tali # poker game
-   iagno # go game
-   hitori # sudoku game
-   atomix # puzzle game
-  ]);
+  environment.gnome.excludePackages = (
+    with pkgs;
+    [
+      evince # document viewer
+      gnome-characters
+      totem # video player
+      tali # poker game
+      iagno # go game
+      hitori # sudoku game
+      atomix # puzzle game
+    ]
+  );
 
   programs = {
     dconf.enable = true;
@@ -195,18 +230,18 @@ in
     chromium = {
       enable = true;
       extraOpts = {
-          "BrowserSignin" = 0;
-          "SyncDisabled" = true;
-          "PasswordManagerEnabled" = false;
-          "SpellcheckEnabled" = true;
-          "BrowserLabsEnabled" = false;
-          "HighEfficiencyModeEnabled" = true;
-          "NewTabPageLocation" = "http://tiefenbacher.home";
-          "DefaultNotificationsSetting" = 2;
-          "DefaultSearchProviderEnabled" = true;
-          "DefaultSearchProviderName" = "Whoogle";
-          "DefaultSearchProviderSearchURL" = "http://search.tiefenbacher.home/search?q={searchTerms}";
-          "AutofillAddressEnabled" = false;
+        "BrowserSignin" = 0;
+        "SyncDisabled" = true;
+        "PasswordManagerEnabled" = false;
+        "SpellcheckEnabled" = true;
+        "BrowserLabsEnabled" = false;
+        "HighEfficiencyModeEnabled" = true;
+        "NewTabPageLocation" = "http://tiefenbacher.home";
+        "DefaultNotificationsSetting" = 2;
+        "DefaultSearchProviderEnabled" = true;
+        "DefaultSearchProviderName" = "Whoogle";
+        "DefaultSearchProviderSearchURL" = "http://search.tiefenbacher.home/search?q={searchTerms}";
+        "AutofillAddressEnabled" = false;
       };
     };
   };
@@ -221,7 +256,7 @@ in
 
   security = {
     rtkit.enable = true; # Improves pipewire
-    pam.services.gdm.enableGnomeKeyring = true;  # autologin to keyring
+    pam.services.gdm.enableGnomeKeyring = true; # autologin to keyring
   };
 
   virtualisation.docker = {
@@ -232,7 +267,12 @@ in
   users.users.${user} = {
     isNormalUser = true;
     description = userCfg.name;
-    extraGroups = [ "networkmanager" "wheel" "docker" "cdrom" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+      "cdrom"
+    ];
     shell = pkgs.zsh;
   };
 
