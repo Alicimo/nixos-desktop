@@ -75,8 +75,8 @@ in
             };
           };
 
-        # Import shared programs with platform
-        shared-programs = import ../shared/home-manager.nix {
+        # Import shared configuration with platform context
+        shared-config = import ../shared/home-manager.nix {
           inherit config pkgs lib;
           platform = "darwin";
         };
@@ -110,7 +110,7 @@ in
           };
         };
 
-        programs = shared-programs // {
+        programs = shared-config // {
           ssh = {
             enable = true;
             serverAliveCountMax = 15;
