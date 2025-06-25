@@ -124,34 +124,6 @@ with lib;
           description = "Homepage URL on NixOS";
         };
       };
-
-      search = {
-        darwin = mkOption {
-          type = types.str;
-          default = "ChatGPT";
-          description = "Default search engine on Darwin";
-        };
-
-        nixos = mkOption {
-          type = types.str;
-          default = "Whoogle";
-          description = "Default search engine on NixOS";
-        };
-      };
-
-      whoogle = {
-        darwin = mkOption {
-          type = types.str;
-          default = "http://localhost:5000/search";
-          description = "Whoogle search URL on Darwin";
-        };
-
-        nixos = mkOption {
-          type = types.str;
-          default = "http://search.tiefenbacher.home/search";
-          description = "Whoogle search URL on NixOS";
-        };
-      };
     };
 
     # Git configuration

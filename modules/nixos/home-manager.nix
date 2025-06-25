@@ -1,26 +1,17 @@
 { config, pkgs, lib, ... }:
 
 let
+  # Now userConfig is available via config.userConfig due to the import
   userCfg = config.userConfig;
   user = userCfg.nixos.username;
-  shared-programs = import ../shared/home-manager.nix { inherit config pkgs lib; };
-in
-{
-  imports = [
-    ./gnome.nix
-  ];
-
-  home = {
-    enableNixpkgsReleaseCheck = false;
-    username = "${user}";
-    homeDirectory = userCfg.nixos.homeDirectory;
-    packages = import ../shared/all-packages.nix { inherit pkgs; system = userCfg.nixos.system; };
-    stateVersion = "23.11";
-
-    # The vscode config be editable
-    activation =
+  
+  # Import shared programs with platform
+  shared-programs = import ../shared/home-manager.nix { inherit config pkgs lib; platform = "nixos"; };
+  
+  # VS Code activation function using userConfig
+  mkVSCodeActivation = platform:
     let
-      configPath = userCfg.paths.vscode.nixos;
+      configPath = userCfg.paths.vscode.${platform};
     in
     {
       beforeCheckLinkTargets = {
@@ -38,68 +29,29 @@ in
         '';
       };
     };
+in
+{
+  imports = [
+    ./gnome.nix
+    # Import the user-config module so userConfig is available
+    ../shared/user-config.nix
+  ];
+
+  home = {
+    enableNixpkgsReleaseCheck = false;
+    username = user;
+    homeDirectory = userCfg.nixos.homeDirectory;
+    packages = import ../shared/all-packages.nix { inherit pkgs; system = userCfg.nixos.system; };
+    stateVersion = "23.11";
+
+    # VS Code activation using shared function
+    activation = mkVSCodeActivation "nixos";
   };
 
   programs = shared-programs // {
     git = {
       userName = userCfg.name;
       userEmail = userCfg.email.personal;
-    };
-
-    ghosttty = {
-      enable = true;
-      enableFishIntegration = true;
-    };
-
-    firefox = {
-      enable = true;
-      profiles."default" = {
-        id = 0 ;
-        isDefault = true;
-        settings = {
-          "browser.startup.homepage" = userCfg.services.homepage.nixos;
-          "extensions.pocket.enabled" = false;
-          "signon.rememberSignons" = false;
-          "browser.newtabpage.enabled" = false;
-          "browser.vpn_promo.enabled" = false;
-          "identity.fxaccounts.enabled" = false;
-        };
-        search = {
-          default = userCfg.services.search.nixos;
-          force = true;
-          engines = {
-            "Nix Packages" = {
-              definedAliases = [ "@np" ];
-              urls = [{
-                template = "https://search.nixos.org/packages";
-                params = [
-                  { name = "query"; value = "{searchTerms}"; }
-                ];
-              }];
-              icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-
-            };
-            "Nix Options" = {
-              definedAliases = [ "@no" ];
-              urls = [{
-                template = "https://search.nixos.org/options";
-                params = [
-                  { name = "query"; value = "{searchTerms}"; }
-                ];
-              }];
-            };
-            "Whoogle" = {
-              urls = [{
-                template = userCfg.services.whoogle.nixos;
-                params = [
-                  {name = "q"; value = "{searchTerms}"; }
-                ];
-              }];
-            };
-            "Google".metaData.alias = "@g";
-          };
-        };
-      };
     };
   };
 }

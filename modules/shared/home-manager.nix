@@ -1,4 +1,32 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, platform ? null, ... }:
+
+let
+  userCfg = config.userConfig;
+  
+  # VS Code activation script for making config writable
+  mkVSCodeActivation = platform:
+    let
+      configPath = userCfg.paths.vscode.${platform};
+    in
+    {
+      beforeCheckLinkTargets = {
+        after = [];
+        before = [ "checkLinkTargets" ];
+        data = ''
+          rm -f "${configPath}"
+        '';
+      };
+      makeVSCodeConfigWritable = {
+        after = [ "writeBoundary" ];
+        before = [ ];
+        data = ''
+          install -m 0640 "$(readlink "${configPath}")" "${configPath}"
+        '';
+      };
+    };
+
+
+in
 {
   home-manager.enable = true;
 
@@ -221,6 +249,67 @@
           "ms-toolsai.datawrangler"
           "iterative.dvc"
         ];
+      };
+    };
+  };
+
+  # Firefox configuration - shared across platforms
+  firefox = lib.mkIf (platform != null) {
+    enable = true;
+    profiles."default" = {
+      id = 0;
+      isDefault = true;
+      settings = {
+        "browser.startup.homepage" = userCfg.services.homepage.${platform};
+        "extensions.pocket.enabled" = false;
+        "signon.rememberSignons" = false;
+        "browser.newtabpage.enabled" = false;
+        "browser.vpn_promo.enabled" = false;
+        "identity.fxaccounts.enabled" = false;
+      };
+      search = {
+        default = "google";
+        force = true;
+        engines = {
+          "Nix Packages" = {
+            definedAliases = [ "@np" ];
+            urls = [{
+              template = "https://search.nixos.org/packages";
+              params = [
+                { name = "query"; value = "{searchTerms}"; }
+              ];
+            }];
+            icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+          };
+          "Nix Options" = {
+            definedAliases = [ "@no" ];
+            urls = [{
+              template = "https://search.nixos.org/options";
+              params = [
+                { name = "query"; value = "{searchTerms}"; }
+              ];
+            }];
+          };
+          "ChatGPT" = {
+            definedAliases = [ "@gpt" ];
+            urls = [{
+              template = "https://chatgpt.com/";
+              params = [
+                {name = "q"; value = "{searchTerms}"; }
+              ];
+            }];
+          };
+          "Perplexity" = {
+            definedAliases = [ "@p" ];
+            urls = [{
+              template = "https://www.perplexity.ai/";
+              params = [
+                {name = "q"; value = "{searchTerms}"; }
+              ];
+            }];
+          };
+          "google".metaData.alias = "@g";
+        };
       };
     };
   };

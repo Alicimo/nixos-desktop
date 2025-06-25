@@ -35,16 +35,15 @@ in
   # Enable home-manager
   home-manager = {
     useGlobalPkgs = true;
-    users.${user} = { pkgs, config, lib, ... }:{
-      home = {
-        enableNixpkgsReleaseCheck = false;
-        packages = import ../shared/all-packages.nix { inherit pkgs; system = userCfg.darwin.system; };
-        stateVersion = "23.11";
-
-        # The vscode config be editable
-        activation =
+    users.${user} = { pkgs, config, lib, ... }:
+    let
+      # Now userConfig is available via config.userConfig due to the import
+      userCfg = config.userConfig;
+      
+      # VS Code activation function using userConfig
+      mkVSCodeActivation = platform:
         let
-          configPath = userCfg.paths.vscode.darwin;
+          configPath = userCfg.paths.vscode.${platform};
         in
         {
           beforeCheckLinkTargets = {
@@ -62,6 +61,23 @@ in
             '';
           };
         };
+        
+      # Import shared programs with platform
+      shared-programs = import ../shared/home-manager.nix { inherit config pkgs lib; platform = "darwin"; };
+    in
+    {
+      imports = [
+        # Import the user-config module so userConfig is available
+        ../shared/user-config.nix
+      ];
+      
+      home = {
+        enableNixpkgsReleaseCheck = false;
+        packages = import ../shared/all-packages.nix { inherit pkgs; system = userCfg.darwin.system; };
+        stateVersion = "23.11";
+
+        # VS Code activation using shared function
+        activation = mkVSCodeActivation "darwin";
       };
 
       # Define a LaunchAgent to run hblock periodically
@@ -75,7 +91,7 @@ in
         };
       };
 
-      programs = import ../shared/home-manager.nix { inherit config pkgs lib; } // {
+      programs = shared-programs // {
         ssh = {
           enable = true;
           serverAliveCountMax = 15;
@@ -90,87 +106,6 @@ in
                 exec fish -l
             fi
           '';
-        };
-#        git = {
-#          userName = name;
-#          userEmail = email;
-#        };
-        firefox = {
-          /* Extentions TBA after install
-          - 1password
-          - UblockOrigin
-          - Bypass Paywalls Clean
-          - SponsorBlock
-          - Sotero
-          - LocalCDN
-          */
-          enable = true;
-          # package = pkgs.firefox-bin;
-          profiles."alistair" = {
-            id = 0 ;
-            isDefault = true;
-            settings = {
-              "browser.startup.homepage" = userCfg.services.homepage.darwin;
-              "extensions.pocket.enabled" = false;
-              "signon.rememberSignons" = false;
-              "browser.newtabpage.enabled" = false;
-              "browser.vpn_promo.enabled" = false;
-              "identity.fxaccounts.enabled" = false;
-            };
-            search = {
-              default = userCfg.services.search.darwin;
-              force = true;
-              engines = {
-                "Nix Packages" = {
-                  definedAliases = [ "@np" ];
-                  urls = [{
-                    template = "https://search.nixos.org/packages";
-                    params = [
-                      { name = "query"; value = "{searchTerms}"; }
-                    ];
-                  }];
-                  icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-
-                };
-                "Nix Options" = {
-                  definedAliases = [ "@no" ];
-                  urls = [{
-                    template = "https://search.nixos.org/options";
-                    params = [
-                      { name = "query"; value = "{searchTerms}"; }
-                    ];
-                  }];
-                };
-                # "Whoogle" = {
-                #   urls = [{
-                #     template = "http://localhost:5000/search";
-                #     params = [
-                #       {name = "q"; value = "{searchTerms}"; }
-                #     ];
-                #   }];
-                # };
-                "Perplexity" = {
-                  definedAliases = [ "@p" ];
-                  urls = [{
-                    template = "https://www.perplexity.ai/";
-                    params = [
-                      {name = "q"; value = "{searchTerms}"; }
-                    ];
-                  }];
-                };
-                "ChatGPT" = {
-                  definedAliases = [ "@gpt" ];
-                  urls = [{
-                    template = "https://chatgpt.com/";
-                    params = [
-                      {name = "q"; value = "{searchTerms}"; }
-                    ];
-                  }];
-                };
-                "google".metaData.alias = "@g";
-              };
-            };
-          };
         };
       };
     };
