@@ -34,13 +34,14 @@ with pkgs;
   git # Distributed version control system
   repomix # Tool for managing monorepos (multi-package repositories)
   claude-code # CLI interface for Anthropic’s Claude AI for code assistance
+  podman # Container runtime for building and running Docker containers
 
   (python312.withPackages (
     ps: with ps; [
       polars # Fast DataFrame library in Rust with Python bindings
       pandas # Powerful data analysis and manipulation library
       numpy # Core library for numerical computing in Python
-      # plotly      # Interactive plotting library
+      plotly      # Interactive plotting library
       aider-chat # AI pair programming in your terminal using GPT-based models
       uv # Ultra-fast Python package manager and environment manager
       ruff # Fast Python linter, formatter, and import sorter
