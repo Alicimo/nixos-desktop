@@ -86,6 +86,10 @@ in
       "__pycache__/" # Ignore Python bytecode cache directories.
       "venv/" # Ignore Python virtual environment directories.
       ".env" # Ignore environment files (e.g., containing secrets).
+      ".claude/" # Ignore Claude Code session files.
+      "CLAUDE.md" # Ignore Claude Code project documentation.
+      ".aider*" # Ignore Aider AI coding assistant files.
+      "prompts/" # Ignore prompts directory.
     ];
 
     lfs.enable = true; # Enables Git Large File Storage (LFS) for handling large files efficiently.
@@ -93,6 +97,7 @@ in
 
     extraConfig = {
       # Additional Git configuration settings.
+      core.excludesfile = "~/.config/git/ignore"; # Points to the global gitignore file created by ignores option.
       init.defaultBranch = "main"; # Sets "main" as the default branch name instead of "master".
       merge.conflictstyle = "zdiff3"; # Uses "zdiff3" for merge conflicts, providing more context.
       push.default = "current"; # Pushes the current branch by default instead of requiring explicit naming.
@@ -105,7 +110,6 @@ in
       fetch.prune = true; # Automatically prunes deleted remote branches when fetching.
       fetch.all = true; # Fetches updates from all remotes by default.
       help.autocorrect = "prompt"; # Suggests the closest matching command when a typo is detected.
-      core.excludesfile = "~/.config/git/ignore"; # Specifies a custom global Git ignore file.
     };
   };
 
