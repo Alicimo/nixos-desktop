@@ -114,7 +114,7 @@ with lib;
       homepage = {
         darwin = mkOption {
           type = types.str;
-          default = "http://localhost:5000";
+          default = "https://online.bonjourr.fr";
           description = "Homepage URL on Darwin";
         };
 

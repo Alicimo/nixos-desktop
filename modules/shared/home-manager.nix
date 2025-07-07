@@ -283,6 +283,14 @@ in
         "browser.newtabpage.enabled" = false;
         "browser.vpn_promo.enabled" = false;
         "identity.fxaccounts.enabled" = false;
+        "intl.locale.requested" = "en-GB";
+
+        # Sidebar and vertical tabs settings
+        "sidebar.expandOnHoverMessage.dismissed" = true;
+        "sidebar.main.tools" = "syncedtabs,history";
+        "sidebar.new-sidebar.has-used" = true;
+        "sidebar.revamp" = true;
+        "sidebar.verticalTabs" = true;
       };
       search = {
         default = "google";
