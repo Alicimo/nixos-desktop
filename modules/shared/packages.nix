@@ -14,7 +14,7 @@ with pkgs;
   fd # Simple, fast and user-friendly alternative to `find`
   pciutils # Tools for inspecting and configuring PCI devices
   flyctl # CLI for managing apps on the Fly.io platform
-  nixfmt-tree  # treefmt combined w/ nix-fmt for linting/formating of .nix
+  nixfmt-tree # treefmt combined w/ nix-fmt for linting/formating of .nix
 
   # Monitors
   btop # Resource monitor with a modern UI
@@ -41,7 +41,7 @@ with pkgs;
       polars # Fast DataFrame library in Rust with Python bindings
       pandas # Powerful data analysis and manipulation library
       numpy # Core library for numerical computing in Python
-      plotly      # Interactive plotting library
+      plotly # Interactive plotting library
       aider-chat # AI pair programming in your terminal using GPT-based models
       uv # Ultra-fast Python package manager and environment manager
       ruff # Fast Python linter, formatter, and import sorter
