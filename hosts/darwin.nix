@@ -87,6 +87,14 @@ in
         tilesize = 48;
         largesize = 96;
         mru-spaces = false;
+        persistent-apps = [
+          { app = "/Applications/Visual Studio Code.app"; }
+          { app = "/Applications/Ghostty.app"; }
+          { app = "/Applications/Obsidian.app"; }
+          { app = "/Applications/Telegram.app"; }
+          { app = "/Users/tiefenbacher/Applications/Slack.app"; }
+          { app = "/System/Applications/Music.app"; }
+        ];
       };
 
       finder = {
