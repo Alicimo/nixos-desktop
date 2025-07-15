@@ -291,6 +291,9 @@ in
         "sidebar.new-sidebar.has-used" = true;
         "sidebar.revamp" = true;
         "sidebar.verticalTabs" = true;
+        "sidebar.main.tools" =	"history,bookmarks";
+        "sidebar.visibility" =	"expand-on-hover";
+
       };
       search = {
         default = "google";

@@ -35,6 +35,7 @@ with pkgs;
   repomix # Tool for managing monorepos (multi-package repositories)
   claude-code # CLI interface for Anthropic’s Claude AI for code assistance
   podman # Container runtime for building and running Docker containers
+  nodejs_24 # Nodejs is required to run mcp servers
 
   (python312.withPackages (
     ps: with ps; [
