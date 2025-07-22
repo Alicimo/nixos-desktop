@@ -1,37 +1,39 @@
 _:
 
 [
-  "1password"
-  "keka" # 7zip 4 mac
-  "logitech-options"
-  "stats"
-  "stretchly"
-  "raycast"
+  # Security & System Utilities
+  "1password" # Password manager
+  "keka" # Archive utility (7zip for mac)
+  "logitech-options" # Logitech device configuration
+  "stats" # System monitor for menu bar
+  # "stretchly" # TODO: Conceptially good, but too annoying
+  "raycast" # Spotlight replacement and productivity launcher
 
-  # Personalisation
-  "jordanbaird-ice" # toolbar
-  "fliqlo" # screensaver
-  "meetingbar"
+  # UI Customization
+  "jordanbaird-ice" # Menu bar management tool
+  "fliqlo" # Flip clock screensaver
+  "meetingbar" # Calendar meetings in menu bar
 
   # Development Tools
-  "docker"
-  "visual-studio-code"
-  "ghostty"
+  "docker" # Containerization platform
+  "visual-studio-code" # Code editor
+  "ghostty" # Terminal emulator
 
-  # Communication Tools
-  "slack"
-  "telegram"
-  "cap"
+  # Communication
+  "slack" # Team communication platform
+  "telegram" # Messaging app
+  "cap" # Screen recording and sharing
 
-  # Productivity
-  "lm-studio"
-  "google-drive"
-  "google-chrome"
-  "macwhisper"
-  "obsidian"
+  # Productivity & AI
+  "lm-studio" # Local LLM interface
+  "google-drive" # Cloud storage
+  "google-chrome" # Web browser
+  "macwhisper" # AI transcription tool
+  "obsidian" # Note-taking and knowledge management
+  "claude" # AI assistant app
 
-  # Media
-  "vlc"
-  "netnewswire"
-  "zotero"
+  # Media & Research
+  "vlc" # Media player
+  "netnewswire" # RSS reader
+  "zotero" # Reference manager
 ]

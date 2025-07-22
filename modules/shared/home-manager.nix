@@ -96,19 +96,33 @@ in
     difftastic.enable = true; # Enables Difftastic, a syntax-aware diff tool.
 
     extraConfig = {
-      # Additional Git configuration settings.
+      # Core Git configuration
       core.excludesfile = "~/.config/git/ignore"; # Points to the global gitignore file created by ignores option.
       init.defaultBranch = "main"; # Sets "main" as the default branch name instead of "master".
-      merge.conflictstyle = "zdiff3"; # Uses "zdiff3" for merge conflicts, providing more context.
-      push.default = "current"; # Pushes the current branch by default instead of requiring explicit naming.
-      push.autoSetupRemote = true; # Automatically sets up tracking branches when pushing for the first time.
+
+      # Remote operations
+      push = {
+        default = "current"; # Pushes the current branch by default instead of requiring explicit naming.
+        autoSetupRemote = true; # Automatically sets up tracking branches when pushing for the first time.
+      };
+      fetch = {
+        prune = true; # Automatically prunes deleted remote branches when fetching.
+        all = true; # Fetches updates from all remotes by default.
+      };
+
+      # Branch and merge operations
       branch.sort = "committerdate"; # Sorts branches by the last commit date.
-      rebase.autosquash = true; # Automatically squashes fixup! and squash! commits during rebase.
-      rebase.autostash = true; # Stashes local changes before rebase and restores them afterward.
-      rebase.updateRefs = true; # Updates remote references when rebasing.
+      merge.conflictstyle = "zdiff3"; # Uses "zdiff3" for merge conflicts, providing more context.
+
+      # Rebase operations
+      rebase = {
+        autosquash = true; # Automatically squashes fixup! and squash! commits during rebase.
+        autostash = true; # Stashes local changes before rebase and restores them afterward.
+        updateRefs = true; # Updates remote references when rebasing.
+      };
+
+      # UI and help
       column.ui = "auto"; # Enables column-based output formatting for certain Git commands when useful.
-      fetch.prune = true; # Automatically prunes deleted remote branches when fetching.
-      fetch.all = true; # Fetches updates from all remotes by default.
       help.autocorrect = "prompt"; # Suggests the closest matching command when a typo is detected.
     };
   };
@@ -287,12 +301,11 @@ in
 
         # Sidebar and vertical tabs settings
         "sidebar.expandOnHoverMessage.dismissed" = true;
-        "sidebar.main.tools" = "syncedtabs,history";
         "sidebar.new-sidebar.has-used" = true;
         "sidebar.revamp" = true;
         "sidebar.verticalTabs" = true;
-        "sidebar.main.tools" =	"history,bookmarks";
-        "sidebar.visibility" =	"expand-on-hover";
+        "sidebar.main.tools" = "history,bookmarks";
+        "sidebar.visibility" = "expand-on-hover";
 
       };
       search = {
