@@ -191,11 +191,11 @@ in
           pkief.material-product-icons
           github.github-vscode-theme
 
+          github.copilot
           ms-toolsai.datawrangler
           streetsidesoftware.code-spell-checker
           christian-kohler.path-intellisense
           ms-vscode-remote.remote-ssh
-          continue.continue
 
           mikestead.dotenv
           ms-azuretools.vscode-docker
@@ -217,12 +217,6 @@ in
             publisher = "KevinRose";
             version = "1.18.1";
             sha256 = "sha256-etfQmVEtnTh/cVmjYfbi6sgCBSKUguh4TFMUy2ztRYk=";
-          }
-          {
-            name = "dvc";
-            publisher = "Iterative";
-            version = "1.2.21";
-            sha256 = "sha256-TBjN81+T9c/B8IjFlRqFwK43DYNBLGzNktdM1cwozbE=";
           }
         ];
       userSettings = {

@@ -15,7 +15,6 @@ _:
   "meetingbar" # Calendar meetings in menu bar
 
   # Development Tools
-  "docker" # Containerization platform
   "visual-studio-code" # Code editor
   "ghostty" # Terminal emulator
 
