@@ -112,9 +112,6 @@ in
 
         programs = shared-config // {
           ssh = {
-            enable = true;
-            serverAliveCountMax = 15;
-            serverAliveInterval = 120;
             includes = [ userCfg.paths.ssh.darwin ];
           };
           zsh = {

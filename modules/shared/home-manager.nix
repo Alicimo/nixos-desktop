@@ -177,8 +177,11 @@ in
 
   ssh = {
     enable = true;
-    serverAliveCountMax = 15;
-    serverAliveInterval = 120;
+    enableDefaultConfig = false;
+    matchBlocks."*" = {
+      serverAliveCountMax = 15;
+      serverAliveInterval = 120;
+    };
   };
 
   vscode = {
@@ -279,6 +282,11 @@ in
   };
 
   # Firefox configuration - shared across platforms
+  # Extensions to add post-install
+  # - 1Password / Bitwarden
+	# - UBlockOrigin
+  # - Sponsorblock
+  # - LocalCDN
   firefox = lib.mkIf (platform != null) {
     enable = true;
     profiles."default" = {
