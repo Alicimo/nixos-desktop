@@ -111,7 +111,7 @@ in
         };
 
         programs = shared-config // {
-          ssh = {
+          ssh = shared-config.ssh // {
             includes = [ userCfg.paths.ssh.darwin ];
           };
           zsh = {
