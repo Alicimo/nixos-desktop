@@ -5,8 +5,8 @@ let
   base = import ./packages.nix { inherit pkgs; };
 
   darwinPackages = [
-    # Network security
     hblock # DNS adblocker for improved privacy and security
+    google-cloud-sdk # CLI tools for Google Cloud Platform
   ];
 
   nixosPackages = [

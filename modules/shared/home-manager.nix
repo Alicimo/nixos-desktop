@@ -38,6 +38,8 @@ in
 
   atuin = {
     enable = true;
+    enableFishIntegration = true;
+    enableZshIntegration = false;
     flags = [ "--disable-up-arrow" ];
     settings = {
       update_check = false;
@@ -46,7 +48,7 @@ in
 
   direnv = {
     enable = true;
-    enableZshIntegration = true;
+    enableZshIntegration = false;
     nix-direnv.enable = true;
   };
 
@@ -93,9 +95,8 @@ in
     ];
 
     lfs.enable = true; # Enables Git Large File Storage (LFS) for handling large files efficiently.
-    difftastic.enable = true; # Enables Difftastic, a syntax-aware diff tool.
 
-    extraConfig = {
+    settings = {
       # Core Git configuration
       core.excludesfile = "~/.config/git/ignore"; # Points to the global gitignore file created by ignores option.
       init.defaultBranch = "main"; # Sets "main" as the default branch name instead of "master".
@@ -125,6 +126,12 @@ in
       column.ui = "auto"; # Enables column-based output formatting for certain Git commands when useful.
       help.autocorrect = "prompt"; # Suggests the closest matching command when a typo is detected.
     };
+  };
+
+  # Difftastic, a syntax-aware diff tool.
+  difftastic = {
+    enable = true;
+    git.enable = true;
   };
 
   vim = {
@@ -194,14 +201,16 @@ in
           pkief.material-product-icons
           github.github-vscode-theme
 
-          github.copilot
+          gitlab.gitlab-workflow
           ms-toolsai.datawrangler
+          mechatroner.rainbow-csv
           streetsidesoftware.code-spell-checker
           christian-kohler.path-intellisense
           ms-vscode-remote.remote-ssh
 
           mikestead.dotenv
           ms-azuretools.vscode-docker
+          bbenoist.nix
 
           ms-python.python
           ms-python.vscode-pylance
@@ -218,15 +227,17 @@ in
           {
             name = "vsc-python-indent";
             publisher = "KevinRose";
-            version = "1.18.1";
+            version = "1.21.0";
             sha256 = "sha256-etfQmVEtnTh/cVmjYfbi6sgCBSKUguh4TFMUy2ztRYk=";
           }
         ];
       userSettings = {
         "update.mode" = "none";
         "extensions.ignoreRecommendations" = true;
-        "continue.telemetryEnabled" = false;
         "cSpell.diagnosticLevel" = "Hint";
+
+        "gitlab.duoChat.enabled" = false;
+        "gitlab.duoAgentPlatform.enabled" = false;
 
         "editor.fontFamily" = "Fira Code";
         "editor.fontLigatures" = true;
@@ -275,7 +286,6 @@ in
           "ms-toolsai.jupyter-renderers"
           "ms-toolsai.jupyter-keymap"
           "ms-toolsai.datawrangler"
-          "iterative.dvc"
         ];
       };
     };
@@ -284,7 +294,7 @@ in
   # Firefox configuration - shared across platforms
   # Extensions to add post-install
   # - 1Password / Bitwarden
-	# - UBlockOrigin
+  # - UBlockOrigin
   # - Sponsorblock
   # - LocalCDN
   firefox = lib.mkIf (platform != null) {
