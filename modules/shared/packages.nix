@@ -14,6 +14,7 @@ with pkgs;
   fd # Simple, fast and user-friendly alternative to `find`
   pciutils # Tools for inspecting and configuring PCI devices
   nixfmt-tree # treefmt combined w/ nix-fmt for linting/formating of .nix
+  tldr # Simplified and community-driven man
 
   # Monitors
   btop # Resource monitor with a modern UI

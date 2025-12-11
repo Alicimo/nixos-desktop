@@ -82,6 +82,7 @@ in
       du = "dust";
       today = "date +%Y-%m-%d";
       llm = "codex exec --skip-git-repo-check";
+      man = "tldr";
     };
     interactiveShellInit = ''
       set fish_greeting # Disable greeting
