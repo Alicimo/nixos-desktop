@@ -80,6 +80,8 @@ in
       grep = "rg";
       diff = "difft";
       du = "dust";
+      today = "date +%Y-%m-%d";
+      llm = "codex exec --skip-git-repo-check";
     };
     interactiveShellInit = ''
       set fish_greeting # Disable greeting
@@ -96,6 +98,9 @@ in
         src = pkgs.fishPlugins.bobthefish.src;
       }
     ];
+    shellInit = ''
+      codex completion fish | source
+    '';
   };
 
   git = {
@@ -111,6 +116,7 @@ in
       ".env" # Ignore environment files (e.g., containing secrets).
       ".claude/" # Ignore Claude Code session files.
       "CLAUDE.md" # Ignore Claude Code project documentation.
+      "AGENTS.md" # Ignore Agent Code project documentation.
       ".aider*" # Ignore Aider AI coding assistant files.
       "prompts/" # Ignore prompts directory.
     ];
