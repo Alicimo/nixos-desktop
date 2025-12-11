@@ -3,11 +3,11 @@ _:
 [
   # Security & System Utilities
   "1password" # Password manager
-  "keka" # Archive utility (7zip for mac)
   "logitech-options" # Logitech device configuration
   "stats" # System monitor for menu bar
   # "stretchly" # TODO: Conceptially good, but too annoying
   "raycast" # Spotlight replacement and productivity launcher
+  "betterzip" # Advanced file archiver and extractor
 
   # UI Customization
   "jordanbaird-ice" # Menu bar management tool
@@ -29,10 +29,10 @@ _:
   "google-chrome" # Web browser
   "macwhisper" # AI transcription tool
   "obsidian" # Note-taking and knowledge management
-  "claude" # AI assistant app
+  "chatgpt" # ChatGPT desktop client
 
   # Media & Research
-  "vlc" # Media player
+  "iina" # Media player
   "netnewswire" # RSS reader
   "zotero" # Reference manager
 ]

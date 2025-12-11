@@ -7,17 +7,18 @@ let
   darwinPackages = [
     hblock # DNS adblocker for improved privacy and security
     google-cloud-sdk # CLI tools for Google Cloud Platform
+    mas # Mac App Store command-line interface
   ];
 
   nixosPackages = [
-    # CLI utilities
+    # CLI utilities (included in MacOS)
     killall # Kill processes by name
     unzip # Extracts .zip archive files
     curl # Tool for transferring data with URLs
     zip # Package and compress files into .zip format
 
     # Desktop applications
-    vlc # Media player for audio and video files
+    mpv # Media player for audio and video files
     libreoffice # Office suite with word processor, spreadsheet, and presentation software
     anki # Spaced repetition flashcard program for learning
     telegram-desktop # Desktop client for Telegram messaging

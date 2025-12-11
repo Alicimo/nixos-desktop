@@ -52,6 +52,20 @@ in
     nix-direnv.enable = true;
   };
 
+  ghostty = {
+    enable = true;
+    enableZshIntegration = false;
+    package = if platform == "darwin" then null else pkgs.ghostty; # Use cask on macOS, package on Linux
+    settings = {
+      theme = "Github Light Default";
+      font-family = "Fira Code";
+      keybind = [
+        "global:§=toggle_quick_terminal"
+        "shift+enter=text:\n"
+      ];
+    };
+  };
+
   fish = {
     enable = true;
     shellAliases = {
@@ -310,6 +324,19 @@ in
         "browser.vpn_promo.enabled" = false;
         "identity.fxaccounts.enabled" = false;
         "intl.locale.requested" = "en-GB";
+        "browser.ml.enable" = false;
+
+        # Telementry
+        "toolkit.telemetry.enabled" = false;
+        "datareporting.healthreport.uploadEnabled" = false;
+        "datareporting.policy.dataSubmissionEnabled" = false;
+        "datareporting.sessions.current.clean" = true;
+        "datareporting.sessions.current.activeTicks" = 0;
+        "datareporting.healthreport.service.enabled" = false;
+        "app.normandy.enabled" = false;
+        "app.shield.optoutstudies.enabled" = false;
+        "browser.tabs.crashReporting.sendReports" = false;
+        "browser.urlbar.suggest.searches" = false;
 
         # Sidebar and vertical tabs settings
         "sidebar.expandOnHoverMessage.dismissed" = true;
@@ -317,7 +344,7 @@ in
         "sidebar.revamp" = true;
         "sidebar.verticalTabs" = true;
         "sidebar.main.tools" = "history,bookmarks";
-        "sidebar.visibility" = "expand-on-hover";
+        "sidebar.visibility" = "always-show";
 
       };
       search = {

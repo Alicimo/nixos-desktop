@@ -25,6 +25,7 @@ with pkgs;
   imagemagick # Toolset for editing and converting images
   ffmpeg # Command-line tool for processing video and audio
   rsync # Efficiently sync files and directories over network or locally
+  visidata # Terminal spreadsheet multitool for data exploration
 
   # Dev
   R # Language and environment for statistical computing

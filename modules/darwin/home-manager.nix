@@ -28,6 +28,9 @@ in
     brews = [
       "lightgbm" # for pycaret
     ];
+    # masApps = { # Does not work
+    #   "Spokenly" = 6740315592;
+    # };
     global = {
       autoUpdate = true;
     };
