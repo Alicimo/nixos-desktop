@@ -73,6 +73,7 @@ in
       l = "ls";
       ll = "ls";
       c = "clear";
+      "cd.." = "cd ..";
       ".." = "cd ..";
       cat = "bat";
       top = "btop";
@@ -83,6 +84,12 @@ in
     interactiveShellInit = ''
       set fish_greeting # Disable greeting
     '';
+    functions = {
+      mkcd = ''
+        mkdir -p $argv[1]
+        cd $argv[1]
+      '';
+    };
     plugins = [
       {
         name = "bobthefish";
