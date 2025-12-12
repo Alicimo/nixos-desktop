@@ -274,6 +274,7 @@ in
                 - refactor: simplify error handling logic in parser
               '';
             };
+            ".hushlogin".text = "";
           };
 
           # VS Code activation using shared function
