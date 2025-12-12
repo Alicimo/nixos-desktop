@@ -95,8 +95,8 @@ in
     };
     plugins = [
       {
-        name = "bobthefish";
-        src = pkgs.fishPlugins.bobthefish.src;
+        name = "tide";
+        src = pkgs.fishPlugins.tide.src;
       }
     ];
     shellInit = ''
