@@ -256,7 +256,7 @@ in
             name = "vsc-python-indent";
             publisher = "KevinRose";
             version = "1.21.0";
-            sha256 = "sha256-etfQmVEtnTh/cVmjYfbi6sgCBSKUguh4TFMUy2ztRYk=";
+            sha256 = "sha256-SvJhVG8sofzV0PebZG4IIORX3AcfmErDQ00tRF9fk/4=";
           }
         ];
       userSettings = {
