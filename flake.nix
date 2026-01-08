@@ -10,6 +10,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
     nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin";
     homebrew-bundle = {
@@ -43,6 +47,7 @@
       nixpkgs,
       nixpkgs-stable,
       nixpkgs-firefox-darwin,
+      nixvim,
     }@inputs:
     {
       darwinConfigurations."tiefenbacher-macbook" = nix-darwin.lib.darwinSystem {
@@ -62,6 +67,11 @@
             home-manager.extraSpecialArgs = {
               inherit inputs;
             };
+          }
+          {
+            home-manager.sharedModules = [
+              nixvim.homeManagerModules.nixvim
+            ];
           }
           nix-homebrew.darwinModules.nix-homebrew
           {
@@ -94,6 +104,9 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
+              sharedModules = [
+                nixvim.homeManagerModules.nixvim
+              ];
               users.alistair = import ./modules/nixos/home-manager.nix;
             };
           }

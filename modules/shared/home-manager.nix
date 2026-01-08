@@ -162,51 +162,152 @@ in
     git.enable = true;
   };
 
-  vim = {
+  nixvim = {
     enable = true;
-    plugins = with pkgs.vimPlugins; [
-      vim-lastplace # open files at last edit
-      indentLine # visible indents
-      auto-pairs # closes brackets
-      vim-gitgutter # indicates changes from current git branch
-      vim-better-whitespace # makes trailing spaces visible
-      vim-airline # status bar at bottom of vim
-      gruvbox # colour scheme
-      nerdtree # file browser
-    ];
-    extraConfig = ''
-      " Enable filetype plugins
-      filetype plugin on
-      filetype indent on
-
-      " Remove inane defaults
-      set backspace=indent,eol,start
-
-      " Set tab behaviour
-      set expandtab
-      set autoindent
-      set shiftwidth=2
-      set tabstop=2
-
-      " Remove error cues
-      set noerrorbells
-      set novisualbell
-
-      " Enable pasting
-      set mouse=a
-
-      " Visual cues
-      syntax on
-      set wrap " Wrap lines
-      set number " Line numbers
-      let g:indent_guides_enable_on_vim_startup = 1 " Indent guide plugin enable
-
-      " Colour Scheme
-      set background=dark
-      colorscheme gruvbox
-
-      " Escalate write if opened w/o sudo
-      cmap w!! w !sudo tee % > /dev/null %
+    defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
+    vimdiffAlias = true;
+    globals = {
+      mapleader = " ";
+      maplocalleader = " ";
+    };
+    opts = {
+      number = true;
+      relativenumber = true;
+      expandtab = true;
+      shiftwidth = 2;
+      tabstop = 2;
+      autoindent = true;
+      wrap = false;
+      mouse = "a";
+      termguicolors = true;
+      signcolumn = "yes";
+      updatetime = 200;
+      timeoutlen = 300;
+    };
+    colorschemes = {
+      tokyonight.enable = true;
+      catppuccin.enable = false;
+      gruvbox.enable = false;
+    };
+    plugins = {
+      web-devicons.enable = true;
+      gitsigns.enable = true;
+      which-key.enable = true;
+      noice.enable = true;
+      trouble.enable = true;
+      todo-comments.enable = true;
+      treesitter = {
+        enable = true;
+        settings = {
+          indent.enable = true;
+          highlight.enable = true;
+          folds.enable = true;
+          ensure_installed = [
+            "bash"
+            "c"
+            "diff"
+            "html"
+            "javascript"
+            "jsdoc"
+            "json"
+            "jsonc"
+            "lua"
+            "luadoc"
+            "luap"
+            "markdown"
+            "markdown_inline"
+            "printf"
+            "python"
+            "query"
+            "regex"
+            "toml"
+            "tsx"
+            "typescript"
+            "vim"
+            "vimdoc"
+            "xml"
+            "yaml"
+          ];
+        };
+      };
+      treesitter-textobjects.enable = true;
+      treesitter-context.enable = true;
+      nvim-ts-autotag.enable = true;
+      mini-icons.enable = true;
+      nui.enable = true;
+      snacks.enable = true;
+      grug-far.enable = true;
+      flash.enable = true;
+      mini-pairs.enable = true;
+      ts-comments.enable = true;
+      mini-ai.enable = true;
+      lazydev.enable = true;
+      lsp = {
+        enable = true;
+        servers = {
+          basedpyright.enable = true;
+        };
+      };
+      mason.enable = true;
+      mason-lspconfig.enable = true;
+      conform-nvim = {
+        enable = true;
+        settings = {
+          format_on_save = {
+            lsp_fallback = false;
+            timeout_ms = 2000;
+          };
+          formatters_by_ft = {
+            python = [ "ruff_format" ];
+          };
+          formatters = {
+            ruff_format = {
+              command = "ruff";
+              args = [
+                "format"
+                "--stdin-filename"
+                "$FILENAME"
+                "-"
+              ];
+              stdin = true;
+            };
+          };
+        };
+      };
+      nvim-lint.enable = true;
+      plenary.enable = true;
+      vim-startuptime.enable = true;
+      lualine = {
+        enable = true;
+        settings = {
+          options = {
+            theme = "auto";
+          };
+        };
+      };
+      bufferline = {
+        enable = true;
+        settings = {
+          options = {
+            diagnostics = "nvim_lsp";
+          };
+        };
+      };
+      persistence.enable = true;
+      
+      # Optional (previous Vim functionality)
+      # vim-lastplace.enable = true;
+      # indent-blankline.enable = true;
+      # vim-better-whitespace.enable = true;
+      # nerdtree.enable = true;
+    };
+    extraConfigLua = ''
+      -- Optional (previous Vim settings)
+      -- vim.opt.background = "dark"
+      -- vim.g.indent_guides_enable_on_vim_startup = 1
+      vim.cmd("cmap w!! w !sudo tee % > /dev/null %")
     '';
   };
 
