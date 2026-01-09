@@ -40,6 +40,7 @@ with pkgs;
   uv # Ultra-fast Python package manager and environment manager
   codex # OpenAI code completion tool
   claude-code
+  lazygit
 
   (python313.withPackages (
     ps: with ps; [

@@ -35,10 +35,6 @@ let
 in
 {
   home-manager.enable = true;
-  home.packages = [
-    pkgs.ruff
-    pkgs.codespell
-  ];
 
   atuin = {
     enable = true;
