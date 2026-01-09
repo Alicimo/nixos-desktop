@@ -35,6 +35,10 @@ let
 in
 {
   home-manager.enable = true;
+  home.packages = [
+    pkgs.ruff
+    pkgs.codespell
+  ];
 
   atuin = {
     enable = true;
@@ -168,10 +172,7 @@ in
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
-    globals = {
-      mapleader = " ";
-      maplocalleader = " ";
-    };
+    globals.mapleader = " ";
     opts = {
       number = true;
       relativenumber = true;
@@ -186,19 +187,155 @@ in
       updatetime = 200;
       timeoutlen = 300;
     };
+    keymaps = [
+      # LSP
+      {
+        mode = "n";
+        key = "gd";
+        action = "<cmd>lua vim.lsp.buf.definition()<cr>";
+        options.desc = "Go to definition";
+      }
+      {
+        mode = "n";
+        key = "gD";
+        action = "<cmd>lua vim.lsp.buf.declaration()<cr>";
+        options.desc = "Go to declaration";
+      }
+      {
+        mode = "n";
+        key = "gi";
+        action = "<cmd>lua vim.lsp.buf.implementation()<cr>";
+        options.desc = "Go to implementation";
+      }
+      {
+        mode = "n";
+        key = "gr";
+        action = "<cmd>lua vim.lsp.buf.references()<cr>";
+        options.desc = "List references";
+      }
+      {
+        mode = "n";
+        key = "K";
+        action = "<cmd>lua vim.lsp.buf.hover()<cr>";
+        options.desc = "Hover docs";
+      }
+      {
+        mode = "n";
+        key = "<leader>rn";
+        action = "<cmd>lua vim.lsp.buf.rename()<cr>";
+        options.desc = "Rename symbol";
+      }
+      {
+        mode = "n";
+        key = "<leader>ca";
+        action = "<cmd>lua vim.lsp.buf.code_action()<cr>";
+        options.desc = "Code action";
+      }
+      {
+        mode = "n";
+        key = "<leader>f";
+        action = "<cmd>lua vim.lsp.buf.format({ async = true })<cr>";
+        options.desc = "Format buffer";
+      }
+
+      # Diagnostics
+      {
+        mode = "n";
+        key = "[d";
+        action = "<cmd>lua vim.diagnostic.goto_prev()<cr>";
+        options.desc = "Previous diagnostic";
+      }
+      {
+        mode = "n";
+        key = "]d";
+        action = "<cmd>lua vim.diagnostic.goto_next()<cr>";
+        options.desc = "Next diagnostic";
+      }
+      {
+        mode = "n";
+        key = "<leader>e";
+        action = "<cmd>lua vim.diagnostic.open_float()<cr>";
+        options.desc = "Line diagnostics";
+      }
+
+      # Telescope
+      {
+        mode = "n";
+        key = "<leader>ff";
+        action = "<cmd>Telescope find_files<cr>";
+        options.desc = "Find files";
+      }
+      {
+        mode = "n";
+        key = "<leader>fg";
+        action = "<cmd>Telescope live_grep<cr>";
+        options.desc = "Live grep";
+      }
+      {
+        mode = "n";
+        key = "<leader>fb";
+        action = "<cmd>Telescope buffers<cr>";
+        options.desc = "Buffers";
+      }
+      {
+        mode = "n";
+        key = "<leader>fh";
+        action = "<cmd>Telescope help_tags<cr>";
+        options.desc = "Help tags";
+      }
+      {
+        mode = "n";
+        key = "<leader>fo";
+        action = "<cmd>Telescope oldfiles<cr>";
+        options.desc = "Recent files";
+      }
+
+      # Trouble
+      {
+        mode = "n";
+        key = "<leader>xx";
+        action = "<cmd>TroubleToggle<cr>";
+        options.desc = "Trouble toggle";
+      }
+      {
+        mode = "n";
+        key = "<leader>xw";
+        action = "<cmd>Trouble workspace_diagnostics<cr>";
+        options.desc = "Workspace diagnostics";
+      }
+      {
+        mode = "n";
+        key = "<leader>xd";
+        action = "<cmd>Trouble document_diagnostics<cr>";
+        options.desc = "Document diagnostics";
+      }
+      {
+        mode = "n";
+        key = "<leader>xl";
+        action = "<cmd>Trouble loclist<cr>";
+        options.desc = "Location list";
+      }
+      {
+        mode = "n";
+        key = "<leader>xq";
+        action = "<cmd>Trouble quickfix<cr>";
+        options.desc = "Quickfix list";
+      }
+    ];
     colorschemes = {
-      tokyonight.enable = true;
+      tokyonight.enable = false;
       catppuccin.enable = false;
       gruvbox.enable = false;
+      github-theme.enable = true;
     };
     plugins = {
-      web-devicons.enable = true;
-      gitsigns.enable = true;
-      which-key.enable = true;
-      noice.enable = true;
-      trouble.enable = true;
-      todo-comments.enable = true;
-      treesitter = {
+      web-devicons.enable = true; # Filetype icons.
+      gitsigns.enable = true; # Git hunk signs and actions.
+      which-key.enable = true; # Keybinding hints popup.
+      noice.enable = true; # Enhanced cmdline/notify UI.
+      trouble.enable = true; # Diagnostics list UI.
+      todo-comments.enable = true; # Highlight TODO/FIXME comments.
+      treesitter = { # Treesitter syntax/indent/query support.
         enable = true;
         settings = {
           indent.enable = true;
@@ -225,19 +362,20 @@ in
           ];
         };
       };
-      treesitter-textobjects.enable = true;
-      treesitter-context.enable = true;
-      nvim-ts-autotag.enable = true;
-      mini-icons.enable = true;
-      nui.enable = true;
-      snacks.enable = true;
-      grug-far.enable = true;
-      flash.enable = true;
-      mini-pairs.enable = true;
-      ts-comments.enable = true;
-      mini-ai.enable = true;
-      lazydev.enable = true;
-      lsp = {
+      treesitter-textobjects.enable = true; # Text objects from Treesitter.
+      treesitter-context.enable = true; # Sticky context at top.
+      nvim-ts-autotag.enable = true; # Auto close/rename HTML tags.
+      mini-icons.enable = true; # Lightweight icon provider.
+      nui.enable = true; # UI components for plugins.
+      snacks.enable = true; # UI/utility extras.
+      grug-far.enable = true; # Search/replace UI.
+      flash.enable = true; # Fast jump navigation.
+      mini-pairs.enable = true; # Auto insert matching pairs.
+      ts-comments.enable = true; # Treesitter-aware comments.
+      mini-ai.enable = true; # Text objects for AI-like selections.
+      lazydev.enable = true; # Lua dev helpers for Neovim.
+      lspsaga.enable = true; # LSP UI enhancements.
+      lsp = { # LSP client configuration.
         enable = true;
         servers = {
           bashls.enable = true;
@@ -246,9 +384,9 @@ in
           ruff.enable = true;
         };
       };
-      mason.enable = true;
-      mason-lspconfig.enable = true;
-      conform-nvim = {
+      mason.enable = true; # LSP/DAP/tool installer.
+      mason-lspconfig.enable = true; # Mason + lspconfig integration.
+      conform-nvim = { # Formatter orchestration.
         enable = true;
         settings = {
           format_on_save = {
@@ -272,10 +410,18 @@ in
           };
         };
       };
-      nvim-lint.enable = true;
-      plenary.enable = true;
-      vim-startuptime.enable = true;
-      lualine = {
+      nvim-lint = { # Linting runner (used for spell checking).
+        enable = true;
+        linters_by_ft = {
+          python = [ "ruff" ];
+          markdown = [ "codespell" ];
+          text = [ "codespell" ];
+          gitcommit = [ "codespell" ];
+        };
+      };
+      plenary.enable = true; # Lua utility library.
+      vim-startuptime.enable = true; # Startup profiling.
+      lualine = { # Statusline.
         enable = true;
         settings = {
           options = {
@@ -283,22 +429,43 @@ in
           };
         };
       };
-      bufferline.enable = true;
-      persistence.enable = true;
-      plugins.nvim-tree = {
+      bufferline.enable = true; # Buffer tabline.
+      persistence.enable = true; # Session persistence.
+      nvim-tree = { # File explorer.
         enable = true;
         openOnSetupFile = true;
         settings.auto_reload_on_write = true;
       };
-      auto-save = {
+      auto-save = { # Automatic file saves.
         enable = true;
         settings.enabled = true;
       };
-      {
-      telescope = {
+      project-nvim = { # Project root detection.
+        enable = true;
+        settings = {
+          detection_methods = [ "lsp" "pattern" ];
+          patterns = [
+            ".git"
+            "flake.nix"
+            "pyproject.toml"
+            "package.json"
+            "Cargo.toml"
+          ];
+        };
+      };
+      telescope = { # Fuzzy finder.
         enable = true;
         extensions.fzf-native.enable = true;
       };
+      cmp = {
+        autoEnableSources = true;
+        settings.sources = [
+          { name = "nvim_lsp"; }
+          { name = "path"; }
+          { name = "buffer"; }
+        ];
+      };
+      gitlab.enable = true; # GitLab integration.
 
       # Optional (previous Vim functionality)
       # vim-lastplace.enable = true;
