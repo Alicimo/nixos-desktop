@@ -206,16 +206,11 @@ in
           folds.enable = true;
           ensure_installed = [
             "bash"
-            "c"
             "diff"
             "html"
             "javascript"
-            "jsdoc"
             "json"
-            "jsonc"
             "lua"
-            "luadoc"
-            "luap"
             "markdown"
             "markdown_inline"
             "printf"
@@ -223,8 +218,6 @@ in
             "query"
             "regex"
             "toml"
-            "tsx"
-            "typescript"
             "vim"
             "vimdoc"
             "xml"
@@ -247,7 +240,10 @@ in
       lsp = {
         enable = true;
         servers = {
+          bashls.enable = true;
           basedpyright.enable = true;
+          nixd.enable = true;
+          ruff.enable = true;
         };
       };
       mason.enable = true;
@@ -287,16 +283,23 @@ in
           };
         };
       };
-      bufferline = {
-        enable = true;
-        settings = {
-          options = {
-            diagnostics = "nvim_lsp";
-          };
-        };
-      };
+      bufferline.enable = true;
       persistence.enable = true;
-      
+      plugins.nvim-tree = {
+        enable = true;
+        openOnSetupFile = true;
+        settings.auto_reload_on_write = true;
+      };
+      auto-save = {
+        enable = true;
+        settings.enabled = true;
+      };
+      {
+      telescope = {
+        enable = true;
+        extensions.fzf-native.enable = true;
+      };
+
       # Optional (previous Vim functionality)
       # vim-lastplace.enable = true;
       # indent-blankline.enable = true;
