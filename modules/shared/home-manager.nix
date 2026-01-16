@@ -333,29 +333,29 @@ in
       todo-comments.enable = true; # Highlight TODO/FIXME comments.
       treesitter = { # Treesitter syntax/indent/query support.
         enable = true;
+        grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+          bash
+          diff
+          html
+          javascript
+          json
+          lua
+          markdown
+          markdown_inline
+          printf
+          python
+          query
+          regex
+          toml
+          vim
+          vimdoc
+          xml
+          yaml
+        ];
         settings = {
           indent.enable = true;
           highlight.enable = true;
           folds.enable = true;
-          ensure_installed = [
-            "bash"
-            "diff"
-            "html"
-            "javascript"
-            "json"
-            "lua"
-            "markdown"
-            "markdown_inline"
-            "printf"
-            "python"
-            "query"
-            "regex"
-            "toml"
-            "vim"
-            "vimdoc"
-            "xml"
-            "yaml"
-          ];
         };
       };
       treesitter-textobjects.enable = true; # Text objects from Treesitter.

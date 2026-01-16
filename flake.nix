@@ -49,10 +49,18 @@
       nixpkgs-firefox-darwin,
       nixvim,
     }@inputs:
+    let
+      brewTaps = {
+        "homebrew/homebrew-core" = homebrew-core;
+        "homebrew/homebrew-cask" = homebrew-cask;
+        "homebrew/homebrew-bundle" = homebrew-bundle;
+        "homebrew/homebrew-krtirtho" = homebrew-krtirtho;
+      };
+    in
     {
       darwinConfigurations."tiefenbacher-macbook" = nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
-        specialArgs = { inherit inputs; };
+        specialArgs = { inherit inputs brewTaps; };
         modules = [
           {
             nixpkgs.overlays = [
@@ -61,6 +69,9 @@
               })
               inputs.nixpkgs-firefox-darwin.overlay
             ];
+          }
+          {
+            homebrew.taps = builtins.attrNames brewTaps;
           }
           home-manager.darwinModules.home-manager
           {
@@ -78,12 +89,7 @@
             nix-homebrew = {
               user = "tiefenbacher";
               enable = true;
-              taps = {
-                "homebrew/homebrew-core" = homebrew-core;
-                "homebrew/homebrew-cask" = homebrew-cask;
-                "homebrew/homebrew-bundle" = homebrew-bundle;
-                "homebrew/homebrew-krtirtho" = homebrew-krtirtho;
-              };
+              taps = brewTaps;
               mutableTaps = false;
               autoMigrate = true;
             };

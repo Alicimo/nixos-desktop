@@ -38,17 +38,8 @@ with pkgs;
   nodejs_24 # Nodejs is required to run mcp servers
   ruff # Fast Python linter, formatter, and import sorter
   uv # Ultra-fast Python package manager and environment manager
+  python312 # System Python for non-uv usage
   codex # OpenAI code completion tool
   claude-code
   lazygit
-
-  (python313.withPackages (
-    ps: with ps; [
-      ipython # Improved iteractive shell
-      polars # Fast DataFrame library in Rust with Python bindings
-      pandas # Powerful data analysis and manipulation library
-      numpy # Core library for numerical computing in Python
-      plotly # Interactive plotting library
-    ]
-  ))
 ]
