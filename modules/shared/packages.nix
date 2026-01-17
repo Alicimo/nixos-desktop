@@ -38,8 +38,8 @@ with pkgs;
   nodejs_24 # Nodejs is required to run mcp servers
   ruff # Fast Python linter, formatter, and import sorter
   uv # Ultra-fast Python package manager and environment manager
+  ty # Ultra-fast Python Type Checker
   python312 # System Python for non-uv usage
   codex # OpenAI code completion tool
-  claude-code
-  lazygit
+  opencode # LLM Agent Coding tool
 ]

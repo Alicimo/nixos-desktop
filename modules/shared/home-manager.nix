@@ -156,6 +156,17 @@ in
     };
   };
 
+  lazygit = {
+    enable = true;
+    settings = {
+      git.pagers = [
+        {
+          externalDiffCommand = "difft --color=always";
+        }
+      ];
+    };
+  };
+
   # Difftastic, a syntax-aware diff tool.
   difftastic = {
     enable = true;
