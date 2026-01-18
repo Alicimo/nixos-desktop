@@ -9,7 +9,7 @@ with pkgs;
   ripgrep # Fast recursive search like grep, but better
   tree # Displays directory structure in a tree-like format
   wget # Non-interactive network downloader
-  difftastic # Syntax-aware diff tool
+  delta # Syntax-aware diff tool
   eza # Modern replacement for `ls` with more features
   fd # Simple, fast and user-friendly alternative to `find`
   pciutils # Tools for inspecting and configuring PCI devices

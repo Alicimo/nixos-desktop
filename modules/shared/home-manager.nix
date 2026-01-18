@@ -78,7 +78,7 @@ in
       cat = "bat";
       top = "btop";
       grep = "rg";
-      diff = "difft";
+      diff = "delta";
       du = "dust";
       today = "date +%Y-%m-%d";
       llm = "codex exec --skip-git-repo-check";
@@ -156,21 +156,31 @@ in
     };
   };
 
-  lazygit = {
+  delta = {
     enable = true;
-    settings = {
-      git.pagers = [
-        {
-          externalDiffCommand = "difft --color=always";
-        }
-      ];
+    enableGitIntegration = true;
+    options = {
+      light = true;
+      line-numbers = true;
+      syntax-theme = "GitHub";
     };
   };
 
-  # Difftastic, a syntax-aware diff tool.
-  difftastic = {
+  lazygit = {
     enable = true;
-    git.enable = true;
+    settings = {
+      gui.theme.selectedLineBgColor = [ "default" ];
+      git.pagers = [
+        {
+          colorArg = "always";
+          pager = "delta --paging=never";
+        }
+        {
+          colorArg = "always";
+          pager = "delta --paging=never --side-by-side";
+        }
+      ];
+    };
   };
 
   nixvim = {
