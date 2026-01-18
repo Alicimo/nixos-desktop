@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if hash pbpaste 2>/dev/null; then
+	exec pbpaste
+elif hash xclip 2>/dev/null; then
+	exec xclip -selection clipboard -o
+else
+	echo 'cannot find a paste program' >&2
+	exit 1
+fi
