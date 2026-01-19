@@ -104,6 +104,21 @@ in
     '';
   };
 
+  opencode = {
+    enable = true;
+    settings = {
+      theme = "opencode";
+      model = "anthropic/claude-sonnet-4-20250514";
+      autoshare = false;
+      autoupdate = true;
+    };
+    commands = {
+      python-checkup = ../../prompts/python-checkup.md;
+      RTFM = ../../prompts/RTFM.md;
+      commit = ../../prompts/commit.md;
+    };
+  };
+
   git = {
     enable = true; # Enables Git support in the system configuration.
 
@@ -119,7 +134,6 @@ in
       "CLAUDE.md" # Ignore Claude Code project documentation.
       "AGENTS.md" # Ignore Agent Code project documentation.
       ".aider*" # Ignore Aider AI coding assistant files.
-      "prompts/" # Ignore prompts directory.
     ];
 
     lfs.enable = true; # Enables Git Large File Storage (LFS) for handling large files efficiently.
