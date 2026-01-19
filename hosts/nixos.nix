@@ -162,12 +162,12 @@ in
     };
 
     # GNOME w/ X
+    displayManager.gdm.enable = true;
+    desktopManager.gnome.enable = true;
     xserver = {
       enable = true;
       videoDrivers = [ "amdgpu" ];
       excludePackages = [ pkgs.xterm ];
-      displayManager.gdm.enable = true;
-      desktopManager.gnome.enable = true;
     };
 
     # Audio

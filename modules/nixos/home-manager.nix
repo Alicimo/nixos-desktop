@@ -62,8 +62,10 @@ in
 
   programs = shared-programs // {
     git = {
-      userName = userCfg.name;
-      userEmail = userCfg.email.personal;
+      settings.user = {
+        name = userCfg.name;
+        email = userCfg.email.personal;
+      };
     };
   };
 }

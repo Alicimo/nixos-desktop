@@ -345,6 +345,7 @@ in
       gruvbox.enable = false;
       github-theme.enable = true;
     };
+    colorscheme = "github_light";
     plugins = {
       web-devicons.enable = true; # Filetype icons.
       gitsigns.enable = true; # Git hunk signs and actions.

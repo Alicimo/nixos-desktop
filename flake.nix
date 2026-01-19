@@ -81,7 +81,7 @@
           }
           {
             home-manager.sharedModules = [
-              nixvim.homeManagerModules.nixvim
+              nixvim.homeModules.nixvim
             ];
           }
           nix-homebrew.darwinModules.nix-homebrew
@@ -111,7 +111,7 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               sharedModules = [
-                nixvim.homeManagerModules.nixvim
+                nixvim.homeModules.nixvim
               ];
               users.alistair = import ./modules/nixos/home-manager.nix;
             };
