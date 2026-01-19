@@ -107,8 +107,7 @@ in
   opencode = {
     enable = true;
     settings = {
-      theme = "opencode";
-      model = "anthropic/claude-sonnet-4-20250514";
+      theme = "github";
       autoshare = false;
       autoupdate = true;
     };
