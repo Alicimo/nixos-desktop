@@ -2,6 +2,7 @@
 {
   imports = [
     ./user-config.nix
+    ./system.nix
   ];
 
   nixpkgs = {
