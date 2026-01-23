@@ -30,7 +30,6 @@ _:
   "macwhisper" # AI transcription tool
   "obsidian" # Note-taking and knowledge management
   "chatgpt" # ChatGPT desktop client
-  "handy"  # Local STT App (OS Spokenly alt)
 
   # Media & Research
   "iina" # Media player
