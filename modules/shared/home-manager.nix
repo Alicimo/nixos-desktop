@@ -110,11 +110,31 @@ in
       theme = "github";
       autoshare = false;
       autoupdate = true;
+      permission = {
+        bash = {
+          "*" = "deny";
+          "git *" = "allow";
+          "grep *" = "allow";
+          "rg *" = "allow";
+          "find *" = "allow";
+          "tree *" = "allow";
+          "ls *" = "allow";
+          "uv run pytest *" = "allow";
+          "uv run ruff *" = "allow";
+          "nix flake check" = "allow";
+        };
+        webfetch = "ask";
+      };
     };
     commands = {
       python-checkup = ../../prompts/python-checkup.md;
       RTFM = ../../prompts/RTFM.md;
       commit = ../../prompts/commit.md;
+    };
+    agents = {
+      code-reviewer = ../../agents/code-reviewer.md;
+      code-simplifier = ../../agents/code-simplifier.md;
+      debugger = ../../agents/debugger.md;
     };
   };
 
