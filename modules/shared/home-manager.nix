@@ -627,61 +627,67 @@ in
   # - UBlockOrigin
   # - Sponsorblock
   # - LocalCDN
-  firefox = lib.mkIf (platform != null) {
-    enable = true;
-    profiles."default" = {
-      id = 0;
-      isDefault = true;
-      settings = {
-        "browser.startup.homepage" = userCfg.services.homepage.${platform};
-        "extensions.pocket.enabled" = false;
-        "signon.rememberSignons" = false;
-        "browser.newtabpage.enabled" = false;
-        "browser.vpn_promo.enabled" = false;
-        "identity.fxaccounts.enabled" = false;
-        "intl.locale.requested" = "en-GB";
-        "browser.ml.enable" = false;
+  firefox = lib.mkIf (platform != null) (lib.mkMerge [
+    {
+      enable = true;
+    }
+    (lib.mkIf (platform == "darwin") {
+      package = pkgs.firefox-bin // { override = _: pkgs.firefox-bin; };
+    })
+    {
+      profiles."default" = {
+        id = 0;
+        isDefault = true;
+        settings = {
+          "browser.startup.homepage" = userCfg.services.homepage.${platform};
+          "extensions.pocket.enabled" = false;
+          "signon.rememberSignons" = false;
+          "browser.newtabpage.enabled" = false;
+          "browser.vpn_promo.enabled" = false;
+          "identity.fxaccounts.enabled" = false;
+          "intl.locale.requested" = "en-GB";
+          "browser.ml.enable" = false;
 
-        # Telementry
-        "toolkit.telemetry.enabled" = false;
-        "datareporting.healthreport.uploadEnabled" = false;
-        "datareporting.policy.dataSubmissionEnabled" = false;
-        "datareporting.sessions.current.clean" = true;
-        "datareporting.sessions.current.activeTicks" = 0;
-        "datareporting.healthreport.service.enabled" = false;
-        "app.normandy.enabled" = false;
-        "app.shield.optoutstudies.enabled" = false;
-        "browser.tabs.crashReporting.sendReports" = false;
-        "browser.urlbar.suggest.searches" = false;
+          # Telementry
+          "toolkit.telemetry.enabled" = false;
+          "datareporting.healthreport.uploadEnabled" = false;
+          "datareporting.policy.dataSubmissionEnabled" = false;
+          "datareporting.sessions.current.clean" = true;
+          "datareporting.sessions.current.activeTicks" = 0;
+          "datareporting.healthreport.service.enabled" = false;
+          "app.normandy.enabled" = false;
+          "app.shield.optoutstudies.enabled" = false;
+          "browser.tabs.crashReporting.sendReports" = false;
+          "browser.urlbar.suggest.searches" = false;
 
-        # Sidebar and vertical tabs settings
-        "sidebar.expandOnHoverMessage.dismissed" = true;
-        "sidebar.new-sidebar.has-used" = true;
-        "sidebar.revamp" = true;
-        "sidebar.verticalTabs" = true;
-        "sidebar.main.tools" = "history,bookmarks";
-        "sidebar.visibility" = "always-show";
+          # Sidebar and vertical tabs settings
+          "sidebar.expandOnHoverMessage.dismissed" = true;
+          "sidebar.new-sidebar.has-used" = true;
+          "sidebar.revamp" = true;
+          "sidebar.verticalTabs" = true;
+          "sidebar.main.tools" = "history,bookmarks";
+          "sidebar.visibility" = "always-show";
 
-      };
-      search = {
-        default = "google";
-        force = true;
-        engines = {
-          "Nix Packages" = {
-            definedAliases = [ "@np" ];
-            urls = [
-              {
-                template = "https://search.nixos.org/packages";
-                params = [
-                  {
-                    name = "query";
-                    value = "{searchTerms}";
-                  }
-                ];
-              }
-            ];
-            icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-          };
+        };
+        search = {
+          default = "google";
+          force = true;
+          engines = {
+            "Nix Packages" = {
+              definedAliases = [ "@np" ];
+              urls = [
+                {
+                  template = "https://search.nixos.org/packages";
+                  params = [
+                    {
+                      name = "query";
+                      value = "{searchTerms}";
+                    }
+                  ];
+                }
+              ];
+              icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+            };
           "Nix Options" = {
             definedAliases = [ "@no" ];
             urls = [
@@ -696,37 +702,53 @@ in
               }
             ];
           };
+          "Home Manager Options" = {
+            definedAliases = [ "@hm" ];
+            urls = [
+              {
+                template = "https://home-manager-options.extranix.com";
+                params = [
+                  {
+                    name = "query";
+                    value = "{searchTerms}";
+                  }
+                ];
+              }
+            ];
+          };
           "ChatGPT" = {
-            definedAliases = [ "@gpt" ];
-            urls = [
-              {
-                template = "https://chatgpt.com/";
-                params = [
-                  {
-                    name = "q";
-                    value = "{searchTerms}";
-                  }
-                ];
-              }
-            ];
+
+              definedAliases = [ "@gpt" ];
+              urls = [
+                {
+                  template = "https://chatgpt.com/";
+                  params = [
+                    {
+                      name = "q";
+                      value = "{searchTerms}";
+                    }
+                  ];
+                }
+              ];
+            };
+            "Perplexity" = {
+              definedAliases = [ "@p" ];
+              urls = [
+                {
+                  template = "https://www.perplexity.ai/";
+                  params = [
+                    {
+                      name = "q";
+                      value = "{searchTerms}";
+                    }
+                  ];
+                }
+              ];
+            };
+            "google".metaData.alias = "@g";
           };
-          "Perplexity" = {
-            definedAliases = [ "@p" ];
-            urls = [
-              {
-                template = "https://www.perplexity.ai/";
-                params = [
-                  {
-                    name = "q";
-                    value = "{searchTerms}";
-                  }
-                ];
-              }
-            ];
-          };
-          "google".metaData.alias = "@g";
         };
       };
-    };
-  };
+    }
+  ]);
 }
