@@ -112,7 +112,7 @@ in
       autoupdate = true;
       permission = {
         bash = {
-          "*" = "deny";
+          "*" = "ask";
           "git *" = "allow";
           "grep *" = "allow";
           "rg *" = "allow";
@@ -122,6 +122,8 @@ in
           "uv run pytest *" = "allow";
           "uv run ruff *" = "allow";
           "nix flake check" = "allow";
+          "head *" = "allow";
+          "tail *" = "allow";
         };
         webfetch = "ask";
       };
@@ -130,6 +132,7 @@ in
       python-checkup = ../../prompts/python-checkup.md;
       RTFM = ../../prompts/RTFM.md;
       commit = ../../prompts/commit.md;
+      updateAGENTS = ../../prompts/updateAGENTS.md;
     };
     agents = {
       code-reviewer = ../../agents/code-reviewer.md;
