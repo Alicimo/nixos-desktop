@@ -3,11 +3,12 @@ description: Write a concise, clear, and descriptive Git commit message
 ---
 
 1. Checks which files are staged with `git status`
-2. If 0 files are staged, automatically adds all modified and new files with `git add`
+2. If no files are staged, automatically adds all modified and new files with `git add`
 3. Performs a `git diff` to understand what changes are being committed
 4. Analyzes the diff to determine if multiple distinct logical changes are present
-5. If multiple distinct changes are detected, suggests breaking the commit into multiple smaller commits
-6. For each commit (or the single commit if not split), creates a commit message using emoji conventional commit format
+5. If multiple distinct changes are detected, break the commit into multiple smaller commits
+6. For each commit (or the single commit if not split), create a commit with a suitable message
+7. If possible, the final state should be a clean working tree, e.g., `git status` retuns nothing of note.
 
 ## Best Practices for Commits
 
