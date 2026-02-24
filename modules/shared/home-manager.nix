@@ -121,9 +121,12 @@ in
           "ls *" = "allow";
           "uv run pytest *" = "allow";
           "uv run ruff *" = "allow";
+          "uv run ty *" = "allow";
+          "python -m py_compile *" = "allow";
           "nix flake check" = "allow";
           "head *" = "allow";
           "tail *" = "allow";
+          "wc *" = "allow";
         };
         webfetch = "ask";
       };
