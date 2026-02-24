@@ -107,6 +107,32 @@ with lib;
           description = "External SSH config path on NixOS";
         };
       };
+
+      workspace = {
+        darwin = mkOption {
+          type = types.str;
+          default = "/Users/tiefenbacher/workspace";
+          description = "Workspace root path on Darwin";
+        };
+
+        nixos = mkOption {
+          type = types.str;
+          default = "/home/alistair/workspace";
+          description = "Workspace root path on NixOS";
+        };
+
+        workSubdir = mkOption {
+          type = types.str;
+          default = "work";
+          description = "Subdirectory name for work projects";
+        };
+
+        personalSubdir = mkOption {
+          type = types.str;
+          default = "personal";
+          description = "Subdirectory name for personal projects";
+        };
+      };
     };
 
     # Service configurations

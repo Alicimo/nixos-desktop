@@ -44,6 +44,7 @@ in
   # Enable home-manager
   home-manager = {
     useGlobalPkgs = true;
+    backupFileExtension = "backup";
     users.${user} =
       {
         pkgs,
@@ -54,6 +55,10 @@ in
       let
         # Now userConfig is available via config.userConfig due to the import
         userCfg = config.userConfig;
+        workspaceRoot = userCfg.paths.workspace.darwin;
+        workspaceWork = "${workspaceRoot}/${userCfg.paths.workspace.workSubdir}";
+        workspacePersonal = "${workspaceRoot}/${userCfg.paths.workspace.personalSubdir}";
+        personalGitConfigPath = ".config/git/config-personal";
 
         # VS Code activation function using userConfig
         mkVSCodeActivation =
@@ -118,6 +123,26 @@ in
               source = ../../scripts/bin/wifi-toggle.sh;
               executable = true;
             };
+            "${personalGitConfigPath}" = {
+              text = ''
+                [user]
+                  email = ${userCfg.email.personal}
+              '';
+            };
+            ".gitconfig" = {
+              text = ''
+                [include]
+                  path = ${userCfg.darwin.homeDirectory}/.config/git/config
+              '';
+            };
+            "workspace-work-keep" = {
+              target = "${workspaceWork}/.keep";
+              text = "";
+            };
+            "workspace-personal-keep" = {
+              target = "${workspacePersonal}/.keep";
+              text = "";
+            };
             ".codex/prompts/python-checkup.md" = {
               source = ../../prompts/python-checkup.md;
             };
@@ -146,6 +171,19 @@ in
         };
 
         programs = shared-config // {
+          git = shared-config.git // {
+            settings = shared-config.git.settings // {
+              user = {
+                name = userCfg.name;
+                email = userCfg.email.work;
+              };
+              includeIf = {
+                "gitdir:${workspacePersonal}/" = {
+                  path = "${userCfg.darwin.homeDirectory}/${personalGitConfigPath}";
+                };
+              };
+            };
+          };
           ssh = shared-config.ssh // {
             includes = [ userCfg.paths.ssh.darwin ];
           };
