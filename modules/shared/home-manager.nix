@@ -140,6 +140,7 @@ in
       commit = ../../prompts/commit.md;
       jira-issue-diff = ../../prompts/jira-issue-from-diff.md;
       jira-issue-todo = ../../prompts/issue.md;
+      jira-yolo = ../../prompts/jira-yolo.md;
       updateAGENTS = ../../prompts/updateAGENTS.md;
     };
     agents = {
