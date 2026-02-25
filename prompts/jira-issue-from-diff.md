@@ -23,6 +23,6 @@ Unstaged diff vs main:
 
 ```bash
 set issue_key (jira issue create -tTask -lDataScience -s"{TITLE}" -b"{DESCRIPTION}" --custom Responsible-Squad="Health Check Squad" --no-input --raw | jq -r '.key')
-jira issue assign "$issue_key" --assignee (jira me | string trim)
+jira issue assign "$issue_key" (jira me)
 echo "https://xund.atlassian.net/browse/$issue_key"
 ```
