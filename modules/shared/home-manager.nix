@@ -138,6 +138,7 @@ in
       python-checkup = ../../prompts/python-checkup.md;
       RTFM = ../../prompts/RTFM.md;
       commit = ../../prompts/commit.md;
+      jira-issue-from-diff = ../../prompts/jira-issue-from-diff.md;
       updateAGENTS = ../../prompts/updateAGENTS.md;
     };
     agents = {
