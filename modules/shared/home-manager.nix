@@ -130,6 +130,9 @@ in
         };
         webfetch = "ask";
       };
+      experimental = {
+        disable_paste_summary = true;
+      };
     };
     commands = {
       python-checkup = ../../prompts/python-checkup.md;
@@ -167,6 +170,10 @@ in
       # Core Git configuration
       core.excludesfile = "~/.config/git/ignore"; # Points to the global gitignore file created by ignores option.
       init.defaultBranch = "main"; # Sets "main" as the default branch name instead of "master".
+
+      alias = {
+        tidy = "!f() { git branch --merged \"$(git config init.defaultBranch)\" | grep -Fv \"$(git config init.defaultBranch)\" | grep -vF '*' | grep -vF '+' | xargs git branch -d && git fetch && git remote prune origin && git branch -v | grep -F '[gone]' | grep -vF '*' | grep -vF '+' | awk '{print $1}' | xargs git branch -D; }; f";
+      };
 
       # Remote operations
       push = {
@@ -673,6 +680,9 @@ in
           "identity.fxaccounts.enabled" = false;
           "intl.locale.requested" = "en-GB";
           "browser.ml.enable" = false;
+          "browser.ai.control.linkPreviewKeyPoints" = "blocked";
+          "browser.ai.control.sidebarChatbot" = "blocked";
+          "browser.ai.control.smartTabGroups" = "blocked";
 
           # Telementry
           "toolkit.telemetry.enabled" = false;
