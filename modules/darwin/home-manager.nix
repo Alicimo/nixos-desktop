@@ -59,6 +59,7 @@ in
         workspaceWork = "${workspaceRoot}/${userCfg.paths.workspace.workSubdir}";
         workspacePersonal = "${workspaceRoot}/${userCfg.paths.workspace.personalSubdir}";
         personalGitConfigPath = ".config/git/config-personal";
+        workGitConfigPath = ".config/git/config-work";
 
         # VS Code activation function using userConfig
         mkVSCodeActivation =
@@ -129,10 +130,10 @@ in
                   email = ${userCfg.email.personal}
               '';
             };
-            ".gitconfig" = {
+            "${workGitConfigPath}" = {
               text = ''
-                [include]
-                  path = ${userCfg.darwin.homeDirectory}/.config/git/config
+                [user]
+                  email = ${userCfg.email.work}
               '';
             };
             "workspace-work-keep" = {
@@ -175,7 +176,9 @@ in
             settings = shared-config.git.settings // {
               user = {
                 name = userCfg.name;
-                email = userCfg.email.work;
+              };
+              include = {
+                path = "${userCfg.darwin.homeDirectory}/${workGitConfigPath}";
               };
               includeIf = {
                 "gitdir:${workspacePersonal}/" = {
