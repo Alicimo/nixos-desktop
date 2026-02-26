@@ -127,6 +127,7 @@ in
           "head *" = "allow";
           "tail *" = "allow";
           "wc *" = "allow";
+          "jira issue view *" = "allow";
         };
         webfetch = "ask";
       };

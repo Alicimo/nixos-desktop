@@ -10,7 +10,7 @@ $ARGUMENTS
 1. Read the Jira issue details using the Jira CLI:
 
 ```bash
-jira issue view "$ARGUMENTS" --raw
+jira issue view "$ARGUMENTS" --plain
 ```
 
 2. Summarize the task and restate acceptance criteria from the issue.
