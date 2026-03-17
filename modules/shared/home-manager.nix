@@ -128,6 +128,8 @@ in
           "tail *" = "allow";
           "wc *" = "allow";
           "jira issue view *" = "allow";
+          "sed *" = "allow";
+          "jq *" = "allow";
         };
         webfetch = "ask";
       };
