@@ -137,10 +137,11 @@ in
     };
     commands = {
       python-checkup = ../../prompts/python-checkup.md;
+      proofread = ../../prompts/proofread.md;
       RTFM = ../../prompts/RTFM.md;
       commit = ../../prompts/commit.md;
       jira-issue-diff = ../../prompts/jira-issue-from-diff.md;
-      jira-issue-todo = ../../prompts/issue.md;
+      jira-issue-todo = ../../prompts/jira-issue.md;
       jira-yolo = ../../prompts/jira-yolo.md;
       updateAGENTS = ../../prompts/updateAGENTS.md;
     };

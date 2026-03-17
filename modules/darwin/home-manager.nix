@@ -147,6 +147,9 @@ in
             ".codex/prompts/python-checkup.md" = {
               source = ../../prompts/python-checkup.md;
             };
+            ".codex/prompts/proofread.md" = {
+              source = ../../prompts/proofread.md;
+            };
             ".codex/prompts/RTFM.md" = {
               source = ../../prompts/RTFM.md;
             };
