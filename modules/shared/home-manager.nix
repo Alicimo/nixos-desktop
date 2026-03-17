@@ -690,6 +690,11 @@ in
           "browser.ai.control.linkPreviewKeyPoints" = "blocked";
           "browser.ai.control.sidebarChatbot" = "blocked";
           "browser.ai.control.smartTabGroups" = "blocked";
+          "browser.search.visualSearch.featureGate" = false;
+          "dom.text-recognition.enabled" = false;
+          "dom.text_fragments.enabled" = false;
+          "privacy.query_stripping.strip_on_share.enabled" = false;
+          "screenshots.browser.component.enabled" = false;
 
           # Telementry
           "toolkit.telemetry.enabled" = false;
