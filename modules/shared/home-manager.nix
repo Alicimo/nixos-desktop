@@ -129,7 +129,15 @@ in
           "wc *" = "allow";
           "jira issue view *" = "allow";
           "sed *" = "allow";
-          "jq *" = "allow";
+          "fd *" = "allow";
+          "eza *" = "allow";
+          "bat *" = "allow";
+          "stat *" = "allow";
+          "file *" = "allow";
+          "readlink *" = "allow";
+          "realpath *" = "allow";
+          "du *" = "allow";
+          "df *" = "allow";
         };
         webfetch = "ask";
       };
