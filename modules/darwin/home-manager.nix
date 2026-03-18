@@ -58,8 +58,12 @@ in
         workspaceRoot = userCfg.paths.workspace.darwin;
         workspaceWork = "${workspaceRoot}/${userCfg.paths.workspace.workSubdir}";
         workspacePersonal = "${workspaceRoot}/${userCfg.paths.workspace.personalSubdir}";
+        sambaMountPoint = "${userCfg.darwin.homeDirectory}/samba";
         personalGitConfigPath = ".config/git/config-personal";
         workGitConfigPath = ".config/git/config-work";
+        mountTiefenbacherShare = pkgs.writeShellScript "mount-tiefenbacher-share" ''
+          exec ${../../scripts/mount_tiefenbacher_share.sh} "${sambaMountPoint}" "//guest:@tiefenbacher/public"
+        '';
 
         # VS Code activation function using userConfig
         mkVSCodeActivation =
@@ -136,6 +140,10 @@ in
                   email = ${userCfg.email.work}
               '';
             };
+            "samba-keep" = {
+              target = "${sambaMountPoint}/.keep";
+              text = "";
+            };
             "workspace-work-keep" = {
               target = "${workspaceWork}/.keep";
               text = "";
@@ -171,6 +179,17 @@ in
             StartInterval = 86400; # Run once per day
             StandardOutPath = "${userCfg.darwin.homeDirectory}/Library/Logs/hblock.log";
             StandardErrorPath = "${userCfg.darwin.homeDirectory}/Library/Logs/hblock-error.log";
+          };
+        };
+
+        launchd.agents.tiefenbacher-samba = {
+          enable = true;
+          config = {
+            ProgramArguments = [ "${mountTiefenbacherShare}" ];
+            RunAtLoad = true;
+            StartInterval = 300;
+            StandardOutPath = "${userCfg.darwin.homeDirectory}/Library/Logs/tiefenbacher-samba.log";
+            StandardErrorPath = "${userCfg.darwin.homeDirectory}/Library/Logs/tiefenbacher-samba-error.log";
           };
         };
 
