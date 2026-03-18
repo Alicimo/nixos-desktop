@@ -5,6 +5,7 @@ in
 {
   imports = [
     ../modules/darwin/home-manager.nix
+    ../modules/darwin/tailscale-hosts.nix
     ../modules/shared
   ];
 
