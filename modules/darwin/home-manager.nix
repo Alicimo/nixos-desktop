@@ -140,10 +140,6 @@ in
                   email = ${userCfg.email.work}
               '';
             };
-            "samba-keep" = {
-              target = "${sambaMountPoint}/.keep";
-              text = "";
-            };
             "workspace-work-keep" = {
               target = "${workspaceWork}/.keep";
               text = "";
