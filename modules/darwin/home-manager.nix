@@ -128,6 +128,10 @@ in
               source = ../../scripts/bin/wifi-toggle.sh;
               executable = true;
             };
+            "bin/slugify" = {
+              source = ../../scripts/bin/slugify-file.py;
+              executable = true;
+            };
             "${personalGitConfigPath}" = {
               text = ''
                 [user]
