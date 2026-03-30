@@ -6,10 +6,9 @@ let
 
   darwinPackages = [
     hblock # DNS adblocker for improved privacy and security
-    google-cloud-sdk # CLI tools for Google Cloud Platform
     mas # Mac App Store command-line interface
     jira-cli-go # CLI tools to interact with JIRA
-    kubectl # CLI tools for k8s
+    (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.kubectl])
   ];
 
   nixosPackages = [
