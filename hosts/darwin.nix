@@ -1,13 +1,6 @@
-{ config, pkgs, ... }:
+{ config, ... }:
 let
   user = config.userConfig.darwin.username;
-  nixApps = pkgs.buildEnv {
-    name = "darwin-applications";
-    paths = [
-      pkgs.firefox-bin
-    ];
-    pathsToLink = "/Applications";
-  };
 in
 {
   imports = [
@@ -62,7 +55,6 @@ in
           { app = "/Applications/Ghostty.app"; }
           { app = "/Applications/Telegram.app"; }
           { app = "/Users/tiefenbacher/Applications/Slack.app"; }
-          { app = "/Applications/Nix Apps/Firefox.app"; }
           { app = "/System/Applications/Mail.app"; }
           { app = "/System/Applications/Calendar.app"; }
           { app = "/System/Applications/Reminders.app"; }
@@ -87,12 +79,6 @@ in
     };
 
     keyboard.enableKeyMapping = true;
-
-    activationScripts.applications.text = ''
-      mkdir -p /Applications/Nix\ Apps
-      rm -rf /Applications/Nix\ Apps/Firefox.app
-      ln -sfn "${nixApps}/Applications/Firefox.app" /Applications/Nix\ Apps/Firefox.app
-    '';
   };
 
   security.pam.services.sudo_local.touchIdAuth = true;
