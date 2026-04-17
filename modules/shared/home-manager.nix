@@ -107,7 +107,6 @@ in
   opencode = {
     enable = true;
     settings = {
-      theme = "github";
       autoshare = false;
       autoupdate = true;
       permission = {
@@ -122,6 +121,7 @@ in
           "uv run pytest *" = "allow";
           "uv run ruff *" = "allow";
           "uv run ty *" = "allow";
+          "uv run python -m py_compile *" = "allow";
           "python -m py_compile *" = "allow";
           "nix flake check" = "allow";
           "head *" = "allow";
@@ -145,6 +145,9 @@ in
         disable_paste_summary = true;
       };
     };
+    tui = {
+      theme = "github";
+    };
     commands = {
       python-checkup = ../../prompts/python-checkup.md;
       proofread = ../../prompts/proofread.md;
@@ -164,6 +167,7 @@ in
 
   git = {
     enable = true; # Enables Git support in the system configuration.
+    signing.format = "openpgp";
 
     ignores = [
       # Specifies global Git ignore patterns.

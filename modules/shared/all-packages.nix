@@ -9,6 +9,7 @@ let
     mas # Mac App Store command-line interface
     jira-cli-go # CLI tools to interact with JIRA
     (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.kubectl])
+    feishin
   ];
 
   nixosPackages = [
