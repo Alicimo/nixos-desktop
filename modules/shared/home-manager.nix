@@ -446,7 +446,7 @@ in
         settings = {
           indent.enable = true;
           highlight.enable = true;
-          folds.enable = true;
+          folds.enable = false;
         };
       };
       treesitter-textobjects.enable = true; # Text objects from Treesitter.
