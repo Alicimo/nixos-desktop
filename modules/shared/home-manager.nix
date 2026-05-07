@@ -128,6 +128,7 @@ in
           "tail *" = "allow";
           "wc *" = "allow";
           "jira issue view *" = "allow";
+          "jira sprint list *" = "allow";
           "sed *" = "allow";
           "fd *" = "allow";
           "eza *" = "allow";
@@ -138,6 +139,8 @@ in
           "realpath *" = "allow";
           "du *" = "allow";
           "df *" = "allow";
+          "npm run build" = "allow";
+          "bash -n *" = "allow";
         };
         webfetch = "ask";
       };
@@ -162,6 +165,7 @@ in
       code-reviewer = ../../agents/code-reviewer.md;
       code-simplifier = ../../agents/code-simplifier.md;
       debugger = ../../agents/debugger.md;
+      test-engineer = ../../agents/test-engineer.md;
     };
   };
 
