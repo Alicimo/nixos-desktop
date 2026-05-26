@@ -41,6 +41,12 @@ in
     };
   };
 
+  system.activationScripts.unquarantineStats.text = ''
+    if [ -d "/Applications/Stats.app" ]; then
+      /usr/bin/xattr -dr com.apple.quarantine "/Applications/Stats.app" || true
+    fi
+  '';
+
   # Enable home-manager
   home-manager = {
     useGlobalPkgs = true;

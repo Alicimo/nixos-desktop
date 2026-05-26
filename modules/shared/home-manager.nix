@@ -1,4 +1,5 @@
 {
+
   config,
   pkgs,
   lib,
@@ -122,6 +123,7 @@ in
           "uv run ruff *" = "allow";
           "uv run ty *" = "allow";
           "uv run python -m py_compile *" = "allow";
+          "uv run python -m compileall *" = "allow";
           "python -m py_compile *" = "allow";
           "nix flake check" = "allow";
           "head *" = "allow";
@@ -141,6 +143,7 @@ in
           "df *" = "allow";
           "npm run build" = "allow";
           "bash -n *" = "allow";
+          "cut *" = "allow";
         };
         webfetch = "ask";
       };
@@ -254,6 +257,7 @@ in
 
   nixvim = {
     enable = true;
+    nixpkgs.source = pkgs.path;
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
@@ -571,7 +575,7 @@ in
   ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks."*" = {
+    settings."*" = {
       serverAliveCountMax = 15;
       serverAliveInterval = 120;
     };

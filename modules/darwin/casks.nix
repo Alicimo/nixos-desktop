@@ -23,9 +23,9 @@ _:
   "google-drive" # Cloud storage
   "google-chrome" # Web browser
   "macwhisper" # AI transcription tool
+  "codex-app"  # OpenAI Desktop App
   # "obsidian" # Note-taking and knowledge management
 
   # Media & Research
-  "iina" # Media player
   "netnewswire" # RSS reader
 ]

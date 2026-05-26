@@ -10,6 +10,7 @@ let
     jira-cli-go # CLI tools to interact with JIRA
     (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.kubectl])
     feishin
+    iina # Media player
   ];
 
   nixosPackages = [

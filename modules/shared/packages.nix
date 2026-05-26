@@ -41,4 +41,5 @@ with pkgs;
   ty # Ultra-fast Python Type Checker
   python312 # System Python for non-uv usage
   codex # OpenAI code completion tool
+  quarto  # Wrapper for pandoc
 ]
