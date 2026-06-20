@@ -108,8 +108,33 @@ in
   opencode = {
     enable = true;
     settings = {
-      autoshare = false;
+      share = "disabled";
       autoupdate = true;
+      provider = {
+        lmstudio = {
+          name = "LM Studio";
+          npm = "@ai-sdk/openai-compatible";
+          options = {
+            baseURL = "http://localhost:1234/v1";
+          };
+          models = {
+            "qwen/qwen3.6-35b-a3b" = {
+              name = "Qwen3.6 35B A3B";
+              modalities = {
+                input = [ "text" ];
+                output = [ "text" ];
+              };
+            };
+            "qwen/qwen3.6-27b" = {
+              name = "Qwen3.6 27B";
+              modalities = {
+                input = [ "text" ];
+                output = [ "text" ];
+              };
+            };
+          };
+        };
+      };
       permission = {
         bash = {
           "*" = "ask";
