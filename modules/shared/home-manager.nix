@@ -455,7 +455,7 @@ in
       };
       treesitter-textobjects.enable = true; # Text objects from Treesitter.
       treesitter-context.enable = true; # Sticky context at top.
-      nvim-ts-autotag.enable = true; # Auto close/rename HTML tags.
+      ts-autotag.enable = true; # Auto close/rename HTML tags.
       mini-icons.enable = true; # Lightweight icon provider.
       nui.enable = true; # UI components for plugins.
       snacks.enable = true; # UI/utility extras.
@@ -475,8 +475,6 @@ in
           ruff.enable = true;
         };
       };
-      mason.enable = true; # LSP/DAP/tool installer.
-      mason-lspconfig.enable = true; # Mason + lspconfig integration.
       conform-nvim = { # Formatter orchestration.
         enable = true;
         settings = {
@@ -501,17 +499,15 @@ in
           };
         };
       };
-      nvim-lint = { # Linting runner (used for spell checking).
+      lint = { # Linting runner (used for spell checking).
         enable = true;
-        linters_by_ft = {
+        lintersByFt = {
           python = [ "ruff" ];
           markdown = [ "codespell" ];
           text = [ "codespell" ];
           gitcommit = [ "codespell" ];
         };
       };
-      plenary.enable = true; # Lua utility library.
-      vim-startuptime.enable = true; # Startup profiling.
       lualine = { # Statusline.
         enable = true;
         settings = {
