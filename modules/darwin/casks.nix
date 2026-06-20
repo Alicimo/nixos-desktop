@@ -11,6 +11,8 @@ _:
   # Development Tools
   "visual-studio-code" # Code editor
   "ghostty" # Terminal emulator
+  "codex-app"  # OpenAI Desktop App
+  "openchamber" # Opencode Desktop App
 
   # Communication
   "meetingbar" # Calendar meetings in menu bar
@@ -20,12 +22,11 @@ _:
 
   # Productivity & AI
   "lm-studio" # Local LLM interface
-  "google-drive" # Cloud storage
   "google-chrome" # Web browser
   "macwhisper" # AI transcription tool
-  "codex-app"  # OpenAI Desktop App
   # "obsidian" # Note-taking and knowledge management
 
   # Media & Research
   "netnewswire" # RSS reader
+  "music-decoy" # stop apple music
 ]
