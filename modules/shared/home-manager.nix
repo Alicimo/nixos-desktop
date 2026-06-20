@@ -266,7 +266,11 @@ in
   lazygit = {
     enable = true;
     settings = {
-      gui.theme.selectedLineBgColor = [ "default" ];
+      gui.theme = {
+        selectedLineBgColor = [ "#eeeeee" ];
+        activeBorderColor = [ "black" "bold" ];
+        inactiveBorderColor = [ "black" ];
+      };
       git.pagers = [
         {
           colorArg = "always";
