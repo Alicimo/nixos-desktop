@@ -290,21 +290,16 @@ in
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
-    vimdiffAlias = true;
-    globals.mapleader = " ";
     opts = {
       number = true;
-      relativenumber = true;
       expandtab = true;
       shiftwidth = 2;
       tabstop = 2;
       autoindent = true;
-      wrap = false;
       mouse = "a";
       termguicolors = true;
       signcolumn = "yes";
       updatetime = 200;
-      timeoutlen = 300;
     };
     keymaps = [
       # LSP
@@ -377,37 +372,6 @@ in
         options.desc = "Line diagnostics";
       }
 
-      # Telescope
-      {
-        mode = "n";
-        key = "<leader>ff";
-        action = "<cmd>Telescope find_files<cr>";
-        options.desc = "Find files";
-      }
-      {
-        mode = "n";
-        key = "<leader>fg";
-        action = "<cmd>Telescope live_grep<cr>";
-        options.desc = "Live grep";
-      }
-      {
-        mode = "n";
-        key = "<leader>fb";
-        action = "<cmd>Telescope buffers<cr>";
-        options.desc = "Buffers";
-      }
-      {
-        mode = "n";
-        key = "<leader>fh";
-        action = "<cmd>Telescope help_tags<cr>";
-        options.desc = "Help tags";
-      }
-      {
-        mode = "n";
-        key = "<leader>fo";
-        action = "<cmd>Telescope oldfiles<cr>";
-        options.desc = "Recent files";
-      }
 
       # Trouble
       {
@@ -449,7 +413,6 @@ in
     };
     colorscheme = "github_light";
     plugins = {
-      web-devicons.enable = true; # Filetype icons.
       gitsigns.enable = true; # Git hunk signs and actions.
       which-key.enable = true; # Keybinding hints popup.
       noice.enable = true; # Enhanced cmdline/notify UI.
@@ -485,7 +448,6 @@ in
       treesitter-textobjects.enable = true; # Text objects from Treesitter.
       treesitter-context.enable = true; # Sticky context at top.
       ts-autotag.enable = true; # Auto close/rename HTML tags.
-      mini-icons.enable = true; # Lightweight icon provider.
       nui.enable = true; # UI components for plugins.
       snacks.enable = true; # UI/utility extras.
       grug-far.enable = true; # Search/replace UI.
@@ -547,11 +509,6 @@ in
       };
       bufferline.enable = true; # Buffer tabline.
       persistence.enable = true; # Session persistence.
-      nvim-tree = { # File explorer.
-        enable = true;
-        openOnSetupFile = true;
-        settings.auto_reload_on_write = true;
-      };
       auto-save = { # Automatic file saves.
         enable = true;
         settings.enabled = true;
@@ -569,10 +526,6 @@ in
           ];
         };
       };
-      telescope = { # Fuzzy finder.
-        enable = true;
-        extensions.fzf-native.enable = true;
-      };
       cmp = {
         autoEnableSources = true;
         settings.sources = [
@@ -581,18 +534,9 @@ in
           { name = "buffer"; }
         ];
       };
-      gitlab.enable = true; # GitLab integration.
 
-      # Optional (previous Vim functionality)
-      # vim-lastplace.enable = true;
-      # indent-blankline.enable = true;
-      # vim-better-whitespace.enable = true;
-      # nerdtree.enable = true;
     };
     extraConfigLua = ''
-      -- Optional (previous Vim settings)
-      -- vim.opt.background = "dark"
-      -- vim.g.indent_guides_enable_on_vim_startup = 1
       vim.cmd("cmap w!! w !sudo tee % > /dev/null %")
     '';
   };
