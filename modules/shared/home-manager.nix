@@ -9,6 +9,22 @@
 
 let
   userCfg = config.userConfig;
+  jiraLabelArgs = lib.concatMapStringsSep " " (label: "-l${lib.escapeShellArg label}") userCfg.services.jira.labels;
+
+  mkJiraPrompt =
+    path:
+      builtins.replaceStrings
+        [
+          "@JIRA_RESPONSIBLE_SQUAD@"
+          "@JIRA_ACTIVE_SPRINT_NAME_CONTAINS@"
+          "@JIRA_LABEL_ARGS@"
+        ]
+        [
+          userCfg.services.jira.responsibleSquad
+          userCfg.services.jira.activeSprintNameContains
+          jiraLabelArgs
+        ]
+        (builtins.readFile path);
 
   # VS Code activation script for making config writable
   mkVSCodeActivation =
@@ -184,8 +200,8 @@ in
       proofread = ../../prompts/proofread.md;
       RTFM = ../../prompts/RTFM.md;
       commit = ../../prompts/commit.md;
-      jira-issue-diff = ../../prompts/jira-issue-from-diff.md;
-      jira-issue-todo = ../../prompts/jira-issue.md;
+      jira-issue-diff = mkJiraPrompt ../../prompts/jira-issue-from-diff.md;
+      jira-issue-todo = mkJiraPrompt ../../prompts/jira-issue.md;
       jira-yolo = ../../prompts/jira-yolo.md;
       updateAGENTS = ../../prompts/updateAGENTS.md;
     };

@@ -150,6 +150,29 @@ with lib;
           description = "Homepage URL on NixOS";
         };
       };
+
+      jira = {
+        responsibleSquad = mkOption {
+          type = types.str;
+          default = "Webengers Squad";
+          description = "Default Jira Responsible-Squad value for generated prompts";
+        };
+
+        activeSprintNameContains = mkOption {
+          type = types.str;
+          default = "IC Sprint";
+          description = "Sprint name substring used by generated Jira prompts";
+        };
+
+        labels = mkOption {
+          type = types.listOf types.str;
+          default = [
+            "DataScience"
+            "IC_Eval"
+          ];
+          description = "Default Jira labels for generated prompts";
+        };
+      };
     };
 
     # Git configuration
