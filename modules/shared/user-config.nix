@@ -155,7 +155,19 @@ with lib;
         responsibleSquad = mkOption {
           type = types.str;
           default = "Webengers Squad";
-          description = "Default Jira Responsible-Squad value for generated prompts";
+          description = "Default Jira responsible squad value for generated prompts";
+        };
+
+        responsibleSquadField = mkOption {
+          type = types.str;
+          default = "responsible-squad";
+          description = "Jira CLI custom key for Responsible squad in generated prompts";
+        };
+
+        acceptanceCriteriaField = mkOption {
+          type = types.str;
+          default = "mr-acceptance-criteria";
+          description = "Jira CLI custom key for Acceptance criteria in generated prompts";
         };
 
         activeSprintNameContains = mkOption {

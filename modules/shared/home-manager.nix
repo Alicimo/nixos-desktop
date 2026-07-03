@@ -16,11 +16,15 @@ let
       builtins.replaceStrings
         [
           "@JIRA_RESPONSIBLE_SQUAD@"
+          "@JIRA_RESPONSIBLE_SQUAD_FIELD@"
+          "@JIRA_ACCEPTANCE_CRITERIA_FIELD@"
           "@JIRA_ACTIVE_SPRINT_NAME_CONTAINS@"
           "@JIRA_LABEL_ARGS@"
         ]
         [
           userCfg.services.jira.responsibleSquad
+          userCfg.services.jira.responsibleSquadField
+          userCfg.services.jira.acceptanceCriteriaField
           userCfg.services.jira.activeSprintNameContains
           jiraLabelArgs
         ]
