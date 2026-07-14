@@ -27,6 +27,7 @@ _:
   # "obsidian" # Note-taking and knowledge management
 
   # Media & Research
+  "iina" # Media player
   "netnewswire" # RSS reader
   "music-decoy" # stop apple music
 ]

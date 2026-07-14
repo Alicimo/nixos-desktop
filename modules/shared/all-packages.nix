@@ -4,13 +4,38 @@ with pkgs;
 let
   base = import ./packages.nix { inherit pkgs; };
 
+  feishin-bin = stdenvNoCC.mkDerivation rec {
+    pname = "feishin";
+    version = "1.14.0";
+
+    src = fetchurl {
+      url = "https://github.com/jeffvli/feishin/releases/download/v${version}/Feishin-${version}-mac-arm64.dmg";
+      hash = "sha256-wOJw55oZjYhIr5KgAcrXttCOC2g3A7v2Tj2YHiKiZUk=";
+    };
+
+    nativeBuildInputs = [ undmg ];
+
+    sourceRoot = ".";
+
+    installPhase = ''
+      runHook preInstall
+
+      mkdir -p "$out/Applications"
+      cp -R Feishin.app "$out/Applications/"
+
+      runHook postInstall
+    '';
+  };
+
   darwinPackages = [
     hblock # DNS adblocker for improved privacy and security
     mas # Mac App Store command-line interface
     jira-cli-go # CLI tools to interact with JIRA
     (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.kubectl])
-    feishin
-    iina # Media player
+    feishin-bin # Music player
+    stable.R # Language and environment for statistical computing
+    stable.quarto # Wrapper for pandoc
+    stable.visidata # Terminal spreadsheet multitool for data exploration
   ];
 
   nixosPackages = [
@@ -19,6 +44,11 @@ let
     unzip # Extracts .zip archive files
     curl # Tool for transferring data with URLs
     zip # Package and compress files into .zip format
+
+    # Dev
+    R # Language and environment for statistical computing
+    quarto # Wrapper for pandoc
+    visidata # Terminal spreadsheet multitool for data exploration
 
     # Desktop applications
     mpv # Media player for audio and video files

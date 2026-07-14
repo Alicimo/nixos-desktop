@@ -8,7 +8,7 @@
   nixpkgs = {
     config = {
       allowUnfree = true;
-      allowBroken = true;
+      allowBroken = false;
       allowInsecure = false;
       allowUnsupportedSystem = true;
     };

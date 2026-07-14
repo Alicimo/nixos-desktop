@@ -26,10 +26,8 @@ with pkgs;
   imagemagick # Toolset for editing and converting images
   ffmpeg # Command-line tool for processing video and audio
   rsync # Efficiently sync files and directories over network or locally
-  visidata # Terminal spreadsheet multitool for data exploration
 
   # Dev
-  R # Language and environment for statistical computing
   sqlite # Lightweight, self-contained SQL database engine
   devenv # Tool for reproducible, shareable developer environments
   git # Distributed version control system
@@ -41,5 +39,4 @@ with pkgs;
   ty # Ultra-fast Python Type Checker
   python312 # System Python for non-uv usage
   codex # OpenAI code completion tool
-  quarto  # Wrapper for pandoc
 ]
