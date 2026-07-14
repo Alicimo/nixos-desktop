@@ -11,7 +11,7 @@ _:
   # Development Tools
   "visual-studio-code" # Code editor
   "ghostty" # Terminal emulator
-  "codex-app"  # OpenAI Desktop App
+  "chatgpt" # OpenAI Desktop App
   "openchamber" # Opencode Desktop App
 
   # Communication
