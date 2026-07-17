@@ -12,6 +12,7 @@ let
   jiraLabelArgs = lib.concatMapStringsSep " " (label: "-l${lib.escapeShellArg label}") userCfg.services.jira.labels;
   llmCodingDir = ../../llm-coding;
   commandDir = llmCodingDir + "/commands";
+  skillDir = llmCodingDir + "/skills";
   direnvPackage = pkgs.direnv.overrideAttrs (old: {
     installPhase = old.installPhase + ''
       rm -rf "$out/share/fish"
@@ -22,7 +23,7 @@ let
   '';
   atuinUuidgen = if platform == "darwin" then "/usr/bin/uuidgen" else lib.getExe' pkgs.util-linux "uuidgen";
 
-  renderJiraCommand =
+  renderJiraTemplate =
     path:
       builtins.replaceStrings
         [
@@ -259,18 +260,11 @@ in
         disable_paste_summary = true;
       };
     };
-    commands = lib.mapAttrs (
-      name: path:
-      if lib.elem name [
-        "jira-issue-diff"
-        "jira-issue-todo"
-      ] then
-        renderJiraCommand path
-      else
-        path
-    ) commandFiles;
+    commands = commandFiles;
     agents = llmCodingDir + "/agents";
-    skills = llmCodingDir + "/skills";
+    skills = {
+      jira-create-issue = renderJiraTemplate (skillDir + "/jira-create-issue/SKILL.md");
+    };
   };
 
   git = {
