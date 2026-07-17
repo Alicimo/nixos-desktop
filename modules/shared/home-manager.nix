@@ -10,6 +10,15 @@
 let
   userCfg = config.userConfig;
   jiraLabelArgs = lib.concatMapStringsSep " " (label: "-l${lib.escapeShellArg label}") userCfg.services.jira.labels;
+  direnvPackage = pkgs.direnv.overrideAttrs (old: {
+    installPhase = old.installPhase + ''
+      rm -rf "$out/share/fish"
+    '';
+  });
+  direnvFishHook = pkgs.runCommand "direnv-hook.fish" { } ''
+    ${lib.getExe direnvPackage} hook fish > "$out"
+  '';
+  atuinUuidgen = if platform == "darwin" then "/usr/bin/uuidgen" else lib.getExe' pkgs.util-linux "uuidgen";
 
   mkJiraPrompt =
     path:
@@ -69,6 +78,8 @@ in
 
   direnv = {
     enable = true;
+    package = direnvPackage;
+    enableFishIntegration = false;
     enableZshIntegration = false;
     nix-direnv.enable = true;
   };
@@ -107,6 +118,18 @@ in
     };
     interactiveShellInit = ''
       set fish_greeting # Disable greeting
+      source ${direnvFishHook}
+
+      set --global tide_left_prompt_items pwd git
+      set --global tide_right_prompt_items status context python nix_shell
+    '';
+    shellInit = ''
+      if status is-interactive
+        if not set -q ATUIN_SESSION; or test "$ATUIN_SHLVL" != "$SHLVL"
+          set --global --export ATUIN_SESSION (${atuinUuidgen})
+          set --global --export ATUIN_SHLVL $SHLVL
+        end
+      end
     '';
     functions = {
       mkcd = ''
@@ -120,9 +143,6 @@ in
         src = pkgs.fishPlugins.tide.src;
       }
     ];
-    shellInit = ''
-      codex completion fish | source
-    '';
   };
 
   opencode = {

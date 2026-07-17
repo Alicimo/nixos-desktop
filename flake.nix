@@ -92,6 +92,7 @@
               taps = brewTaps;
               mutableTaps = false;
               autoMigrate = true;
+              enableFishIntegration = false;
             };
           }
           ./hosts/darwin.nix
