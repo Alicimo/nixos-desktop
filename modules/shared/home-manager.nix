@@ -147,9 +147,11 @@ in
 
   opencode = {
     enable = true;
+    tui.attention.enabled = true;
     settings = {
+      formatter = "true";
       share = "disabled";
-      autoupdate = true;
+      autoupdate = false;
       provider = {
         lmstudio = {
           name = "LM Studio";
@@ -215,9 +217,6 @@ in
       experimental = {
         disable_paste_summary = true;
       };
-    };
-    tui = {
-      theme = "github";
     };
     commands = {
       python-checkup = ../../prompts/python-checkup.md;
