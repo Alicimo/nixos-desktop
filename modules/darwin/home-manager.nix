@@ -173,18 +173,6 @@ in
               target = "${workspacePersonal}/.keep";
               text = "";
             };
-            ".codex/prompts/python-checkup.md" = {
-              source = ../../prompts/python-checkup.md;
-            };
-            ".codex/prompts/proofread.md" = {
-              source = ../../prompts/proofread.md;
-            };
-            ".codex/prompts/RTFM.md" = {
-              source = ../../prompts/RTFM.md;
-            };
-            ".codex/prompts/commit.md" = {
-              source = ../../prompts/commit.md;
-            };
             ".hushlogin".text = "";
           };
 

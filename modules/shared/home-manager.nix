@@ -10,6 +10,8 @@
 let
   userCfg = config.userConfig;
   jiraLabelArgs = lib.concatMapStringsSep " " (label: "-l${lib.escapeShellArg label}") userCfg.services.jira.labels;
+  llmCodingDir = ../../llm-coding;
+  commandDir = llmCodingDir + "/commands";
   direnvPackage = pkgs.direnv.overrideAttrs (old: {
     installPhase = old.installPhase + ''
       rm -rf "$out/share/fish"
@@ -20,7 +22,7 @@ let
   '';
   atuinUuidgen = if platform == "darwin" then "/usr/bin/uuidgen" else lib.getExe' pkgs.util-linux "uuidgen";
 
-  mkJiraPrompt =
+  renderJiraCommand =
     path:
       builtins.replaceStrings
         [
@@ -38,6 +40,13 @@ let
           jiraLabelArgs
         ]
         (builtins.readFile path);
+
+  commandFiles =
+    lib.mapAttrs'
+      (fileName: _: lib.nameValuePair (lib.removeSuffix ".md" fileName) (commandDir + "/${fileName}"))
+      (lib.filterAttrs
+        (fileName: type: type == "regular" && lib.hasSuffix ".md" fileName)
+        (builtins.readDir commandDir));
 
   # VS Code activation script for making config writable
   mkVSCodeActivation =
@@ -250,22 +259,18 @@ in
         disable_paste_summary = true;
       };
     };
-    commands = {
-      python-checkup = ../../prompts/python-checkup.md;
-      proofread = ../../prompts/proofread.md;
-      RTFM = ../../prompts/RTFM.md;
-      commit = ../../prompts/commit.md;
-      jira-issue-diff = mkJiraPrompt ../../prompts/jira-issue-from-diff.md;
-      jira-issue-todo = mkJiraPrompt ../../prompts/jira-issue.md;
-      jira-yolo = ../../prompts/jira-yolo.md;
-      updateAGENTS = ../../prompts/updateAGENTS.md;
-    };
-    agents = {
-      code-reviewer = ../../agents/code-reviewer.md;
-      code-simplifier = ../../agents/code-simplifier.md;
-      debugger = ../../agents/debugger.md;
-      test-engineer = ../../agents/test-engineer.md;
-    };
+    commands = lib.mapAttrs (
+      name: path:
+      if lib.elem name [
+        "jira-issue-diff"
+        "jira-issue-todo"
+      ] then
+        renderJiraCommand path
+      else
+        path
+    ) commandFiles;
+    agents = llmCodingDir + "/agents";
+    skills = llmCodingDir + "/skills";
   };
 
   git = {
