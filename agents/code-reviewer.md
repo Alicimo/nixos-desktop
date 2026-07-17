@@ -1,6 +1,8 @@
 ---
 description: Senior code reviewer that evaluates changes across five dimensions — correctness, readability, architecture, security, and performance.
 mode: subagent
+model: openai/gpt-5.6-sol
+variant: high
 permission:
   edit: deny
   bash: deny

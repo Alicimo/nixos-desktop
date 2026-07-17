@@ -1,6 +1,8 @@
 ---
 description: QA engineer specialized in test strategy, test writing, and coverage analysis. Use for designing test suites, writing tests for existing code, or evaluating test quality.
 mode: subagent
+model: openai/gpt-5.6-sol
+variant: medium
 ---
 
 # Test Engineer

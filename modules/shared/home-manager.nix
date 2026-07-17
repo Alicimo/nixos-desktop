@@ -149,9 +149,41 @@ in
     enable = true;
     tui.attention.enabled = true;
     settings = {
-      formatter = "true";
+      formatter = true;
       share = "disabled";
       autoupdate = false;
+      model = "openai/gpt-5.6-sol";
+      small_model = "openai/gpt-5.6-luna";
+      agent = {
+        build = {
+          model = "openai/gpt-5.6-sol";
+          variant = "medium";
+        };
+        plan = {
+          model = "openai/gpt-5.6-sol";
+          variant = "high";
+        };
+        general = {
+          model = "openai/gpt-5.6-luna";
+          variant = "medium";
+        };
+        explore = {
+          model = "openai/gpt-5.6-luna";
+          variant = "low";
+        };
+        title = {
+          model = "openai/gpt-5.6-luna";
+          variant = "none";
+        };
+        summary = {
+          model = "openai/gpt-5.6-luna";
+          variant = "low";
+        };
+        compaction = {
+          model = "openai/gpt-5.6-luna";
+          variant = "low";
+        };
+      };
       provider = {
         lmstudio = {
           name = "LM Studio";

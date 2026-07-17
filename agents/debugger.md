@@ -1,6 +1,8 @@
 ---
 description: Guides systematic root-cause debugging. Use when tests fail, builds break, behavior doesn't match expectations, or you encounter any unexpected error. Use when you need a systematic approach to finding and fixing the root cause rather than guessing.
 mode: subagent
+model: openai/gpt-5.6-sol
+variant: high
 ---
 
 # Debugging and Error Recovery
