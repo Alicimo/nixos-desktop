@@ -49,6 +49,14 @@ let
         (fileName: type: type == "regular" && lib.hasSuffix ".md" fileName)
         (builtins.readDir commandDir));
 
+  skillDirectories =
+    lib.mapAttrs
+      (directoryName: _: skillDir + "/${directoryName}")
+      (lib.filterAttrs
+        (directoryName: type:
+          type == "directory" && builtins.pathExists (skillDir + "/${directoryName}/SKILL.md"))
+        (builtins.readDir skillDir));
+
   # VS Code activation script for making config writable
   mkVSCodeActivation =
     platform:
@@ -262,8 +270,8 @@ in
     };
     commands = commandFiles;
     agents = llmCodingDir + "/agents";
-    skills = {
-      jira-create-issue = renderJiraTemplate (skillDir + "/jira-create-issue/SKILL.md");
+    skills = skillDirectories // {
+      jira-publish-issues = renderJiraTemplate (skillDir + "/jira-publish-issues/SKILL.md");
     };
   };
 
