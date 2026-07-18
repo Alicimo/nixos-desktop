@@ -1,3 +1,7 @@
+---
+description: Update AGENTS.md with durable repository guidance from recent work
+---
+
 # Update AGENTS.md
 
 You are updating this project's AGENTS.md to reflect recent changes or learnings.
