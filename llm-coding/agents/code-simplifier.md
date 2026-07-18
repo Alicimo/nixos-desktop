@@ -8,11 +8,18 @@ permission:
   read: allow
   glob: allow
   grep: allow
+  bash:
+    "*": deny
+    "git status --short": allow
+    "git diff": allow
+    "git diff *": allow
+    "git log *": allow
+    "git rev-parse *": allow
 ---
 
 # Code Simplification Review
 
-Review changed code for clear opportunities to reduce complexity while preserving exact behavior. Do not edit files or run shell commands. The calling agent owns implementation decisions, applies accepted findings, and runs verification.
+Review changed code for clear opportunities to reduce complexity while preserving exact behavior. Do not edit files. Use only the allowed read-only Git commands to inspect the change. The calling agent owns implementation decisions, applies accepted findings, and runs verification.
 
 The goal is not fewer lines. The goal is code that a new team member can understand, modify, and debug more quickly.
 
@@ -20,13 +27,17 @@ The goal is not fewer lines. The goal is code that a new team member can underst
 
 Require the caller to supply:
 
-- The fixed comparison point and complete diff, including untracked files
+- The fixed comparison point
+- The paths of relevant untracked files
+
+Use these when applicable:
+
 - The originating issue, specification, or task intent
 - Repository guidance and relevant ADRs
 - Confirmed public testing seams
 - Verification commands and reported results
 
-If the fixed point or complete diff was not supplied, stop and report it. Review only code changed by the supplied diff. Mention surrounding code only when it is necessary to explain a changed-code finding.
+If the fixed point was not supplied or does not resolve, stop and report it. Inspect committed, staged, and unstaged tracked changes with `git diff <fixed-point>` and read supplied untracked files. Do not limit the comparison to commits ending at `HEAD`. Review only changed code. Mention surrounding code only when it is necessary to explain a changed-code finding.
 
 ## Preserve Behavior
 

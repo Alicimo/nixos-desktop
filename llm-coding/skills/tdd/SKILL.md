@@ -19,7 +19,7 @@ See [tests.md](tests.md) for examples and [mocking.md](mocking.md) for mocking g
 
 A **seam** is the public boundary you test at: the interface where you observe behavior without reaching inside. Tests live at seams, never against internals.
 
-**Test only at pre-agreed seams.** Before writing any test, write down the seams under test and confirm them with the user. No test is written at an unconfirmed seam. You can't test everything - agreeing the seams up front is how testing effort lands on the critical paths and complex logic instead of every edge case.
+**Test only at pre-agreed seams.** Use seams supplied by the caller when they are explicitly recorded as user-confirmed. Otherwise, before writing any test, write down the seams under test and confirm them with the user. No test is written at an unconfirmed seam. You can't test everything - agreeing the seams up front is how testing effort lands on the critical paths and complex logic instead of every edge case.
 
 Ask: "What's the public interface, and which seams should we test?"
 
@@ -33,4 +33,4 @@ Ask: "What's the public interface, and which seams should we test?"
 
 - **Red before green.** Write the failing test first, then only enough code to pass it. Don't anticipate future tests or add speculative features.
 - **One slice at a time.** One seam, one test, one minimal implementation per cycle.
-- **Refactoring is not part of the loop.** It belongs after the red -> green implementation cycle and before the final `code-reviewer` and `code-simplifier` agent passes.
+- **Refactoring is not part of the loop.** It belongs after the red -> green implementation cycle and before the final review stage. The outer workflow owns review orchestration; this skill does not select or invoke review agents.

@@ -73,20 +73,18 @@ Discover and run the repository's required checks. Run targeted tests throughout
 
 If required checks cannot pass, stop without committing. Report the failures and leave the implementation available for inspection.
 
-## Review And Simplify
+## Review
 
-Delegate review in parallel to the `code-reviewer` and `code-simplifier` agents. Supply both with:
+Load and follow the `code-review` skill once, using its default reviewer collection. Supply:
 
 - The Jira issue requirements and acceptance criteria
 - The confirmed testing seams
 - The fixed `BASE_COMMIT`
-- The complete diff since `BASE_COMMIT`, including untracked files
+- The paths of untracked files belonging to the implementation
 - Repository guidance and relevant ADRs
 - The verification commands and results
 
-Fix every Critical and Important `code-reviewer` finding. Apply every Important `code-simplifier` finding, and evaluate its Suggestions without introducing unrelated churn. The build agent must make all edits; review agents remain read-only.
-
-Rerun affected checks and the complete required verification after applying fixes. After all fixes and generated files are complete, run `code-reviewer` and `code-simplifier` again in parallel over the exact final worktree diff, including untracked files. Do not commit with unresolved Critical or Important findings from either agent or with changes added after the final passes.
+Fix every Critical and Important finding. Evaluate Suggestions without introducing unrelated churn. The build agent must make all edits; review agents remain read-only. Rerun affected checks and the complete required verification after applying fixes. Do not run a second review round. Do not commit with knowingly unresolved Critical or Important findings.
 
 ## Commit
 
