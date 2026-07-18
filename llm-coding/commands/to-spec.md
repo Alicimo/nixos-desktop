@@ -10,7 +10,7 @@ $ARGUMENTS
 
 ## Process
 
-1. Explore the repository to understand the relevant current behavior if you have not already done so. Use the project's domain glossary vocabulary throughout the specification, and respect applicable ADRs.
+1. Before exploring, read the root `CONTEXT.md` and relevant ADRs under `docs/adr/` if they exist. If absent, proceed silently. Use glossary vocabulary throughout the specification, surface conflicts with existing ADRs, and do not create or update domain documentation. Explore the repository to understand the relevant current behavior if you have not already done so.
 
 2. Sketch the seams at which the feature will be tested. Prefer existing seams to new ones and use the highest public seam possible. Propose as few seams as practical; ideally use one. Ask the user to confirm that the proposed seams match their expectations before writing the specification. This is the only required clarification unless proceeding would otherwise require inventing information.
 

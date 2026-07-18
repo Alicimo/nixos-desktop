@@ -290,6 +290,8 @@ in
       ".claude/" # Ignore Claude Code session files.
       "CLAUDE.md" # Ignore Claude Code project documentation.
       "AGENTS.md" # Ignore Agent Code project documentation.
+      "CONTEXT.md" # Ignore agent-maintained domain terminology by default.
+      "docs/adr/" # Ignore agent-maintained architecture decisions by default.
       ".aider*" # Ignore Aider AI coding assistant files.
     ];
 

@@ -27,7 +27,8 @@ Reject missing values, unknown options, and additional positional arguments. Def
 2. Read the raw Jira response to identify its parent and issue links.
 3. If the issue is a Sub-task, read its parent Task for context.
 4. If the issue references a local specification, read it in full.
-5. Inspect every `is blocked by` relationship. Read each blocking issue and stop when any blocker's Jira status category is not `Done`. Report the blocker keys and statuses without modifying the repository.
+5. Read the root `CONTEXT.md` and relevant ADRs under `docs/adr/` if they exist. If absent, proceed silently. Use glossary vocabulary, surface conflicts with existing ADRs, and do not create or update domain documentation.
+6. Inspect every `is blocked by` relationship. Read each blocking issue and stop when any blocker's Jira status category is not `Done`. Report the blocker keys and statuses without modifying the repository.
 
 Summarize the user story, intent, scope, implementation decisions, and acceptance criteria. Treat the Jira issue and any referenced specification as the source of truth. When non-critical details are missing, choose reasonable defaults and record them.
 

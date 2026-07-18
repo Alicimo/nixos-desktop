@@ -12,7 +12,7 @@ If the input names an existing local specification, read it in full and use it t
 
 ## Gather Context
 
-Explore the relevant parts of the repository if needed. Use the project's domain glossary vocabulary and respect applicable ADRs. Look for prefactoring that would make the requested change easier before implementing it.
+Before exploring, read the root `CONTEXT.md` and relevant ADRs under `docs/adr/` if they exist. If absent, proceed silently. Use glossary vocabulary in the tickets, surface conflicts with existing ADRs, and do not create or update domain documentation. Explore the relevant parts of the repository if needed. Look for prefactoring that would make the requested change easier before implementing it.
 
 ## Draft The Ticket Graph
 
