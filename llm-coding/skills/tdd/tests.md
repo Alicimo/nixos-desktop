@@ -2,7 +2,7 @@
 
 ## Good Tests
 
-**Integration-style**: Test through real interfaces, not mocks of internal parts.
+Test one coherent behavior through a public interface. A good test names the outcome and remains valid when internals change.
 
 ```python
 # GOOD: Tests observable behavior
@@ -13,17 +13,9 @@ def test_user_can_checkout_with_valid_cart(product, payment_method):
     assert result.status == "confirmed"
 ```
 
-Characteristics:
-
-- Tests behavior users/callers care about
-- Uses public API only
-- Survives internal refactors
-- Describes WHAT, not HOW
-- One logical assertion per test
-
 ## Bad Tests
 
-**Implementation-detail tests**: Coupled to internal structure.
+Implementation-coupled tests mock internal collaborators, test private methods, assert call structure, or describe how instead of what. They fail when internals change without a behavior change.
 
 ```python
 # BAD: Tests implementation details
@@ -33,33 +25,7 @@ def test_checkout_calls_payment_service_process(mocker, cart, payment):
     process.assert_called_once_with(cart.total)
 ```
 
-Red flags:
-
-- Mocking internal collaborators
-- Testing private methods
-- Asserting on call counts/order
-- Test breaks when refactoring without behavior change
-- Test name describes HOW not WHAT
-- Verifying through external means instead of interface
-
-```python
-# BAD: Bypasses interface to verify
-def test_create_user_saves_to_database(db):
-    create_user({"name": "Alice"})
-    row = db.execute(
-        "SELECT * FROM users WHERE name = ?", ("Alice",)
-    ).fetchone()
-    assert row is not None
-
-
-# GOOD: Verifies through interface
-def test_create_user_makes_user_retrievable():
-    user = create_user({"name": "Alice"})
-    retrieved = get_user(user.id)
-    assert retrieved.name == "Alice"
-```
-
-**Tautological tests**: Expected value restates the implementation, so the test passes by construction.
+Tautological tests copy the production algorithm into the expected value. Use a simpler, independently justified oracle such as a specification, worked example, invariant, or known-good literal.
 
 ```python
 # BAD: Expected value is recomputed the way the code computes it
