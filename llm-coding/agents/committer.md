@@ -3,7 +3,7 @@ description: Creates one focused local Git commit from an approved file-level sc
 mode: subagent
 hidden: true
 model: openai/gpt-5.6-luna
-variant: medium
+variant: high
 permission:
   "*": deny
   read: allow

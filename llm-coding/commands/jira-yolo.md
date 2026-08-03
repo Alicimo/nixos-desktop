@@ -59,7 +59,11 @@ After selecting the issue branch, record `BASE_COMMIT` as the merge base between
 
 ## Implement With TDD
 
-Load and follow the `tdd` skill using the confirmed seams.
+Delegate the implementation to the `implementer` agent. Supply the complete issue requirements and acceptance criteria, confirmed testing seams, relevant repository guidance and ADRs, the selected issue branch and fixed `BASE_COMMIT`, and any implementation decisions established while gathering context. Instruct it to load and follow the `tdd` skill using the confirmed seams.
+
+Use one implementer at a time so concurrent edits cannot collide. Let the implementer inspect the shared worktree and preserve unrelated changes. If it reports an ambiguity that affects behavior or architecture, resolve it in the coordinator and then resume the same implementation session when possible. The coordinator owns scope and decisions; the implementer owns implementation edits.
+
+Require the implementer to:
 
 - Work in vertical slices: one failing test, one minimal implementation, then repeat.
 - Run the affected test file after each cycle.
@@ -84,7 +88,7 @@ Load and follow the `code-review` skill once, using its default reviewer collect
 - Repository guidance and relevant ADRs
 - The verification commands and results
 
-Fix every Critical and Important finding. Evaluate Suggestions without introducing unrelated churn. The build agent must make all edits; review agents remain read-only. Rerun affected checks and the complete required verification after applying fixes. Do not run a second review round. Do not commit with knowingly unresolved Critical or Important findings.
+Fix every Critical and Important finding. Evaluate Suggestions without introducing unrelated churn. The coordinator decides which findings to apply and delegates the edits to the `implementer` agent, resuming its existing session when possible; review agents remain read-only. Rerun affected checks and the complete required verification after applying fixes. Do not run a second review round. Do not commit with knowingly unresolved Critical or Important findings.
 
 ## Commit
 

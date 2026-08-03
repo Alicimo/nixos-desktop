@@ -1,7 +1,7 @@
 ---
 description: Reviews supplied changes for behavior-preserving simplifications and avoidable complexity without editing code.
 mode: subagent
-model: openai/gpt-5.6-sol
+model: openai/gpt-5.6-luna
 variant: high
 permission:
   "*": deny

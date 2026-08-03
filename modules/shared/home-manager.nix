@@ -182,24 +182,24 @@ in
           variant = "high";
         };
         general = {
-          model = "openai/gpt-5.6-luna";
-          variant = "medium";
+          model = "openai/gpt-5.6-sol";
+          variant = "high";
         };
         explore = {
           model = "openai/gpt-5.6-luna";
-          variant = "low";
+          variant = "medium";
         };
         title = {
           model = "openai/gpt-5.6-luna";
           variant = "none";
         };
         summary = {
-          model = "openai/gpt-5.6-luna";
-          variant = "low";
+          model = "openai/gpt-5.6-terra";
+          variant = "medium";
         };
         compaction = {
-          model = "openai/gpt-5.6-luna";
-          variant = "low";
+          model = "openai/gpt-5.6-terra";
+          variant = "medium";
         };
       };
       provider = {
@@ -292,6 +292,7 @@ in
       "AGENTS.md" # Ignore Agent Code project documentation.
       "CONTEXT.md" # Ignore agent-maintained domain terminology by default.
       "docs/adr/" # Ignore agent-maintained architecture decisions by default.
+      "docs/specs/" # Ignore agent-maintained architecture decisions by default.
       ".aider*" # Ignore Aider AI coding assistant files.
     ];
 
