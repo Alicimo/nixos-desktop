@@ -188,6 +188,12 @@ in
         explore = {
           model = "openai/gpt-5.6-luna";
           variant = "medium";
+          permission = {
+            bash = "deny";
+            webfetch = "deny";
+            websearch = "deny";
+            external_directory = "ask";
+          };
         };
         title = {
           model = "openai/gpt-5.6-luna";
