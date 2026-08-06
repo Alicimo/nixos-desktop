@@ -245,6 +245,10 @@ in
           "uv run pytest *" = "allow";
           "uv run ruff *" = "allow";
           "uv run ty *" = "allow";
+          "uv lock --check" = "allow";
+          "uv audit --locked" = "allow";
+          "uv sync --check" = "allow";
+          "uv format --check" = "allow";
           "uv run python -m py_compile *" = "allow";
           "uv run python -m compileall *" = "allow";
           "python -m py_compile *" = "allow";
