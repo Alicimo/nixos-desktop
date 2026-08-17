@@ -4,7 +4,7 @@ let
     automatic = true;
     options = "--delete-older-than 30d";
   };
-  trustedUser = if pkgs.stdenv.isDarwin then config.userConfig.darwin.username else config.userConfig.nixos.username;
+  trustedUser = if pkgs.stdenv.hostPlatform.isDarwin then config.userConfig.darwin.username else config.userConfig.nixos.username;
 in
 {
   nix = {
@@ -31,7 +31,7 @@ in
     '';
 
     gc = gcCommon // (
-      if pkgs.stdenv.isDarwin then {
+      if pkgs.stdenv.hostPlatform.isDarwin then {
         interval = {
           Weekday = 0;
           Hour = 2;

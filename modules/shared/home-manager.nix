@@ -362,14 +362,14 @@ in
         activeBorderColor = [ "black" "bold" ];
         inactiveBorderColor = [ "black" ];
       };
-      git.pagers = [
+      git.diffRenderers = [
         {
           colorArg = "always";
-          pager = "delta --paging=never";
+          command = "delta --paging=never";
         }
         {
           colorArg = "always";
-          pager = "delta --paging=never --side-by-side";
+          command = "delta --paging=never --side-by-side";
         }
       ];
     };
@@ -750,6 +750,7 @@ in
   firefox = lib.mkIf (platform != null) (lib.mkMerge [
     {
       enable = true;
+      configPath = ".mozilla/firefox";
     }
     (lib.mkIf (platform == "darwin") {
       package = pkgs.firefox-bin // { override = _: pkgs.firefox-bin; };
