@@ -750,7 +750,7 @@ in
   firefox = lib.mkIf (platform != null) (lib.mkMerge [
     {
       enable = true;
-      configPath = ".mozilla/firefox";
+      configPath = if platform == "darwin" then "Library/Application Support/Firefox" else ".mozilla/firefox";
     }
     (lib.mkIf (platform == "darwin") {
       package = pkgs.firefox-bin // { override = _: pkgs.firefox-bin; };
