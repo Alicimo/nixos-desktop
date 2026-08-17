@@ -17,6 +17,8 @@ Key paths:
 - `nix flake check`: validate flake evaluation.
 - `nix flake update [input]`: update inputs.
 
+Agents must only make declarative configuration changes and may validate them with `nix flake check`. Do not run rebuild, switch, or activation commands; the user will build and apply configuration changes.
+
 ## Coding Style & Naming Conventions
 - Nix files use 2-space indentation (follow existing style in `modules/**`).
 - Keep modules small and platform-specific; use `modules/shared/` for cross-platform settings.
@@ -24,7 +26,7 @@ Key paths:
 
 ## Testing Guidelines
 - No automated test suite is defined.
-- Use `nix flake check` and `darwin-rebuild build`/`nixos-rebuild build` for validation.
+- Agents should use `nix flake check` for validation; the user runs platform rebuilds.
 
 ## Commit & Pull Request Guidelines
 - No commit message convention is defined in this repo; use clear, imperative summaries.
