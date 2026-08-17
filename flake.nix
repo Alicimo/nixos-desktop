@@ -65,7 +65,7 @@
           {
             nixpkgs.overlays = [
               (final: prev: {
-                stable = import inputs.nixpkgs-stable { system = prev.system; };
+                stable = import inputs.nixpkgs-stable { system = prev.stdenv.hostPlatform.system; };
               })
               inputs.nixpkgs-firefox-darwin.overlay
             ];

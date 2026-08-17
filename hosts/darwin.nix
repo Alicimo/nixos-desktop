@@ -17,6 +17,9 @@ in
     enable = true;
   };
 
+  # Firefox's Nix store path changes on updates; keep using the profile marked as default.
+  launchd.user.envVariables.MOZ_LEGACY_PROFILES = "1";
+
   system = {
     stateVersion = 4;
 
