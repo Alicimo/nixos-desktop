@@ -272,6 +272,7 @@ in
           "npm run build" = "allow";
           "bash -n *" = "allow";
           "cut *" = "allow";
+          "jq *" = "allow";
         };
         webfetch = "ask";
       };
