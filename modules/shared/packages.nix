@@ -34,6 +34,7 @@ with pkgs;
   repomix # Tool for managing monorepos (multi-package repositories)
   podman # Container runtime for building and running Docker containers
   nodejs_24 # Nodejs is required to run mcp servers
+  mcp-nixos # MCP server for querying Nix ecosystem packages and options
   ruff # Fast Python linter, formatter, and import sorter
   uv # Ultra-fast Python package manager and environment manager
   ty # Ultra-fast Python Type Checker

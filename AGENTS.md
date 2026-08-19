@@ -23,6 +23,7 @@ Agents must only make declarative configuration changes and may validate them wi
 - Nix files use 2-space indentation (follow existing style in `modules/**`).
 - Keep modules small and platform-specific; use `modules/shared/` for cross-platform settings.
 - Prefer descriptive option blocks (e.g., `programs.fish`, `nixvim.plugins.*`).
+- Use the `nixos` MCP tools to look up NixOS, Home Manager, nix-darwin, Nixvim, and package facts instead of relying on memory.
 
 ## Testing Guidelines
 - No automated test suite is defined.
