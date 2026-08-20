@@ -3,7 +3,7 @@ _:
 [
   # Security & System Utilities
   "1password" # Password manager
-  "logitech-options" # Logitech device configuration
+  "logi-options+" # Logitech device configuration
   "stats" # System monitor for menu bar
   "raycast" # Spotlight replacement and productivity launcher
   "betterzip" # Advanced file archiver and extractor
