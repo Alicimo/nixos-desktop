@@ -40,5 +40,5 @@ with pkgs;
   ty # Ultra-fast Python Type Checker
   python312 # System Python for non-uv usage
   codex # OpenAI code completion tool
-  openshell  # sandboxes
+  nono # Kernel-enforced sandbox for AI agents and tools
 ]
