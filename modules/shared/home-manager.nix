@@ -175,7 +175,7 @@ in
       agent = {
         build = {
           model = "openai/gpt-5.6-sol";
-          variant = "medium";
+          variant = "high";
         };
         plan = {
           model = "openai/gpt-5.6-sol";
@@ -270,6 +270,7 @@ in
           "du *" = "allow";
           "df *" = "allow";
           "npm run build" = "allow";
+          "npx eslint *" = "allow";
           "bash -n *" = "allow";
           "cut *" = "allow";
           "jq *" = "allow";
