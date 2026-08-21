@@ -127,6 +127,7 @@ in
             inherit pkgs;
             system = userCfg.darwin.system;
           };
+          sessionVariables.DOCKER_HOST = "unix://\${TMPDIR}podman/podman-machine-default-api.sock";
           stateVersion = "23.11";
 
           sessionPath = [
